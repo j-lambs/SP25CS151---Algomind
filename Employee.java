@@ -5,11 +5,11 @@ abstract class Employee {
     private String fullName;
     private int age;
     private int id;
-    private double pay;
-    private ArrayList availability; //bitstring of hour available
-    private String positionTitle;
-    private String Manager;
-    private Date Hire_date;
+    private double pay = 0.00;
+    private ArrayList availability = null; //bitstring of hour available
+    private String positionTitle = "Unassigned";
+    private String manager = "Unassigned";
+    private Date hire_date;
 
     //All employee info is known
     protected Employee(String fullName,
@@ -25,21 +25,72 @@ abstract class Employee {
             this.pay = pay;
             this.availability = availability;
             this.positionTitle = positionTitle;
-            this.Hire_date = Hire_date;
+            this.hire_date = Hire_date;
     }
     //Basic employee info is known
-    protected Employee(String fullName, int age, int id, Date Hire_date) {
+    protected Employee(String fullName, int age, int id, Date hire_date) {
             this.fullName = fullName;
             this.age = age;
             this.id = id;
-            this.Hire_date = Hire_date;
+            this.hire_date = hire_date;
     }
 
-    //use in hourly and salary to display differently depending on employee type
+    //getters
+    protected String getFullName() {
+        return fullName;
+    }
+    protected int getAge() {
+        return age;
+    }
+    protected int getId() {
+        return id;
+    }
+    protected double getPay() {
+        return pay;
+    }
+    protected ArrayList getAvailability() {
+        return availability;
+    }
+    protected String getPositionTitle() {
+        return positionTitle;
+    }
+    protected Date getHire_date() {
+        return hire_date;
+    }
+    protected String getManager() {
+        return manager;
+    }
+
+    // Setters
+    protected void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+    protected void setAge(int age) {
+        this.age = age;
+    }
+    protected void setId(int id) {
+        this.id = id;
+    }
+    protected void setPay(double pay) {
+        this.pay = pay;
+    }
+    protected void setAvailability(ArrayList availability) {
+        this.availability = availability;
+    }
+    protected void setPositionTitle(String positionTitle) {
+        this.positionTitle = positionTitle;
+    }
+    protected void setHire_date(Date Hire_date) {
+        this.hire_date = Hire_date;
+    }
+
+    //access methods
     abstract void display_information();
 
-    protected void update_age(){
-        this.age = this.age + 1;
+    abstract void pay_employee();
+
+    protected void update_age(int age){
+        this.age = age;
     }
 
     protected void update_pay(double pay){ //percent increase
@@ -50,45 +101,14 @@ abstract class Employee {
         this.availability = availability;
     }
 
-    public ArrayList get_availability(){
-        return this.availability;
-    }
-
     //promotes or demotes
     protected void new_title(String positionTitle){
         this.positionTitle = positionTitle;
     };
 
     protected void assign_manager(String manager){
-        this.Manager = manager;
+        this.manager = manager;
     }
 
-    abstract void offboard();
 
-}
-
-class hourly_employee extends Employee {
-
-    public hourly_employee(String fullName,int age, int id, Date Hire_date) {
-        super(fullName, age, id, Hire_date);
-    }
-
-    public hourly_employee(String fullName,int age, int id, double pay, ArrayList availability, String positionTitle, Date Hire_date) {
-        super(fullName, age, id, pay, availability, positionTitle, Hire_date);
-    }
-
-    public void display_information() {
-        System.out.println(
-                "Name: " +
-                "Birthday: " +
-                "Employee ID: " +
-                "Position Title: " +
-                "Manager: " +
-                "Hire Date: "
-        );
-    }
-
-    public void offboard(){
-
-    }
 }
