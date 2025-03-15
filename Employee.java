@@ -2,54 +2,65 @@ import java.util.ArrayList;
 import java.util.Date;
 
 abstract class Employee {
-    private String fullName;
-    private int age;
+    private String firstName;
+    private String lastName;
     private int id;
-    private double pay = 0.00;
-    private ArrayList availability = null; //bitstring of hour available
     private String positionTitle = "Unassigned";
-    private String manager = "Unassigned";
     private Date hire_date;
+    private String status; // active, inactive
+    private long phone_number;
 
     //All employee info is known
-    protected Employee(String fullName,
-                    int age,
-                    int id,
-                    double pay,
-                    ArrayList availability,
-                    String positionTitle,
-                    Date Hire_date) {
-            this.fullName = fullName;
-            this.age = age;
+    protected Employee() {}
+
+    protected Employee(String firstName,
+                       String lastName,
+                       int age,
+                       int id,
+                       Date hire_date,
+                       String status,
+                       long phone_number) {
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.id = id;
-            this.pay = pay;
-            this.availability = availability;
             this.positionTitle = positionTitle;
-            this.hire_date = Hire_date;
-    }
-    //Basic employee info is known
-    protected Employee(String fullName, int age, int id, Date hire_date) {
-            this.fullName = fullName;
-            this.age = age;
-            this.id = id;
             this.hire_date = hire_date;
+            this.status = status;
+            this.phone_number = phone_number;
+    }
+
+    // Setters
+    protected void set_firstName(String firstName) {
+        this.firstName = firstName;
+    }
+    protected void set_lastName(String lastName) {
+        this.lastName = lastName;
+    }
+    protected void set_id(int id) {
+        this.id = id;
+    }
+    protected void set_positionTitle(String positionTitle) {
+        this.positionTitle = positionTitle;
+    }
+    protected void set_hire_date(Date hire_date) {
+        this.hire_date = hire_date;
+    }
+    protected void set_status(String status) {
+        this.status = status;
+    }
+    protected void set_phone_number(long phone_number) {
+        this.phone_number = phone_number;
     }
 
     //getters
-    protected String getFullName() {
-        return fullName;
+    protected String get_firstName() {
+        return firstName;
     }
-    protected int getAge() {
-        return age;
+    protected String get_lastName() {
+        return lastName;
     }
     protected int getId() {
         return id;
-    }
-    protected double getPay() {
-        return pay;
-    }
-    protected ArrayList getAvailability() {
-        return availability;
     }
     protected String getPositionTitle() {
         return positionTitle;
@@ -57,58 +68,25 @@ abstract class Employee {
     protected Date getHire_date() {
         return hire_date;
     }
-    protected String getManager() {
-        return manager;
+    protected String get_status() {
+        return status;
     }
-
-    // Setters
-    protected void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-    protected void setAge(int age) {
-        this.age = age;
-    }
-    protected void setId(int id) {
-        this.id = id;
-    }
-    protected void setPay(double pay) {
-        this.pay = pay;
-    }
-    protected void setAvailability(ArrayList availability) {
-        this.availability = availability;
-    }
-    protected void setPositionTitle(String positionTitle) {
-        this.positionTitle = positionTitle;
-    }
-    protected void setHire_date(Date Hire_date) {
-        this.hire_date = Hire_date;
+    protected long getPhone_number() {
+        return phone_number;
     }
 
     //access methods
-    abstract void display_information();
-
-    abstract void pay_employee();
-
-    protected void update_age(int age){
-        this.age = age;
-    }
-
-    protected void update_pay(double pay){ //percent increase
-        this.pay = this.pay + this.pay*pay;
-    }
-
-    protected void update_availability(ArrayList availability){
-        this.availability = availability;
-    }
-
-    //promotes or demotes
-    protected void new_title(String positionTitle){
-        this.positionTitle = positionTitle;
+    public void display_information(){
+        System.out.println("Employee: " + get_lastName() + ", " + get_firstName());
+        System.out.println("Employee ID: " + getId());
+        System.out.println("Hire Date: " + getHire_date());
+        System.out.println("Position Title: " + getPositionTitle());
+        System.out.println("Status: " + get_status());
+        System.out.println("Phone Number: " + getPhone_number());
     };
 
-    protected void assign_manager(String manager){
-        this.manager = manager;
-    }
+    abstract void pay();
+    abstract void position_pay_rate();
 
 
 }
