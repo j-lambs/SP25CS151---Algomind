@@ -97,6 +97,7 @@ class hourly_employee extends Employee {
                 "Birthday: " +
                 "Employee ID: " +
                 "Position Title: " +
+                "Hourly Rate: " +
                 "Manager: " +
                 "Hire Date: "
         );
