@@ -85,7 +85,7 @@ abstract class Employee {
         System.out.println("Phone Number: " + getPhone_number());
     };
 
-    abstract void pay();
+    abstract double gross_pay();
     abstract void position_pay_rate();
 
 
