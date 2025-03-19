@@ -2,27 +2,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Session {
-    static final int DEFAULT_SESSION_DURATION = 10;
+    static final int DEFAULT_SESSION_DURATION = 3;
 
-    long duration;      // duration of session in seconds
-    long startTime;     // seconds from midnight
-    long endTime;       // seconds from midnight
-    Student student;    // student in session
-    Lesson lesson;      // lesson being taught
-    Timer timer = new Timer();
+    private long duration;      // duration of session in seconds
+    private long startTime;     // gets start time of session in standard format
+    private long endTime;       // end time of session in standard format
+    private Student student;    // student in session
+    private Lesson lesson;      // lesson being taught
 
     public Session(long duration, long startTime, Student student, Lesson lesson) {
         this.duration = duration;
         this.startTime = startTime;
-        this.endTime = startTime + this.duration;
+        this.endTime = startTime + this.duration * 1000;
         this.student = student;
         this.lesson = lesson;
     }
 
-    public Session(int startTime, Student student, Lesson lesson) {
+    public Session(Student student, Lesson lesson) {
         this.duration = DEFAULT_SESSION_DURATION;
-        this.startTime = startTime;
-        this.endTime = startTime + this.duration;
+        this.startTime = System.currentTimeMillis();
+        this.endTime = startTime + this.duration * 1000;
         this.student = student;
         this.lesson = lesson;
     }
@@ -31,11 +30,14 @@ public class Session {
     Starts timer to start session, will end after duration of session
      */
     public void startSession() {
+        printMilitaryTime(startTime);
+
+        Timer timer = new Timer();
         // Schedule a task to run after 10 seconds (10000 milliseconds)
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                endSession();
+                endSession(timer);
                 timer.cancel(); // Stop the timer after execution
             }
         }, this.duration * 1000L);
@@ -46,21 +48,22 @@ public class Session {
     /**
      * Ends session
      */
-    public void endSession() {
+    public void endSession(Timer timer) {
         System.out.println(duration + " seconds passed! Session finished.");
+        printMilitaryTime(endTime);
+        timer.cancel(); // Stop the timer
+        timer.purge(); //Remove cancelled tasks
+
         //TODO: update student lesson after session finished
+
     }
 
     /**
-     * Converts seconds from midnight, myTime, and prints it in military time.
+     * Converts and prints milliseconds from midnight, myTime, and prints it in military time.
      * @param myTime
      */
-    public static String convertToMilitaryTime(long myTime) {
-        long hours = (myTime / 3600) % 24;  // Get hours
-        long minutes = (myTime % 3600) / 60; // Get remaining minutes
-        long seconds = myTime % 60;         // Get remaining seconds
-
-         return (String.format("%02d:%02d:%02d", hours, minutes, seconds));
+    public static void printMilitaryTime(long myTime) {
+        System.out.println(String.format("%1$TH:%1$TM:%1$TS", myTime));
     }
 
     /**
@@ -68,11 +71,11 @@ public class Session {
      */
     public void viewSessionDetails() {
         System.out.println(
-                "Duration: " + this.duration
+                "Duration: " + this.duration +
                 "Start Time: " + this.startTime +
                 "End Time: " + this.endTime +
-                "Student: " + this.student.getName() +
-                "Lesson: " this.lesson.getName()
+                "Student: " + this.student.getStudentName() +
+                "Lesson: " + this.lesson.getLessonName()
                 );
     }
 

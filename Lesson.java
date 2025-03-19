@@ -1,8 +1,12 @@
 public class Lesson {
     String lessonName;
-    int difficulty;
 
-    public Lesson() {
-
+    public Lesson(String lessonName) {
+        this.lessonName = lessonName;
     }
+
+    public String getLessonName() {
+        return this.getLessonName();
+    }
+
 }
