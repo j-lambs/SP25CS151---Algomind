@@ -1,8 +1,11 @@
-public class Course {
+import java.util.ArrayList;
+
+public class Courses {
     private String courseName;
     private String courseInfo;
     private int courseCode;
     private String gradeLevel;
+    private ArrayList<String> lessons;
 
     // Constructor
     public Course(String courseName, String courseInfo, int courseCode, String gradeLevel) {
@@ -10,6 +13,7 @@ public class Course {
         this.courseInfo = courseInfo;
         this.courseCode = courseCode;
         this.gradeLevel = gradeLevel;
+        this.lessons = new ArrayList<>();
     }
 
     // Getter Methods
@@ -29,6 +33,10 @@ public class Course {
         return gradeLevel;
     }
 
+    public ArrayList<String> getLessons() {
+        return lessons;
+    }
+
     // Setter Methods
     public void setCourseName(String courseName) {
         this.courseName = courseName;
@@ -46,26 +54,40 @@ public class Course {
         this.gradeLevel = gradeLevel;
     }
 
-    // Display Course Info
+    // Methods to manage lessons
+    public void addLesson(String lesson) {
+        lessons.add(lesson);
+        System.out.println("Lesson  should added: " + lesson);
+    }
+    //methods to remove lessons
+    public void removeLesson(String lesson) {
+        if (lessons.contains(lesson)) {
+            lessons.remove(lesson);
+            System.out.println("Lesson removed: " + lesson);
+        } else {
+            System.out.println("Lesson not found: " + lesson);
+        }
+    }
+    //Update lessons
+    public void updateLesson(String lesson) {
+        if (lessons.contains(lesson)) {
+            lessons.set(lessons.indexOf(lesson), lesson);
+            System.out.println("Lesson update: " + lesson);
+        }
+        else {
+            System.out.println("Lesson not found: " + lesson);
+        }
+    }
+
+    //Display Course Info
     public void displayCourseInfo() {
         System.out.println("Course: " + courseName + " (Code: " + courseCode + ")");
         System.out.println("Grade Level: " + gradeLevel);
         System.out.println("Info: " + courseInfo);
+        System.out.println("Lessons:");
+        for (String lesson : lessons) {
+            System.out.println("- " + lesson);
+        }
     }
 
-    // Main Method for Testing
-    public static void main(String[] args) {
-        // Creating a course object
-        Course course1 = new Course("Algebra I", "Basic algebra principles", 101, "9th Grade");
-
-        // Displaying course information
-        course1.displayCourseInfo();
-
-        // Updating some details
-        course1.setCourseInfo("Introduction to algebra concepts and problem-solving");
-
-        // Display updated information
-        System.out.println("\nUpdated Course Information:");
-        course1.displayCourseInfo();
-    }
 }
