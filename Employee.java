@@ -47,7 +47,7 @@ abstract class Employee {
     }
 
     protected void update_availability(ArrayList availability){
-        this.availability = availability
+        this.availability = availability;
     }
     public String fullName;
     public int age;
