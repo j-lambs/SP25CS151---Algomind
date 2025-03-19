@@ -6,9 +6,9 @@ public class SessionTest {
         courses.add("Algebra 1"); courses.add("Trig");
 
         Student myStudent = new Student("Jack", courses, 800, "jack.rellamas@gmail.com", "10");
-        Lesson myLesson = new Lesson("Quadratic Formula");
-        Session session = new Session(myStudent, myLesson);
-
+        String lesson = "Quadratic Formula";
+        Session session = new Session(myStudent, lesson);
         session.startSession();
+        System.out.println(session.getLessonName());
     }
 }

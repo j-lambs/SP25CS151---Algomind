@@ -8,9 +8,9 @@ public class Session {
     private long startTime;     // gets start time of session in standard format
     private long endTime;       // end time of session in standard format
     private Student student;    // student in session
-    private Lesson lesson;      // lesson being taught
+    private String lesson;      // lesson being taught
 
-    public Session(long duration, long startTime, Student student, Lesson lesson) {
+    public Session(long duration, long startTime, Student student, String lesson) {
         this.duration = duration;
         this.startTime = startTime;
         this.endTime = startTime + this.duration * 1000;
@@ -18,7 +18,7 @@ public class Session {
         this.lesson = lesson;
     }
 
-    public Session(Student student, Lesson lesson) {
+    public Session(Student student, String lesson) {
         this.duration = DEFAULT_SESSION_DURATION;
         this.startTime = System.currentTimeMillis();
         this.endTime = startTime + this.duration * 1000;
@@ -75,7 +75,7 @@ public class Session {
                 "Start Time: " + this.startTime +
                 "End Time: " + this.endTime +
                 "Student: " + this.student.getStudentName() +
-                "Lesson: " + this.lesson.getLessonName()
+                "Lesson: " + this.lesson
                 );
     }
 
@@ -85,5 +85,9 @@ public class Session {
 
     public void setDuration(long duration) {
         this.duration = duration;
+    }
+
+    public String getLessonName() {
+        return lesson;
     }
 }
