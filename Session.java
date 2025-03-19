@@ -4,14 +4,14 @@ import java.util.TimerTask;
 public class Session {
     static final int DEFAULT_SESSION_DURATION = 10;
 
-    int duration;       // duration of session in seconds
+    long duration;      // duration of session in seconds
     long startTime;     // seconds from midnight
     long endTime;       // seconds from midnight
     Student student;    // student in session
     Lesson lesson;      // lesson being taught
     Timer timer = new Timer();
 
-    public Session(int duration, long startTime, Student student, Lesson lesson) {
+    public Session(long duration, long startTime, Student student, Lesson lesson) {
         this.duration = duration;
         this.startTime = startTime;
         this.endTime = startTime + this.duration;
@@ -48,6 +48,7 @@ public class Session {
      */
     public void endSession() {
         System.out.println(duration + " seconds passed! Session finished.");
+        //TODO: update student lesson after session finished
     }
 
     /**
@@ -57,27 +58,29 @@ public class Session {
     public static String convertToMilitaryTime(long myTime) {
         long hours = (myTime / 3600) % 24;  // Get hours
         long minutes = (myTime % 3600) / 60; // Get remaining minutes
-        long seconds = myTime % 60;  // Get remaining seconds
+        long seconds = myTime % 60;         // Get remaining seconds
 
          return (String.format("%02d:%02d:%02d", hours, minutes, seconds));
     }
 
-//    public void viewSessionDetails() {
-//        System.out.println(
-//                "Duration: " + this.duration
-//                "Start Time: " + this.startTime +
-//                );
-//    }
-//
-//    public int getDuration() {
-//        return duration;
-//    }
-//
-//    public int setDuration(int duration) {
-//        this.duration = duration;
-//    }
-//
-//    public Lesson getLesson() {
-//        return this.lesson;
-//    }
+    /**
+     * Prints Attributes of Session
+     */
+    public void viewSessionDetails() {
+        System.out.println(
+                "Duration: " + this.duration
+                "Start Time: " + this.startTime +
+                "End Time: " + this.endTime +
+                "Student: " + this.student.getName() +
+                "Lesson: " this.lesson.getName()
+                );
+    }
+
+    public long getDuration() {
+        return this.duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 }
