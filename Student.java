@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Student {
+public class Student {
     public String studentName;
     public ArrayList<String> coursesTaken;
     public int phoneNo;
