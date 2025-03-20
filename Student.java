@@ -1,23 +1,18 @@
 import java.util.ArrayList;
 
-public class Student {
-    public String studentName;
-    public ArrayList<String> coursesTaken;
-    public long phoneNo;
-    public String email;
-    public String gradeLevel;
-    public Course currentCourse;
+class Student {
+    private String studentName;
+    private ArrayList<String> coursesTaken;
+    private long phoneNo;
+    private String email;
+    private String gradeLevel;
 
-    public Student(String studentName, ArrayList<String> coursesTaken, long phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, ArrayList<String> coursesTaken, int phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
         this.email = email;
         this.gradeLevel = gradeLevel;
-    }
-
-    public String getStudentName() {
-        return this.studentName;
     }
 
     public void getStudentInfo() {
@@ -30,25 +25,49 @@ public class Student {
         System.out.println(studentName + "'s courses: " + coursesTaken);
     }
 
-    public void addCourse(String course) {
-        coursesTaken.add(course);
+    public void addCourse(Course course) {
+        if (!coursesTaken.contains(course.getCourseName())) {
+            if (course.getGradeLevel().equals(gradeLevel)) {
+                coursesTaken.add(course.getCourseName());
+                System.out.println(course.getCourseName() + " added.");
+            } else {
+                System.out.println("Cannot enroll in " + course.getCourseName() +
+                        " as it is for " + course.getGradeLevel());
+            }
+        } else {
+            System.out.println(course.getCourseName() + " already exists.");
+        }
+    }
+
+    public void removeCourse(String course) {
+        if (coursesTaken.contains(course)) {
+            coursesTaken.remove(course);
+            System.out.println(course + " removed.");
+        } else {
+            System.out.println(course + " not found.");
+        }
+    }
+
+    public boolean isEnrolled(String course) {
+        if (coursesTaken.contains(course)) {
+            System.out.println(studentName + " is enrolled in " + course);
+            return true;
+        } else {
+            System.out.println(studentName + " is NOT enrolled in " + course);
+            return false;
+        }
     }
 
     public void updateGradeLevel(String newGradeLevel) {
-        this.gradeLevel = newGradeLevel;
+        if (!newGradeLevel.equals(gradeLevel)) {
+            gradeLevel = newGradeLevel;
+            System.out.println("Grade level updated to " + newGradeLevel);
+        } else {
+            System.out.println("New grade level is same as current.");
+        }
     }
 
     public void updateEmail(String newEmail) {
         this.email = newEmail;
-    }
-
-    /**
-     * Prints all courses student knows
-     */
-    public void showCoursesTaken() {
-        for (String course : coursesTaken) {
-            System.out.print(course + " ");
-        }
-        System.out.println();
     }
 }
