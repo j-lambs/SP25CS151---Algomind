@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 class Student {
-    private String studentName;
-    private ArrayList<String> coursesTaken;
-    private long phoneNo;
-    private String email;
-    private String gradeLevel;
+    public String studentName;
+    public ArrayList<String> coursesTaken;
+    public int phoneNo;
+    public String email;
+    public String gradeLevel;
 
     public Student(String studentName, ArrayList<String> coursesTaken, int phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
@@ -25,7 +25,7 @@ class Student {
         System.out.println(studentName + "'s courses: " + coursesTaken);
     }
 
-    public void addCourse(Course course) {
+    public void addCourse(Courses course) {
         if (!coursesTaken.contains(course.getCourseName())) {
             if (course.getGradeLevel().equals(gradeLevel)) {
                 coursesTaken.add(course.getCourseName());
