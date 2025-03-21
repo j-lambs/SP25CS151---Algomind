@@ -8,7 +8,7 @@ abstract class Employee {
     private int id = 0;
     private String positionTitle = "Unassigned";
     private Date hireDate;
-    private String status = "Unassigned"; // active, inactive
+    private String status = "Unassigned";// active, inactive
 
     //All employee info is known
     protected Employee() {}
