@@ -17,7 +17,6 @@ abstract class Employee {
                        String lastName,
                        String email,
                        String phone,
-                       int age,
                        int id,
                        Date hireDate,
                        String status) {
