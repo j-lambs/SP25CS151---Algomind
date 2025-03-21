@@ -2,8 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Class for managing tutors, students, and tutoring sessions
+
+// Method to add a student
 public class Management {
-    // List to hold tutors, students, and sessions
     private List<Tutors> tutors;
     private List<Student> students;
     private List<Session> sessions;
@@ -15,22 +16,13 @@ public class Management {
         this.sessions = new ArrayList<>();
     }
 
-    // Method to add a tutor
-    public void addTutor(Tutors tutor) {
-        tutors.add(tutor);
-    }
-    // Method to remove tutor
-    public void removeTutor(Tutors tutor) {
-    tutors.remove(tutor);}
-    }
-
-    // Method to add a student
     public void addStudent(Student student) {
         students.add(student);
     }
-    // Method to remove students
-    public void removeStudent(Student student){
 
+    // Method to remove students
+    public void removeStudent(Student student) {
+        students.remove(student);
     }
 
     // Method to view all tutors
@@ -56,3 +48,4 @@ public class Management {
             System.out.println(session);
         }
     }
+}
