@@ -64,6 +64,9 @@ abstract class Employee {
     protected String getLastName() {
         return lastName;
     }
+    protected String getFullName(){
+        return firstName + " " + lastName;
+    }
     protected int getId() {
         return id;
     }
@@ -138,9 +141,7 @@ abstract class Employee {
         }
     }
 
-    abstract double update_gross_pay(); //for tutor and manager
-    abstract void position_pay_rate();
-
+    abstract void positionPayRate();
     abstract double updateGrossPay(); //for tutor and manager
 
 
