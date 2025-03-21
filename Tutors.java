@@ -13,10 +13,12 @@ public class Tutors extends Employee {
                   String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
         super(firstName,
                 lastName,
+               tutorEmail,
+               phoneNumber,
                 id,
                 hireDate,
-                status,
-                phoneNumber);// call the construcotr from the employee calss means parent class
+                status);
+                // call the construcotr from the employee calss means parent class
         this.tutorEmail = tutorEmail;
         this.availability = availability;
         this.coursesTeaching = new ArrayList<>(coursesTeaching);
@@ -75,7 +77,7 @@ public class Tutors extends Employee {
     public void showInformation() {
         super.display_information();
         System.out.println("Email: " + tutorEmail);
-        System.out.println("Available: " + (availability ? "Yes" : "No"));
+        System.out.println("Available: " + (availability ))
         System.out.println("Courses: " + coursesTeaching);
         if (scheduledSessions.isEmpty()) {
             System.out.println("Sessions: Null means nothing");
@@ -87,7 +89,7 @@ public class Tutors extends Employee {
     public void addStudent(Student student) {
         students.add(student);
 
-        System.out.println("Student added: " + student.getStudentName());
+        System.out.println("Student added: " + student.StudentName());
 
     }
 
@@ -131,27 +133,9 @@ public class Tutors extends Employee {
         }
         for (Tutors tutor : tutorList) {
             tutor.showInformation();
-            System.out.println("-----------------");
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
         }
     }
-
-    //public void removeTutor(String name) {
-    // if (tutorList.contains(name)) {
-    // tutorList.remove(name);
-    //  System.out.println("Tutor removed: " + name.getFirstName() + " " + name.getLastName());
-    //  } else {
-    // System.out.println("Tutor not found: " + name.getFirstName() + " " + name.getLastName());
-    //}
-
-    /*public void removeTutor(Tutors tutor) {
-        if (tutorList.contains(tutor)) {
-            tutorList.remove(tutor);
-            System.out.println("Tutor removed: " + tutor.get_firstName() + " " + tutor.get_lastName());
-        } else {
-            System.out.println("Tutor not found.");
-        }
-    }*/
-
 
 
 
@@ -203,13 +187,13 @@ public class Tutors extends Employee {
             System.out.println("/n1.add Tutors");
             System.out.println("/n2.show all Tutors");
             System.out.println("/n3. schdule a Session");
-            System.out.println("/n4 update a Session");
-            System.out.println("/n5 remove a Tutor");
+            System.out.println("/n4. update a Session");
+           // System.out.println("/n5 remove a Tutor");
             System.out.println("/n6 view students of a tutor");
 
             System.out.println("/n7 exit");
 
-            System.out.println("choose an option:");
+            System.out.println("choosimg  an option:");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
