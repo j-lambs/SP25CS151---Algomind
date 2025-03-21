@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Student {
+public class Student {  // Keeping 'public' from main
     public String studentName;
     public ArrayList<String> coursesTaken;
     public int phoneNo;
@@ -25,6 +25,7 @@ class Student {
         System.out.println(studentName + "'s courses: " + coursesTaken);
     }
 
+    // Keeping the more complete addCourse method from bhavya
     public void addCourse(Courses course) {
         if (!coursesTaken.contains(course.getCourseName())) {
             if (course.getGradeLevel().equals(gradeLevel)) {
@@ -59,12 +60,7 @@ class Student {
     }
 
     public void updateGradeLevel(String newGradeLevel) {
-        if (!newGradeLevel.equals(gradeLevel)) {
-            gradeLevel = newGradeLevel;
-            System.out.println("Grade level updated to " + newGradeLevel);
-        } else {
-            System.out.println("New grade level is same as current.");
-        }
+        this.gradeLevel = newGradeLevel;
     }
 
     public void updateEmail(String newEmail) {
