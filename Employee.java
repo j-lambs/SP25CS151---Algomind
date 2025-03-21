@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
@@ -14,6 +15,19 @@ abstract class Employee {
     private String status; // active, inactive
     private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
 
+import java.util.Date;
+
+abstract class Employee {
+    private String firstName = null
+    private String lastName = null;
+    private String email = null;
+    private String phone = null;
+    private int id = 0;
+    private String positionTitle = "Unassigned";
+    private Date hireDate;
+    private String status = "Unassigned";// active, inactive
+
+
     //All employee info is known
     protected Employee() {}
 
@@ -23,7 +37,7 @@ abstract class Employee {
                        String phone,
                        int age,
                        int id,
-                       Date hire_date,
+                       Date hireDate,
                        String status) {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -31,41 +45,41 @@ abstract class Employee {
             this.phone = phone;
             this.id = id;
             this.positionTitle = positionTitle;
-            this.hire_date = hire_date;
+            this.hireDate = hireDate;
             this.status = status;
     }
 
     // Setters
-    protected void set_firstName(String firstName) {
+    protected void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    protected void set_lastName(String lastName) {
+    protected void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    protected void set_id(int id) {
+    protected void setID(int id) {
         this.id = id;
     }
-    protected void set_positionTitle(String positionTitle) {
+    protected void setPositionTitle(String positionTitle) {
         this.positionTitle = positionTitle;
     }
-    protected void set_hire_date(Date hire_date) {
-        this.hire_date = hire_date;
+    protected void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
     }
-    protected void set_status(String status) {
+    protected void setStatus(String status) {
         this.status = status;
     }
-    protected void set_phone_number(String phone) {
+    protected void setPhoneNumber(String phone) {
         this.phone = phone;
     }
-    protected void set_email(String email) {
+    protected void setEmail(String email) {
         this.email = email;
     }
 
     //getters
-    protected String get_firstName() {
+    protected String getFirstName() {
         return firstName;
     }
-    protected String get_lastName() {
+    protected String getLastName() {
         return lastName;
     }
     protected int getId() {
@@ -74,29 +88,30 @@ abstract class Employee {
     protected String getPositionTitle() {
         return positionTitle;
     }
-    protected Date getHire_date() {
-        return hire_date;
+    protected Date getHireDate() {
+        return hireDate;
     }
-    protected String get_status() {
+    protected String getStatus() {
         return status;
     }
-    protected String get_Phone_number() {
+    protected String getPhoneNumber() {
         return phone;
     }
-    protected String get_email() {
+    protected String getEmail() {
         return email;
     }
 
     //access methods
     public void display_information(){
-        System.out.println("Employee: " + get_lastName() + ", " + get_firstName());
-        System.out.println("Email: " + get_email());
-        System.out.println("Phone: " + get_Phone_number());
+        System.out.println("Employee: " + getLastName() + ", " + getFirstName());
+        System.out.println("Email: " + getEmail());
+        System.out.println("Phone: " + getPhoneNumber());
         System.out.println("Employee ID: " + getId());
-        System.out.println("Hire Date: " + getHire_date());
+        System.out.println("Hire Date: " + getHireDate());
         System.out.println("Position Title: " + getPositionTitle());
-        System.out.println("Status: " + get_status());
+        System.out.println("Status: " + getStatus());
     };
+
 
     // Set availability for a specific 30-minute slot
     public void setAvailability(int slot, boolean isAvailable) {
@@ -147,6 +162,10 @@ abstract class Employee {
 
     abstract double update_gross_pay(); //for tutor and manager
     abstract void position_pay_rate();
+
+    abstract double updateGrossPay(); //for tutor and manager
+    abstract void positionPayRate();
+
 
 
 }
