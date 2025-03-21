@@ -1,3 +1,20 @@
+
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.Date;
+
+abstract class Employee {
+    private final int WORK_HOURS_IN_DAY = 8;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private int id;
+    private String positionTitle = "Unassigned";
+    private Date hire_date;
+    private String status; // active, inactive
+    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
+
 import java.util.Date;
 
 abstract class Employee {
@@ -8,6 +25,7 @@ abstract class Employee {
     private int id = 0;
     private Date hireDate;
     private String status = "Unassigned";// active, inactive
+
 
     //All employee info is known
     protected Employee() {}
@@ -84,6 +102,58 @@ abstract class Employee {
         System.out.println("Status: " + getStatus());
     };
 
+
+    // Set availability for a specific 30-minute slot
+    public void setAvailability(int slot, boolean isAvailable) {
+        if (slot >= 0 && slot < WORK_HOURS_IN_DAY) {
+            availability.set(slot, isAvailable);
+        } else {
+            throw new IllegalArgumentException("Invalid time slot.");
+        }
+    }
+
+    // Check if the employee is available at a specific slot
+    public boolean isAvailable(int slot) {
+        if (slot >= 0 && slot < WORK_HOURS_IN_DAY) {
+            return availability.get(slot);
+        }
+        throw new IllegalArgumentException("Invalid time slot.");
+    }
+
+    // Getter: Convert the BitSet to a bitstring representation
+    public String getAvailabilityBitString() {
+        StringBuilder bitString = new StringBuilder(WORK_HOURS_IN_DAY);
+        for (int i = 0; i < WORK_HOURS_IN_DAY; i++) {
+            bitString.append(availability.get(i) ? "1" : "0");
+        }
+        return bitString.toString();
+    }
+
+    // Setter: Set availability from a bitstring (must be exactly 48 characters)
+    public void setAvailabilityBitString(String bitString) {
+        if (bitString.length() != WORK_HOURS_IN_DAY || !bitString.matches("[01]+")) {
+            throw new IllegalArgumentException("Bitstring must be 48 characters long, containing only '0' or '1'.");
+        }
+        availability.clear();
+        for (int i = 0; i < WORK_HOURS_IN_DAY; i++) {
+            if (bitString.charAt(i) == '1') {
+                availability.set(i);
+            }
+        }
+    }
+
+    // Print availability for better readability
+    public void printAvailability() {
+        for (int i = 0; i < WORK_HOURS_IN_DAY; i++) {
+            String time = String.format("%02d:%02d", i / 2, (i % 2) * 30);
+            System.out.println(time + " - " + (availability.get(i) ? "Available" : "Unavailable"));
+        }
+    }
+
+    abstract double update_gross_pay(); //for tutor and manager
+    abstract void position_pay_rate();
+
     abstract double updateGrossPay(); //for tutor and manager
+
 
 }
