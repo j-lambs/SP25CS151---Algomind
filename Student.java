@@ -15,6 +15,10 @@ public class Student {
         this.gradeLevel = gradeLevel;
     }
 
+    public String getStudentName() {
+        return this.studentName;
+    }
+
     public void getStudentInfo() {
         System.out.println("Student Name: " + studentName);
         System.out.println("Grade Level: " + gradeLevel);
