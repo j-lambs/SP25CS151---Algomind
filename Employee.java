@@ -5,26 +5,14 @@ import java.util.Date;
 
 abstract class Employee {
     private final int WORK_HOURS_IN_DAY = 8;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
-    private int id;
-    private String positionTitle = "Unassigned";
-    private Date hire_date;
-    private String status; // active, inactive
-    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
-
-import java.util.Date;
-
-abstract class Employee {
     private String firstName = null;
     private String lastName = null;
     private String email = null;
     private String phone = null;
     private int id = 0;
     private Date hireDate;
-    private String status = "Unassigned";// active, inactive
+    private String status = "Unassigned";
+    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY);// active, inactive
 
 
     //All employee info is known
