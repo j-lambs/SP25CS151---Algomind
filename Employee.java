@@ -18,12 +18,11 @@ abstract class Employee {
 import java.util.Date;
 
 abstract class Employee {
-    private String firstName = null
+    private String firstName = null;
     private String lastName = null;
     private String email = null;
     private String phone = null;
     private int id = 0;
-    private String positionTitle = "Unassigned";
     private Date hireDate;
     private String status = "Unassigned";// active, inactive
 
@@ -35,7 +34,6 @@ abstract class Employee {
                        String lastName,
                        String email,
                        String phone,
-                       int age,
                        int id,
                        Date hireDate,
                        String status) {
@@ -44,7 +42,6 @@ abstract class Employee {
             this.email = email;
             this.phone = phone;
             this.id = id;
-            this.positionTitle = positionTitle;
             this.hireDate = hireDate;
             this.status = status;
     }
@@ -58,9 +55,6 @@ abstract class Employee {
     }
     protected void setID(int id) {
         this.id = id;
-    }
-    protected void setPositionTitle(String positionTitle) {
-        this.positionTitle = positionTitle;
     }
     protected void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
@@ -85,9 +79,6 @@ abstract class Employee {
     protected int getId() {
         return id;
     }
-    protected String getPositionTitle() {
-        return positionTitle;
-    }
     protected Date getHireDate() {
         return hireDate;
     }
@@ -108,7 +99,6 @@ abstract class Employee {
         System.out.println("Phone: " + getPhoneNumber());
         System.out.println("Employee ID: " + getId());
         System.out.println("Hire Date: " + getHireDate());
-        System.out.println("Position Title: " + getPositionTitle());
         System.out.println("Status: " + getStatus());
     };
 
@@ -164,8 +154,6 @@ abstract class Employee {
     abstract void position_pay_rate();
 
     abstract double updateGrossPay(); //for tutor and manager
-    abstract void positionPayRate();
-
 
 
 }
