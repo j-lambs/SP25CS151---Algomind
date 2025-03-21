@@ -66,4 +66,6 @@ public class Student {  // Keeping 'public' from main
     public void updateEmail(String newEmail) {
         this.email = newEmail;
     }
+
+
 }
