@@ -8,12 +8,12 @@ public class Session implements Schedulable {
     // FINALS
     private static final int WORK_HOURS_IN_DAY = 8;
     private static final int START_HOUR = 9;
-    private static final int DEFAULT_SESSION_DURATION = 2;
+    private static final int DEFAULT_SESSION_DURATION = 1;
 
     // ATTRIBUTES
-    private long duration;      // duration of session in seconds
-    private long startTime;     // gets start time of session in standard format
-    private long endTime;       // end time of session in standard format
+    private int duration;      // duration of session in seconds
+    private int startTime;     // gets start time of session in standard format
+    private int endTime;       // end time of session in standard format
     private Student student;    // student in session
     private Tutors tutor;
     private String lesson;      // lesson being taught
@@ -27,26 +27,33 @@ public class Session implements Schedulable {
      * @param student
      * @param lesson
      */
-    public Session(long duration, long startTime, Tutors tutor, Student student, String lesson) {
+    public Session(int duration, int startTime, Tutors tutor, Student student, String lesson) throws Exception {
+        if (startTime < START_HOUR || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
+            throw new IllegalArgumentException("Invalid Session.");
+        }
+        if (!isAvailable(startTime, duration, tutor)) {
+            throw new IllegalArgumentException("Invalid Session.");
+        }
+
         this.duration = duration;
         this.startTime = startTime;
-        this.endTime = startTime + this.duration * 1000;
+        this.endTime = startTime + this.duration;
         this.tutor = tutor;
         this.student = student;
         this.lesson = lesson;
     }
 
     /**
-     * Constructor, with default duration = 2 'hours'
+     * Constructor, with default duration
      * @param startTime
      * @param tutor
      * @param student
      * @param lesson
      */
-    public Session(long startTime, Tutors tutor, Student student, String lesson) {
+    public Session(int startTime, Tutors tutor, Student student, String lesson) {
         this.duration = DEFAULT_SESSION_DURATION;
-        this.startTime = System.currentTimeMillis();
-        this.endTime = startTime + this.duration * 1000;
+        this.startTime = startTime;
+        this.endTime = startTime + this.duration;
         this.student = student;
         this.lesson = lesson;
     }
@@ -69,13 +76,13 @@ public class Session implements Schedulable {
     }
 
     /**
-     *
-     * @param startTime
+     * Start time
+     * @param startTime integer from 8 to 12 or from 1 to 4
      * @param duration
      * @return
-     */
+     */ // TODO: Check if tutor is available during proposedSession hours
     @Override
-    public boolean isAvailable(int startTime, int duration) {
+    public boolean isAvailable(int startTime, int duration, Tutors tutor) {
         BitSet proposedSession = new BitSet(WORK_HOURS_IN_DAY);
         startTime -= WORK_HOURS_IN_DAY;
         // create bitset for proposedSession with startTime and duration
@@ -142,7 +149,7 @@ public class Session implements Schedulable {
                 "Duration: " + this.duration +
                 "End Time: " + this.endTime +
                 "Student: " + this.student.getStudentName() +
-                "Tutor: " + this.tutor.getName() +
+                "Tutor: " + this.tutor.getTutorName() +
                 "Lesson: " + this.lesson
                 );
     }
