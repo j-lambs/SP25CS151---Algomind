@@ -26,36 +26,44 @@ public class Courses {
     }
 
     public int getCourseCode() {
+
         return courseCode;
     }
 
     public String getGradeLevel() {
+
         return gradeLevel;
     }
 
     public ArrayList<String> getLessons() {
+
         return lessons;
     }
 
     // Setter Methods
     public void setCourseName(String courseName) {
+
         this.courseName = courseName;
     }
 
     public void setCourseInfo(String courseInfo) {
+
         this.courseInfo = courseInfo;
     }
 
     public void setCourseCode(int courseCode) {
+
         this.courseCode = courseCode;
     }
 
     public void setGradeLevel(String gradeLevel) {
+
         this.gradeLevel = gradeLevel;
     }
 
     // Methods to manage lessons
     public void addLesson(String lesson) {
+
         lessons.add(lesson);
         System.out.println("Lesson  should added: " + lesson);
     }
@@ -79,7 +87,7 @@ public class Courses {
         }
     }
 
-    //Display Course Info
+    //Displaing Course Info
     public void displayCourseInfo() {
         System.out.println("Course: " + courseName + " (Code: " + courseCode + ")");
         System.out.println("Grade Level: " + gradeLevel);

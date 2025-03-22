@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TutorCenterUI {
@@ -7,6 +8,9 @@ public class TutorCenterUI {
     public static void main(String[] args) {
         ArrayList<Tutors> listOfTutors = new ArrayList<>();
         ArrayList<Manager> listOfManagers = new ArrayList<>();
+//        Manager m0 = new Manager("jane", "doe", "jane.doe@algomind.com",
+//                "650888999", 100, "active");
+//        listOfManagers.add(m0);
 
         while (true) {
             System.out.println("Welcome to our Tutor Center, Select an option:");
@@ -20,7 +24,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    showManagerMenu();
+                    showManagerMenu(listOfTutors, listOfManagers);
                     break;
                 case 2:
                     showTutorMenu();
@@ -37,7 +41,8 @@ public class TutorCenterUI {
         }
     }
 
-    private static void showManagerMenu() {
+    private static void showManagerMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers) {
+        Manager currentManager = managerSignIn(listOfManagers);
         while (true) {
             System.out.println("\nManager Menu");
             System.out.println("1. Hire Tutor");
@@ -50,7 +55,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    hireTutor();
+                    hireTutor(listOfTutors, currentManager);
                     break;
                 case 2:
                     fireTutor();
@@ -66,7 +71,42 @@ public class TutorCenterUI {
         }
     }
 
-    private static void viewTutors() {
+    private static Manager managerSignIn(ArrayList<Manager> listOfManagers) {
+        Scanner managerMenuScanner = new Scanner(System.in);
+        Manager currentManager;
+        boolean validManager = false;
+
+        while (!validManager) {
+            System.out.println("Which manager are you? Enter your ID.");
+            int currentManagerID = managerMenuScanner.nextInt();
+            // check if ID exists in listOfManagers
+            int i = 0;
+            for (Manager m : listOfManagers) {
+                if (m.getId() == currentManagerID) {
+                    currentManager = m;
+                    validManager = true;
+                    break;
+                }
+                ++i;
+            }
+            // has look through listOfManagers and ID does not exist
+            if (i >= listOfManagers.size()) {
+                System.out.println("Manager ID does not exist. Please try again.");
+            }
+        }
+
+        managerMenuScanner.close();
+        return currentManager;
+    }
+
+    /**
+     * Displays all tutors hired.
+     * @param tutorsArrayList
+     */
+    private static void viewTutors(ArrayList<Tutors> tutorsArrayList) {
+        for (Tutors t : tutorsArrayList) {
+            t.showInformation();
+        }
     }
 
     private static void hireTutor(ArrayList<Tutors> tutorsArrayList, Manager manager) {
@@ -75,7 +115,7 @@ public class TutorCenterUI {
         String firstName = scanner.nextLine();
         System.out.print("Enter tutor last name: ");
         String lastName = scanner.nextLine();
-        int newTutorID = tutorsArrayList.size();
+        int newTutorID = generateNewID();
         System.out.print("Enter hourly rate: ");
         double payRate = scanner.nextDouble();
         System.out.print("Enter tutor phone number: ");
@@ -89,6 +129,15 @@ public class TutorCenterUI {
                 coursesTeaching);
         manager.hireTutor(tutor);
         System.out.println("Tutor hired successfully!");
+    }
+
+    /**
+     * Creates random ID between 100 and 900
+     * @return newID
+     */
+    private static int generateNewID() {
+        Random random = new Random();
+        return random.nextInt(900) + 100; // Generates a number between 100 and 999
     }
 
     private static ArrayList<String> getCoursesTutorCanTeach() {

@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class Tutors extends Employee {
+public class Tutors extends Employee implements Schedulable{
     private String tutorEmail;
-    private boolean availability;
+    private BitSet availability;
     private List<String> coursesTeaching;
     private List<String> scheduledSessions;
     private double rate;
@@ -11,7 +11,7 @@ public class Tutors extends Employee {
 
 
     public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
-                  String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
+                  String tutorEmail, BitSet availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
         super(firstName,
                 lastName,
                tutorEmail,
@@ -29,19 +29,26 @@ public class Tutors extends Employee {
     }
 
 
-    public String getTutorName() {
-        return getFirstName;
-    }
+//    public String getTutorFirstName() {
+//
+//        return getFirstName;
+//    }
+//    public String getTutorLastName() {
+//
+//    }
 
+    public BitSet getAvailability() {
+        return availability;
+    }
 
 
     public String getEmail() {
         return tutorEmail;
     }
 
-    public boolean isAvailability() {
-        return availability;
-    }
+//    public boolean isAvailability() {
+//        return availability;
+//    }
 
     public List<String> getCourses() {
         return coursesTeaching;
@@ -51,20 +58,20 @@ public class Tutors extends Employee {
         return scheduledSessions;
     }
 
-    public List<Tutors> getTutors() {
-        return tutorList;
-    }
-    public List<Student> getStudents() {
-        return students;
-    }
+//    public List<Tutors> getTutors() {
+//        return tutorList;
+//    }
+//    public List<Student> getStudents() {
+//        return students;
+//    }
 
     public void setEmail(String email) {
         tutorEmail = email;
     }
 
-    public void setAvailability(boolean available) {
-        availability = available;
-    }
+//    public void setAvailability(boolean available) {
+//        availability = available;
+//    }
 
     public void setCoursesTeaching(List<String> courses) {
         for (String s : coursesTeaching = courses) {
@@ -105,7 +112,7 @@ public class Tutors extends Employee {
         if (students.isEmpty()) {
             System.out.println("No students assigned to this tutor.");
         } else {
-            System.out.println("Students assigned to Tutor: " + getFirstName());
+            System.out.println("Students  going to assigned to  the Tutor: " + getFirstName());
             for (Student student : students) {
                 student.getStudentInfo();
                 System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -129,7 +136,7 @@ public class Tutors extends Employee {
             scheduledSessions.set(index, newSession);
             System.out.println("Updated: " + newSession);
         } else {
-            System.out.println("Session not found.");
+            System.out.println("Session not able to found .");
         }
     }
 
@@ -145,10 +152,9 @@ public class Tutors extends Employee {
     }
 
 
-
     @Override
     public void positionPayRate() {
-        System.out.println("Pay rate: $20/hr");
+        System.out.println("Pay rate: $25hr");
     }
 
     @Override
@@ -175,129 +181,15 @@ public class Tutors extends Employee {
      }
 
      @Override
-     double update_gross_pay() {
+     double update_gross_pay() { // no need because we removed from employee
          return 20.0 * 20 * 4;
      }
 
-     @Override
+     @Override // no need
      void position_pay_rate() {
          System.out.println("Pay rate: $20/hr");
      }
 
- }*/
-// new main using scanner
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        List<Tutors> tutorList = new ArrayList<>();
-        // using for loop to apply only in 10 tutors
-        for (int i = 0; i < 10; i++) {
-            System.out.println("/n1.add Tutors");
-            System.out.println("/n2.show all Tutors");
-            System.out.println("/n3. schdule a Session");
-            System.out.println("/n4. update a Session");
-           // System.out.println("/n5 remove a Tutor");
-            System.out.println("/n6 view students of a tutor");
-
-            System.out.println("/n7 exit");
-
-            System.out.println("choosimg  an option:");
-            int choice = sc.nextInt();
-            switch (choice) {
-                case 1:
-                    System.out.println("Enter tutor's first name:");
-                    String firstName = sc.next();
-                    //lastname
-                    System.out.println("Enter tutor's last name:");
-                    String lastName = sc.next();
-                    System.out.println("Enter tutor's id:");
-                    int id = sc.nextInt();
-                    System.out.println("Enter tutor's status:");
-                    String status = sc.next();
-                    System.out.println("Enter tutor's phone number:");
-                    long phoneNumber = sc.nextLong();
-                    System.out.println("Enter tutor's tutor email:");
-                    String email = sc.next();
-                    System.out.println("Enter tutor's availability:");
-                    boolean availability = sc.nextBoolean();
-                    break;
-                case 2:
-                    if (!tutorList.isEmpty()) {
-                        for (Tutors tutor : tutorList) {
-                            tutor.showInformation();
-                            System.out.println("---------------");
-                        }
-                    } else {
-                        System.out.println(" no tutors information available");
-                    }
-                    break;
-                case 3:
-                    System.out.print("Enter tutor ID: ");
-                    int tutorIDForSession = sc.nextInt();
-                    sc.nextLine();
-
-                    for (Tutors tutor : tutorList) {
-                        if (tutor.getId() == tutorIDForSession) {
-                            System.out.print("Enter session: ");
-                            tutor.scheduleSession(sc.nextLine());
-                            break;
-                        }
-                    }
-                case 4:
-                    System.out.print("Enter tutor ID: ");
-                    int tutorIDForUpdate = sc.nextInt();
-                    sc.nextLine(); // Fix input issue
-
-                    for (Tutors tutor : tutorList) {
-                        if (tutor.getId() == tutorIDForUpdate) {
-                            System.out.print("Enter old session: ");
-                            String oldSession = sc.nextLine();
-                            System.out.print("Enter new session: ");
-                            tutor.updateSession(oldSession, sc.nextLine());
-                            break;
-                        }
-                    }
-                case 5:
-                    System.out.print("Enter tutor ID to remove: ");
-                    int tutorIDToRemove = sc.nextInt();
-                    sc.nextLine();
-                    for (Tutors tutor : tutorList) {
-                        if (tutor.getId() == tutorIDToRemove) {
-                            tutorList.remove(tutor);
-                            System.out.println("Tutor removed: " + tutor.getFirstName() + " " + tutor.getLastName());
-                            break;
-                        }
-                    }
-                case 6:
-                    System.out.print("Enter Tutor ID to view students: ");
-                    int tutorIdToView = sc.nextInt();
-                    sc.nextLine();
-                            boolean found = false;
-                            for (Tutors tutor : tutorList) {
-                                if (tutor.getId() == tutorIdToView) {
-                                    tutor.showInformation();
-                                    found = true;
-                                    break;
-                                }
-                            }
-
-                    
-                    if (!found) {
-                        System.out.println("Tutor not found.");
-                    }
-                    break;
-
-                case 7:
-                    System.out.println("Exiting program...");
-                    sc.close();
-                    return;
-
-                default:
-                    System.out.println("Invalid choosen try again.");
-            }
-        }
-        // System.out.println("You have reached the maximum number of actions. Exiting program...");
-        sc.close();
-    }
 
 
 
@@ -315,95 +207,3 @@ public class Tutors extends Employee {
 
 
 
-// main
-
-/*public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    List<Tutors> tutorList = new ArrayList<>();
-    System.out.println("Enter tutor's first name: ");
-    String firstName = sc.nextLine();
-    System.out.println("Enter tutor's last name: ");
-    String lastName = sc.nextLine();
-    System.out.println("Enter tutor's id: ");
-    int id = sc.nextInt();
-    System.out.println("Enter tutor's email: ");
-    String email = sc.nextLine();
-    System.out.println("Enter tutor's availability: ");
-    boolean availability = sc.nextBoolean();
-    sc.nextLine();
-    System.out.println("Enter tutor's courses: ");
-    List <String> coursesTeaching = new ArrayList<>();
-    sc.nextLine();
-    */
-/*public void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    ArrayList<Tutors> tutorList = new ArrayList<>();
-
-    // Get tutor details from user
-    System.out.print("Enter tutor's first name: ");
-    String firstName = scanner.nextLine();
-
-    System.out.print("Enter tutor's last name: ");
-    String lastName = scanner.nextLine();
-
-    System.out.print("Enter tutor ID: ");
-    int tutorID = scanner.nextInt();
-    scanner.nextLine();  // Fix input issue
-
-    System.out.print("Enter tutor's email: ");
-    String tutorEmail = scanner.nextLine();
-
-    System.out.print("Is the tutor available? (true/false): ");
-    boolean availability = scanner.nextBoolean();
-    scanner.nextLine();  // Fix input issue
-
-    // Create tutor object
-    Tutors tutor = new Tutors(firstName, lastName, tutorID, tutorEmail, availability);
-    tutor.addTutor(tutor);
-
-    for (int i = 0; i < 10; i++) {
-        System.out.println("\n1. Show All Tutors");
-        System.out.println("2. Schedule a Session");
-        System.out.println("3. Update a Session");
-        System.out.println("4. Remove a Tutor");
-        System.out.println("5. Show Tutor Info");
-        System.out.println("6. Exit");
-        System.out.print("Choose an option: ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();  // Fix input issue
-
-        switch (choice) {
-            case 1:
-                tutor.showAllTutors();
-                break;
-            case 2:
-                System.out.print("Enter session details: ");
-                String session = scanner.nextLine();
-                tutor.scheduleSession(session);
-                break;
-            case 3:
-                System.out.print("Enter the old session: ");
-                String oldSession = scanner.nextLine();
-                System.out.print("Enter the new session: ");
-                String newSession = scanner.nextLine();
-                tutor.updateSession(oldSession, newSession);
-                break;
-            case 4:
-                System.out.print("Enter tutor's full name to remove: ");
-                String tutorName = scanner.nextLine();
-                tutor.removeTutor(tutorName);
-                break;
-            case 5:
-                tutor.showInformation();
-                break;
-            case 6:
-                System.out.println("Exiting program...");
-                return;
-            default:
-                System.out.println("Invalid choice! Try again.");
-        }
-    }
-    System.out.println("You have reached the maximum number of actions. Exiting program...");
-    scanner.close();
-}*/
