@@ -6,20 +6,33 @@ public class Tutors extends Employee {
     private List<String> coursesTeaching;
     private List<String> scheduledSessions;
     private List<Tutors> tutorList;
+    private List<Student> students = new ArrayList<>();
+
 
     public Tutors(String firstName, String lastName, int id, Date hireDate, String status, long phoneNumber,
-                  String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList) {
-        super(firstName, lastName, id, hireDate, status, phoneNumber);// call the construcotr from the employee calss means parent class
+                  String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
+        super(firstName,
+                lastName,
+               tutorEmail,
+               phoneNumber,
+                id,
+                hireDate,
+                status);
+                // call the construcotr from the employee calss means parent class
         this.tutorEmail = tutorEmail;
         this.availability = availability;
         this.coursesTeaching = new ArrayList<>(coursesTeaching);
         this.scheduledSessions = new ArrayList<>();
         this.tutorList = tutorList;
+        this.students = students;
     }
+
 
     public String getTutorName() {
         return getFirstName;
     }
+
+
 
     public String getEmail() {
         return tutorEmail;
@@ -40,6 +53,9 @@ public class Tutors extends Employee {
     public List<Tutors> getTutors() {
         return tutorList;
     }
+    public List<Student> getStudents() {
+        return students;
+    }
 
     public void setEmail(String email) {
         tutorEmail = email;
@@ -50,18 +66,24 @@ public class Tutors extends Employee {
     }
 
     public void setCoursesTeaching(List<String> courses) {
-        coursesTeaching = courses;
+        for (String s : coursesTeaching = courses) {
+
+        }
+
     }
 
-    public void addTutor(Tutors name) {
-        tutorList.add(name);
-        System.out.println("Tutor added: " + name.get_firstName() + " " + name.get_lastName());
+   public void addTutor(Tutors name) {
+      tutorList.add(name);
+        System.out.println("Tutor added: " + name.getFullName());
     }
 
+
+
+    // show tutor information
     public void showInformation() {
         super.display_information();
         System.out.println("Email: " + tutorEmail);
-        System.out.println("Available: " + (availability ? "Yes" : "No"));
+        System.out.println("Available: " + (availability ))
         System.out.println("Courses: " + coursesTeaching);
         if (scheduledSessions.isEmpty()) {
             System.out.println("Sessions: Null means nothing");
@@ -69,6 +91,27 @@ public class Tutors extends Employee {
             System.out.println("Sessions: " + scheduledSessions);
         }
     }
+    // adding students
+    public void addStudent(Student student) {
+        students.add(student);
+
+        System.out.println("Student added: " + student.StudentName());
+
+    }
+
+// showing information student information
+    public void showAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students assigned to this tutor.");
+        } else {
+            System.out.println("Students assigned to Tutor: " + getFirstName());
+            for (Student student : students) {
+                student.getStudentInfo();
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
+            }
+        }
+    }
+
 
     public void scheduleSession(String session) {
         if (availability) {
@@ -96,32 +139,11 @@ public class Tutors extends Employee {
         }
         for (Tutors tutor : tutorList) {
             tutor.showInformation();
-            System.out.println("-----------------");
-        }
-    }
-
-    //public void removeTutor(String name) {
-    // if (tutorList.contains(name)) {
-    // tutorList.remove(name);
-    //  System.out.println("Tutor removed: " + name.getFirstName() + " " + name.getLastName());
-    //  } else {
-    // System.out.println("Tutor not found: " + name.getFirstName() + " " + name.getLastName());
-    //}
-
-    public void removeTutor(Tutors tutor) {
-        if (tutorList.contains(tutor)) {
-            tutorList.remove(tutor);
-            System.out.println("Tutor removed: " + tutor.get_firstName() + " " + tutor.get_lastName());
-        } else {
-            System.out.println("Tutor not found.");
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
         }
     }
 
 
-    @Override
-    public double grossPay() {
-        return 20.0 * 20 * 4; // $20 per hour and 20 hours per week and 4 weeks per month
-    }
 
     @Override
     public void positionPayRate() {
@@ -129,15 +151,12 @@ public class Tutors extends Employee {
     }
 
     @Override
-    double update_gross_pay() {
+    double updateGrossPay() {
         return 25.0 * 20 * 4;
     }
 
-    @Override
-    void position_pay_rate() {
-        System.out.println("Pay rate: $25/hr");
 
-    }
+
 
     /* public static void main(String[] args) {
          List<Tutors> tutorList = new ArrayList<>();
@@ -174,10 +193,13 @@ public class Tutors extends Employee {
             System.out.println("/n1.add Tutors");
             System.out.println("/n2.show all Tutors");
             System.out.println("/n3. schdule a Session");
-            System.out.println("/n4 update a Session");
-            System.out.println("/n5 remove a Tutor");
-            System.out.println("/n6 exit");
-            System.out.println("choose an option:");
+            System.out.println("/n4. update a Session");
+           // System.out.println("/n5 remove a Tutor");
+            System.out.println("/n6 view students of a tutor");
+
+            System.out.println("/n7 exit");
+
+            System.out.println("choosimg  an option:");
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
@@ -240,22 +262,44 @@ public class Tutors extends Employee {
                     for (Tutors tutor : tutorList) {
                         if (tutor.getId() == tutorIDToRemove) {
                             tutorList.remove(tutor);
-                            System.out.println("Tutor removed: " + tutor.get_firstName() + " " + tutor.get_lastName());
+                            System.out.println("Tutor removed: " + tutor.getFirstName() + " " + tutor.getLastName());
                             break;
                         }
                     }
-                    case 6:
-                        System.out.println("Exiting program...");
-                        sc.close();
-                        return;
+                case 6:
+                    System.out.print("Enter Tutor ID to view students: ");
+                    int tutorIdToView = sc.nextInt();
+                    sc.nextLine();
+                            boolean found = false;
+                            for (Tutors tutor : tutorList) {
+                                if (tutor.getId() == tutorIdToView) {
+                                    tutor.showInformation();
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                    
+                    if (!found) {
+                        System.out.println("Tutor not found.");
+                    }
+                    break;
+
+                case 7:
+                    System.out.println("Exiting program...");
+                    sc.close();
+                    return;
 
                 default:
                     System.out.println("Invalid choosen try again.");
             }
         }
-       // System.out.println("You have reached the maximum number of actions. Exiting program...");
+        // System.out.println("You have reached the maximum number of actions. Exiting program...");
         sc.close();
     }
+
+
+
 }
 
 
