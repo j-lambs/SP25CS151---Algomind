@@ -5,9 +5,9 @@ class Student {
     public ArrayList<String> coursesTaken;
     public long phoneNo;
     public String email;
-    prublic String gradeLevel;
+    public String gradeLevel;
 
-    public Student(String studentName, ArrayList<String> coursesTaken, int phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, ArrayList<String> coursesTaken, long phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
