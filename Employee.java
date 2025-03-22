@@ -1,4 +1,5 @@
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
@@ -10,7 +11,7 @@ abstract class Employee {
     private String email = null;
     private String phone = null;
     private int id = 0;
-    private Date hireDate;
+    private SimpleDateFormat hireDate;
     private String status = "Unassigned";
     private BitSet availability = new BitSet(WORK_HOURS_IN_DAY);// active, inactive
 
@@ -23,7 +24,7 @@ abstract class Employee {
                        String email,
                        String phone,
                        int id,
-                       Date hireDate,
+                       SimpleDateFormat hireDate,
                        String status) {
             this.firstName = firstName;
             this.lastName = lastName;
@@ -44,7 +45,7 @@ abstract class Employee {
     protected void setID(int id) {
         this.id = id;
     }
-    protected void setHireDate(Date hireDate) {
+    protected void setHireDate(SimpleDateFormat hireDate) {
         this.hireDate = hireDate;
     }
     protected void setStatus(String status) {

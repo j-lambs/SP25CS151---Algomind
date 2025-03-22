@@ -14,7 +14,7 @@ public class Manager extends Employee {
     }
 
     // Method to add a tutor to the manager's list
-    public void addTutor(Tutors tutor) {
+    public void hireTutor(Tutors tutor) {
         try {
             if (tutor == null) {
                 throw new IllegalArgumentException("Tutor cannot be null.");
@@ -29,7 +29,7 @@ public class Manager extends Employee {
     }
 
     // Method to remove a tutor from the manager's list
-    public void removeTutor(Tutors tutor) {
+    public void fireTutor(Tutors tutor) {
         try {
             if (tutor == null) {
                 throw new IllegalArgumentException("Tutor cannot be null.");
