@@ -12,9 +12,9 @@ abstract class Employee {
     private String phone;
     private int id;
     private String positionTitle = "Unassigned";
-    private Date hire_date;
+//    private Date hire_date;
     private String status; // active, inactive
-//    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
+//    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every hour in workday
 
 import java.util.Date;
 

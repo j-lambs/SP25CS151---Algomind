@@ -1,9 +1,13 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TutorCenterUI {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        ArrayList<Tutors> listOfTutors = new ArrayList<>();
+        ArrayList<Manager> listOfManagers = new ArrayList<>();
+
         while (true) {
             System.out.println("Welcome to our Tutor Center, Select an option:");
             System.out.println("1. Manager Menu");
@@ -65,15 +69,44 @@ public class TutorCenterUI {
     private static void viewTutors() {
     }
 
-    private static void hireTutor() {
-        System.out.print("Enter tutor name: ");
-        String name = scanner.nextLine();
+    private static void hireTutor(ArrayList<Tutors> tutorsArrayList, Manager manager) {
+        // Get tutor info
+        System.out.print("Enter tutor first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter tutor last name: ");
+        String lastName = scanner.nextLine();
+        int newTutorID = tutorsArrayList.size();
         System.out.print("Enter hourly rate: ");
-        double rate = scanner.nextDouble();
+        double payRate = scanner.nextDouble();
+        System.out.print("Enter tutor phone number: ");
+        String phoneNumber = scanner.nextLine();
+        String email = firstName + "." + lastName + "@algomind.com";
+
+        ArrayList<String> coursesTeaching = getCoursesTutorCanTeach();
+
         scanner.nextLine();  // Consume newline character
-        Tutors tutor = new Tutors(name, rate);
+        Tutors tutor = new Tutors(firstName, lastName, newTutorID, payRate,"active", phoneNumber, email, true,
+                coursesTeaching);
         manager.hireTutor(tutor);
         System.out.println("Tutor hired successfully!");
+    }
+
+    private static ArrayList<String> getCoursesTutorCanTeach() {
+        Scanner tempScanner = new Scanner(System.in);
+        ArrayList<String> courses = new ArrayList<>();
+        courses.add("Arithmetic"); courses.add("Algebra"); courses.add("Trigonometry");
+        boolean moreCourses = true;
+        while (moreCourses) {
+            String nextCourse = tempScanner.nextLine();
+            if (nextCourse.equals("s")) {
+                moreCourses = false;
+            } else {
+                courses.add(nextCourse);
+                System.out.println("Press 's' when done.");
+            }
+        }
+        tempScanner.close();
+        return courses;
     }
 
     private static void fireTutor() {

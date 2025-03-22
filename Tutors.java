@@ -5,26 +5,27 @@ public class Tutors extends Employee {
     private boolean availability;
     private List<String> coursesTeaching;
     private List<String> scheduledSessions;
-    private List<Tutors> tutorList;
-    private List<Student> students = new ArrayList<>();
+    private double rate;
+//    private List<Tutors> tutorList;
+//    private List<Student> students = new ArrayList<>();
 
 
-    public Tutors(String firstName, String lastName, int id, Date hireDate, String status, long phoneNumber,
+    public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
                   String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
         super(firstName,
                 lastName,
                tutorEmail,
                phoneNumber,
                 id,
-                hireDate,
+                payRate,
                 status);
                 // call the construcotr from the employee calss means parent class
         this.tutorEmail = tutorEmail;
         this.availability = availability;
         this.coursesTeaching = new ArrayList<>(coursesTeaching);
         this.scheduledSessions = new ArrayList<>();
-        this.tutorList = tutorList;
-        this.students = students;
+//        this.tutorList = tutorList;
+//        this.students = students;
     }
 
 
