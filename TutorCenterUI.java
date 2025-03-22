@@ -224,7 +224,7 @@ public class TutorCenterUI {
     }
 
     private static void showTutorMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers) {
-        // Make manager sign in by ID
+        // Make tutor sign in by ID
         Tutors currentTutor = (Tutors) signIn(listOfTutors);
         while (true) {
             System.out.println("\nTutor Menu");
@@ -249,7 +249,7 @@ public class TutorCenterUI {
                     updateLesson();
                     break;
                 case 4:
-                    viewAllTutors();
+                    viewAllTutors(listOfTutors);
                     break;
                 case 5:
                     scheduleSession();
