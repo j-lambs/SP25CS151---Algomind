@@ -3,11 +3,11 @@ import java.util.ArrayList;
 class Student {
     public String studentName;
     public ArrayList<String> coursesTaken;
-    public long phoneNo;
+    public String phoneNo;
     public String email;
     public String gradeLevel;
 
-    public Student(String studentName, ArrayList<String> coursesTaken, long phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, ArrayList<String> coursesTaken, String phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
