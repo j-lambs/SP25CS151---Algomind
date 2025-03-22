@@ -1,6 +1,7 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * Assume time is military time for simplicity of math.
@@ -31,10 +32,10 @@ public class Session implements Schedulable {
      * @param lesson
      */
     public Session(int duration, int startTime, Tutors tutor, Student student, String lesson) throws Exception {
-        if (startTime < START_HOUR || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
+        if (startTime < START_HOUR || startTime + duration >= (WORK_HOURS_IN_DAY + START_HOUR)) {
             throw new IllegalArgumentException("Invalid Session.");
         }
-        if (!isAvailable(startTime, duration, tutor)) {
+        if (!isAvailable(startTime, duration, tutor, student)) {
             throw new IllegalArgumentException("Invalid Session. Tutor not available.");
         } else {
             this.sessionTime = createNewAvailibilityBitSet(startTime, duration);
@@ -89,11 +90,19 @@ public class Session implements Schedulable {
      * @return
      */
     @Override
-    public boolean isAvailable(int startTime, int duration, Tutors tutor) {
+    public boolean isAvailable(int startTime, int duration, Tutors tutor, Student student) {
         BitSet proposedSession = createNewAvailibilityBitSet(startTime, duration);
         BitSet tutorAvailibility = tutor.getAvailability();
 
-        return containsAllBits(proposedSession, tutorAvailibility);
+        boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailibility);
+
+        // check if tutor can teach subject
+        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(), student.getCurrentCourse);
+
+        if (tutorAvailable && tutorCanTeachSubject) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -122,44 +131,20 @@ public class Session implements Schedulable {
     }
 
     /**
-    Starts timer to start session, will end after duration of session
+     * Chcek if tutor teaches subject Student is currently working on.
+     * @param tutorCourses
+     * @param targetCourse
+     * @return
      */
-//    public void startSession() {
-//        printMilitaryTime(startTime);
-//
-//        Timer timer = new Timer();
-//        // Schedule a task to run after 10 seconds (10000 milliseconds)
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                endSession(timer);
-//                timer.cancel(); // Stop the timer after execution
-//            }
-//        }, this.duration * 1000L);
-//
-//        System.out.println("Timer started. Function will execute in " + DEFAULT_SESSION_DURATION + " seconds...");
-//    }
-//
-//    /**
-//     * Ends session
-//     */
-//    public void endSession(Timer timer) {
-//        System.out.println(duration + " hours passed! Session finished.");
-//        printMilitaryTime(endTime);
-//        timer.cancel(); // Stop the timer
-//        timer.purge(); //Remove cancelled tasks
-//
-//
-//
-//    }
-//
-//    /**
-//     * Converts and prints milliseconds from midnight, myTime, and prints it in military time.
-//     * @param myTime
-//     */
-//    public static void printMilitaryTime(long myTime) {
-//        System.out.println(String.format("%1$TH:%1$TM:%1$TS", myTime));
-//    }
+    public static boolean tutorTeachesSubject(List<String> tutorCourses, String targetCourse) {
+        boolean canTeach = false;
+        for (String c : tutorCourses) {
+            if (targetCourse.equals(c)) {
+                canTeach = true;
+            }
+        }
+        return canTeach;
+    }
 
     /**
      * Prints Attributes of Session
@@ -208,4 +193,44 @@ public class Session implements Schedulable {
     public BitSet getAvailabilityBitSet(BitSet newSchedule) {
         return null;
     }
+
+    /**
+     Starts timer to start session, will end after duration of session
+     */
+//    public void startSession() {
+//        printMilitaryTime(startTime);
+//
+//        Timer timer = new Timer();
+//        // Schedule a task to run after 10 seconds (10000 milliseconds)
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                endSession(timer);
+//                timer.cancel(); // Stop the timer after execution
+//            }
+//        }, this.duration * 1000L);
+//
+//        System.out.println("Timer started. Function will execute in " + DEFAULT_SESSION_DURATION + " seconds...");
+//    }
+//
+//    /**
+//     * Ends session
+//     */
+//    public void endSession(Timer timer) {
+//        System.out.println(duration + " hours passed! Session finished.");
+//        printMilitaryTime(endTime);
+//        timer.cancel(); // Stop the timer
+//        timer.purge(); //Remove cancelled tasks
+//
+//
+//
+//    }
+//
+//    /**
+//     * Converts and prints milliseconds from midnight, myTime, and prints it in military time.
+//     * @param myTime
+//     */
+//    public static void printMilitaryTime(long myTime) {
+//        System.out.println(String.format("%1$TH:%1$TM:%1$TS", myTime));
+//    }
 }
