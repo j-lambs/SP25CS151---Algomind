@@ -20,7 +20,8 @@ public class Manager extends Employee {
                 throw new IllegalArgumentException("Tutor cannot be null.");
             }
             managedTutors.add(tutor);
-            System.out.println("Tutor " + tutor.getFullName() + " added.");
+            System.out.println("Tutor " + tutor.getFullName() + " now reports to "
+                    + this.getFullName() + ".");
         } catch (IllegalArgumentException e) {
             System.out.println("Error adding tutor: " + e.getMessage());
         } catch (Exception e) {
@@ -38,7 +39,8 @@ public class Manager extends Employee {
                 throw new IllegalArgumentException("Tutor not found.");
             }
             managedTutors.remove(tutor);
-            System.out.println("Tutor " + tutor.getFullName() + " removed.");
+            System.out.println("Tutor " + tutor.getFullName() + " no longer reports to "
+                + this.getFullName() + ".");
         } catch (IllegalArgumentException e) {
             System.out.println("Error removing tutor: " + e.getMessage());
         } catch (Exception e) {
@@ -62,19 +64,21 @@ public class Manager extends Employee {
     }
 
     // Method to schedule a session for a tutor
-    public void scheduleSession(Tutors tutor, Student student, String lesson, long startTime) {
+    public void scheduleSession(Tutors tutor, Student student, Courses course, int startTime, int duration) {
         try {
-            if (tutor == null || student == null || lesson == null || startTime <= 0) {
+            if (tutor == null || student == null || course == null || startTime <= 0) {
                 throw new IllegalArgumentException("Invalid session parameters.");
             }
 
             // Check if the tutor is available for the session
-            Session session = new Session(startTime, tutor, student, lesson);
-            if (session.isAvailable((int) startTime, (int) session.getDuration())) {
+            Session session = new Session(duration,startTime,tutor,student,course);
+            if (session.isAvailable(startTime,duration,tutor,student)){
                 // If available, schedule the session
                 sessions.add(session);
-                System.out.println("Session scheduled for tutor " + tutor.getFullName() + " with student " + student.getStudentName());
-            } else {
+                System.out.println("Session scheduled for tutor " + tutor.getFullName()
+                        + " with student " + student.getStudentName());
+            }
+            else {
                 System.out.println("Tutor " + tutor.getFullName() + " is not available at the requested time.");
             }
         } catch (IllegalArgumentException e) {
