@@ -4,6 +4,7 @@ class Student {
     public String studentName;
     public List<Course> currentCourses;
     public int phoneNo;
+
     public String email;
     public int gradeLevel;
     private List<String> permanentRecord;
