@@ -13,7 +13,7 @@ abstract class Employee {
     private String positionTitle = "Unassigned";
     private Date hire_date;
     private String status; // active, inactive
-    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
+//    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every 30 minutes
 
 import java.util.Date;
 
@@ -35,7 +35,6 @@ abstract class Employee {
                        String lastName,
                        String email,
                        String phone,
-                       int age,
                        int id,
                        Date hireDate,
                        String status) {

@@ -17,6 +17,10 @@ public class Tutors extends Employee {
         this.tutorList = tutorList;
     }
 
+    public String getTutorName() {
+        return getFirstName;
+    }
+
     public String getEmail() {
         return tutorEmail;
     }
