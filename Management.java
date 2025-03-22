@@ -8,7 +8,6 @@ public class Management {
     private List<Tutors> tutors;
     private List<Student> students;
     private List<Session> sessions;
-
     // Constructor to initialize the lists
     public Management() {
         this.tutors = new ArrayList<>();
@@ -39,14 +38,16 @@ public class Management {
     // Method to add session
     public void scheduleSession(long duration, long startTime, Tutors tutor, Student student, String lesson) {
         // Check if tutor is available at the proposed start time (if desired)
-        boolean isAvailable = tutor.isAvailable((int) startTime, (int) duration);
+        boolean isAvailable = tutor.isAvailable((int)startTime,(int) duration);
 
         if (isAvailable) {
             Session session = new Session(duration, startTime, tutor, student, lesson);
             sessions.add(session);
-            System.out.println("Session scheduled for " + student.+ " with " + tutor.getName() + " on " + startTime + " for " + duration + " seconds.");
+            System.out.println("Session scheduled for " + student.studentName
+                    + " with " + tutor.getFullName()
+                    + " on " + startTime + " for " + duration + " seconds.");
         } else {
-            System.out.println("Tutor " + tutor.getName() + " is not available at the requested time.");
+            System.out.println("Tutor " + tutor.getFullName() + " is not available at the requested time.");
         }
     }
 

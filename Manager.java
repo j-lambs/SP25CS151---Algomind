@@ -1,16 +1,16 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Manager extends Employee {
     private List<Tutors> managedTutors;  // List of tutors the manager manages
-    private List<Session> sessions;     // List of sessions the manager oversees
+    private List<Session> sessions;// List of sessions the manager oversees
 
     // Constructor
-    public Manager(String firstName, String lastName, String email, String phone, int id, Date hireDate, String status) {
-        super(firstName, lastName, email, phone, id, hireDate, status); // Call Employee constructor
+    public Manager(String firstName, String lastName, String email, String phone, int id, SimpleDateFormat hireDate, String status) {
+        super(firstName, lastName, email, phone, id,status); // Call Employee constructor
         managedTutors = new ArrayList<>(); // Initialize the list of tutors
-        sessions = new ArrayList<>();      // Initialize the list of sessions
+        sessions = new ArrayList<>();// Initialize the list of sessions
     }
 
     // Method to add a tutor to the manager's list
@@ -29,7 +29,7 @@ public class Manager extends Employee {
     }
 
     // Method to remove a tutor from the manager's list
-    public void removeTutor(Tutors tutor) {
+    public void fireTutor(Tutors tutor) {
         try {
             if (tutor == null) {
                 throw new IllegalArgumentException("Tutor cannot be null.");
