@@ -1,12 +1,12 @@
 import java.util.List;
 
-public class Student {  
+class Student {
     public String studentName;
     public List<Courses> coursesTaken;
     public int phoneNo;
     public String email;
     public String gradeLevel;
-
+  
     public Student(String studentName, List<Courses> coursesTaken, int phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
@@ -29,8 +29,10 @@ public class Student {
         System.out.println(studentName + "'s courses: " + coursesTaken);
     }
 
+
     public void addCourse(Courses course) {
         if (!coursesTaken.contains(course)) {
+
             if (course.getGradeLevel().equals(gradeLevel)) {
                 coursesTaken.add(course);
                 System.out.println(course.getCourseName() + " added.");
@@ -62,7 +64,25 @@ public class Student {
         }
     }
 
-    public void enrollStudent(Student student) {
 
+    public void enrollStudent(Student student) {
     }
+
+    public void updateGradeLevel(String newGradeLevel) {
+        if (!newGradeLevel.equals(gradeLevel)) {
+            gradeLevel = newGradeLevel;
+            System.out.println("Grade level updated to " + newGradeLevel);
+        } else {
+            System.out.println("New grade level is same as current.");
+        }
+    }
+
+    public String currentCourse(Session session) {
+        if (session != null && session.getStudent().equals(this)) {
+            return session.getLessonName();
+        } else {
+            return "No active session found.";
+        }
+    }
+
 }
