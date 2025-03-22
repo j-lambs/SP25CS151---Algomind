@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Manager extends Employee {
     private List<Tutors> managedTutors;  // List of tutors the manager manages
-    private List<Session> sessions;// List of sessions the manager oversees
+    private List<Session> sessions;
+    private double grossPay;// List of sessions the manager oversees
 
     // Constructor
     public Manager(String firstName, String lastName, String email, String phone, int id, String status) {
@@ -14,7 +15,7 @@ public class Manager extends Employee {
     }
 
     // Method to add a tutor to the manager's list
-    public void addTutor(Tutors tutor) {
+    public void hireTutor(Tutors tutor) {
         try {
             if (tutor == null) {
                 throw new IllegalArgumentException("Tutor cannot be null.");
@@ -64,7 +65,7 @@ public class Manager extends Employee {
     }
 
     // Method to schedule a session for a tutor
-    public void scheduleSession(Tutors tutor, Student student, Courses course, int startTime, int duration) {
+    public void scheduleSession(Tutors tutor, Student student, Course course, int startTime, int duration) {
         try {
             if (tutor == null || student == null || course == null || startTime <= 0) {
                 throw new IllegalArgumentException("Invalid session parameters.");
@@ -115,15 +116,13 @@ public class Manager extends Employee {
 
     // Override updateGrossPay method
     @Override
-    double updateGrossPay() {
-        try {
-            // Assuming manager works 40 hours/week, 4 weeks/month
-            double pay = 30.0 * 40 * 4;
-            return pay;
-        } catch (Exception e) {
-            System.out.println("Error calculating gross pay: " + e.getMessage());
-            return 0;
-        }
+    protected void updateGrossPay() {
+        this.grossPay = this.grossPay + (30 * 40);
+    }
+
+    protected void payEmployee(Manager manager) {
+        System.out.println(this.getFullName() + " has been paid for the week.");
+        updateGrossPay();
     }
 }
 

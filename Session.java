@@ -1,15 +1,17 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import java.util.Collections;
 
 class Session implements Schedulable {
     // Constants
     private static final int WORK_HOURS_IN_DAY = 8;
     private static final int START_HOUR = 9;
     private static final int DEFAULT_SESSION_DURATION = 1;
-    private static final int[] startTimes = {9,10,11,12,13,14,15,16,17};
+    private static final List<Integer> startTimes =
+            Collections.unmodifiableList(List.of(9, 10, 11, 12, 13, 14, 15, 16, 17));
+
 
     // Attributes
     private int duration;       // duration of session in minutes
@@ -17,12 +19,13 @@ class Session implements Schedulable {
     private int endTime;        // end time of session in minutes
     private Student student;    // student in session
     private Tutors tutor;        // tutor conducting the session
-    private Courses course;      // lesson being taught
+    private Course course;      // lesson being taught
     private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
     /** Constructor with specified duration */
-    public Session(int duration, int startTime, Tutors tutor, Student student, Courses course) throws IllegalArgumentException {
-        if (startTime < START_HOUR || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
+    public Session(int duration, int startTime, Tutors tutor, Student student, Course course)
+            throws IllegalArgumentException {
+        if (!startTimes.contains(startTime) || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
             throw new IllegalArgumentException("Invalid session timing.");
         }
 
@@ -42,7 +45,7 @@ class Session implements Schedulable {
     }
 
     /** Constructor with default session duration */
-    public Session(int startTime, Tutors tutor, Student student, Courses course) {
+    public Session(int startTime, Tutors tutor, Student student, Course course) {
         this.duration = DEFAULT_SESSION_DURATION;
         this.startTime = startTime;
         this.endTime = startTime + duration;
@@ -96,7 +99,7 @@ class Session implements Schedulable {
     }
 
     /** Checks if the tutor teaches the student's current subject */
-    public static boolean tutorTeachesSubject(List<Courses> tutorCourses, Courses targetCourse) {
+    public static boolean tutorTeachesSubject(List<Course> tutorCourses, Course targetCourse) {
         return tutorCourses.contains(targetCourse);
     }
 
@@ -125,7 +128,7 @@ class Session implements Schedulable {
     public Tutors getTutor(){
         return tutor;
     }
-    public Courses getCourse() {
+    public Course getCourse() {
         return course;
     }
     public int getDuration() {
@@ -139,7 +142,7 @@ class Session implements Schedulable {
     public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
-    public void setCourse(Courses course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
     public void setDuration(int duration) {
@@ -152,7 +155,6 @@ class Session implements Schedulable {
     }
 
     /** Sets tutor availability */
-    @Override
     public void setAvailability(int timeStart, int duration, boolean isAvailable) {
         if (timeStart < START_HOUR || timeStart + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
             System.out.println("Invalid time slot.");

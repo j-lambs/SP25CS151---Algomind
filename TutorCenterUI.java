@@ -211,7 +211,7 @@ public class TutorCenterUI {
         }
     }
 
-    private static void hireTutor(ArrayList<Tutors> tutorsArrayList, Manager manager) {
+    private static void hireTutor(Manager manager) {
         // Get tutor info
         System.out.print("Enter tutor first name: ");
         String firstName = scanner.nextLine();
@@ -262,7 +262,7 @@ public class TutorCenterUI {
         return courses;
     }
 
-    private static void fireTutor() {
+    private static void fireTutor(Manager manager ) {
         System.out.print("Enter tutor name to fire: ");
         String name = scanner.nextLine();
         // Assuming the manager has the method to find tutor by name
