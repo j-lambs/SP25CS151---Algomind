@@ -24,7 +24,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    showManagerMenu(listOfTutors);
+                    showManagerMenu(listOfTutors, listOfManagers);
                     break;
                 case 2:
                     showTutorMenu();
@@ -99,7 +99,14 @@ public class TutorCenterUI {
         return currentManager;
     }
 
-    private static void viewTutors() {
+    /**
+     * Displays all tutors hired.
+     * @param tutorsArrayList
+     */
+    private static void viewTutors(ArrayList<Tutors> tutorsArrayList) {
+        for (Tutors t : tutorsArrayList) {
+            t.showInformation();
+        }
     }
 
     private static void hireTutor(ArrayList<Tutors> tutorsArrayList, Manager manager) {
