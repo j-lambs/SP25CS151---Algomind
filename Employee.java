@@ -5,7 +5,7 @@ import java.util.BitSet;
 import java.util.Date;
 
 abstract class Employee {
-    private final int WORK_HOURS_IN_DAY = 8;
+    private String firstName = null
     private String firstName = null;
     private String lastName = null;
     private String email = null;
