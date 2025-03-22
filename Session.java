@@ -29,7 +29,7 @@ class Session implements Schedulable {
             throw new IllegalArgumentException("Invalid session timing.");
         }
 
-        if (!tutor.isAvailable(startTime, duration, tutor, student)) {
+        if (!isAvailable(startTime, duration, tutor, student)) {
             throw new IllegalArgumentException("Tutor is not available at the requested time.");
         }
 
