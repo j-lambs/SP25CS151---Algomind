@@ -7,7 +7,7 @@ public class Manager extends Employee {
     private List<Session> sessions;// List of sessions the manager oversees
 
     // Constructor
-    public Manager(String firstName, String lastName, String email, String phone, int id, SimpleDateFormat hireDate, String status) {
+    public Manager(String firstName, String lastName, String email, String phone, int id, String status) {
         super(firstName, lastName, email, phone, id,status); // Call Employee constructor
         managedTutors = new ArrayList<>(); // Initialize the list of tutors
         sessions = new ArrayList<>();// Initialize the list of sessions
