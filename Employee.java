@@ -11,7 +11,7 @@ abstract class Employee {
     private String email = null;
     private String phone = null;
     private int id = 0;
-    private SimpleDateFormat hireDate;
+    //private SimpleDateFormat hireDate;
     private String status = "Unassigned";
     private BitSet availability = new BitSet(WORK_HOURS_IN_DAY);// active, inactive
 
@@ -24,14 +24,14 @@ abstract class Employee {
                        String email,
                        String phone,
                        int id,
-                       SimpleDateFormat hireDate,
+      //                 SimpleDateFormat hireDate,
                        String status) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
             this.phone = phone;
             this.id = id;
-            this.hireDate = hireDate;
+      //      this.hireDate = hireDate;
             this.status = status;
     }
 
@@ -45,9 +45,9 @@ abstract class Employee {
     protected void setID(int id) {
         this.id = id;
     }
-    protected void setHireDate(SimpleDateFormat hireDate) {
-        this.hireDate = hireDate;
-    }
+   // protected void setHireDate(SimpleDateFormat hireDate) {
+   //   this.hireDate = hireDate;
+   //}
     protected void setStatus(String status) {
         this.status = status;
     }
@@ -71,9 +71,9 @@ abstract class Employee {
     protected int getId() {
         return id;
     }
-    protected Date getHireDate() {
+   /* protected SimpleDateFormat getHireDate() {
         return hireDate;
-    }
+    }*/
     protected String getStatus() {
         return status;
     }
@@ -90,7 +90,7 @@ abstract class Employee {
         System.out.println("Email: " + getEmail());
         System.out.println("Phone: " + getPhoneNumber());
         System.out.println("Employee ID: " + getId());
-        System.out.println("Hire Date: " + getHireDate());
+    //    System.out.println("Hire Date: " + getHireDate());
         System.out.println("Status: " + getStatus());
     };
 
