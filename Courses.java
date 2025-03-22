@@ -8,7 +8,7 @@ public class Courses {
     private ArrayList<String> lessons;
 
     // Constructor
-    public Course(String courseName, String courseInfo, int courseCode, String gradeLevel) {
+    public Courses(String courseName, String courseInfo, int courseCode, String gradeLevel) {
         this.courseName = courseName;
         this.courseInfo = courseInfo;
         this.courseCode = courseCode;
