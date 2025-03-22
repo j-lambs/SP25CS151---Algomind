@@ -3,11 +3,11 @@ import java.util.List;
 class Student {
     public String studentName;
     public List<Courses> coursesTaken;
-    public int phoneNo;
+    public String phoneNo;
     public String email;
     public String gradeLevel;
   
-    public Student(String studentName, List<Courses> coursesTaken, int phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, List<Courses> coursesTaken, String phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;

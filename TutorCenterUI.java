@@ -1,5 +1,6 @@
 import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -26,13 +27,13 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    showManagerMenu(listOfTutors, listOfManagers);
+                    showManagerMenu(listOfTutors, listOfManagers, listOfStudents);
                     break;
                 case 2:
-                    showTutorMenu(listOfTutors, listOfManagers);
+                    showTutorMenu(listOfTutors, listOfManagers, listOfStudents);
                     break;
                 case 3:
-                    showStudentMenu();
+                    showStudentMenu(listOfStudents);
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -43,7 +44,7 @@ public class TutorCenterUI {
         }
     }
 
-    private static void showManagerMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers) {
+    private static void showManagerMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers, ArrayList<Student> students) {
         // Make manager sign in by ID
         Manager currentManager = signIn(listOfManagers);
         while (true) {
@@ -51,7 +52,8 @@ public class TutorCenterUI {
             System.out.println("1. Hire Tutor");
             System.out.println("2. Fire Tutor");
             System.out.println("3. View Tutors");
-            System.out.println("4. Go Back");
+            System.out.println("4. Add New Student");
+            System.out.println("5. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -67,6 +69,8 @@ public class TutorCenterUI {
                     viewTutors(listOfTutors);
                     break;
                 case 4:
+                    addNewStudent(students);
+                case 5:
                    return;
                 default:
                     System.out.println("Invalid choice. Try again.");
@@ -104,6 +108,37 @@ public class TutorCenterUI {
         }
         employeeMenuScanner.close();
         return currentManager;
+    }
+
+    /**
+     * Creates and adds a new student to listOfStudents
+     * @param students
+     */
+    private static void addNewStudent(ArrayList<Student> students) {
+        System.out.print("Enter student's name: ");
+        String name = scanner.nextLine();
+        System.out.println("Enter grade level");
+        String gradeLevel = scanner.nextLine();
+
+        System.out.println("Enter phone number");
+        String phoneNumber = scanner.nextLine();
+        System.out.println("Enter email");
+        String email = scanner.nextLine();
+
+        boolean moreCourses = true;
+        List<Courses> coursesTaken = new ArrayList<>();
+        while (moreCourses) {
+            System.out.println("Enter the next course you've taken. Press 0 (zero) when done.");
+            String nextCourse = scanner.nextLine();
+            if (nextCourse.equals("0")) {
+                moreCourses = false;
+            } else {
+                coursesTaken.add(nextCourse);
+            }
+        }
+
+        Student newStudent = new Student(name, coursesTaken, phoneNumber, email, gradeLevel);
+        students.add(newStudent);
     }
 
     /**
@@ -182,13 +217,13 @@ public class TutorCenterUI {
         String firstName = scanner.nextLine();
         System.out.print("Enter tutor last name: ");
         String lastName = scanner.nextLine();
-        int newTutorID = generateNewID();
-        System.out.print("Enter hourly rate: ");
-        double payRate = scanner.nextDouble();
-        System.out.print("Enter tutor phone number: ");
         String phoneNumber = scanner.nextLine();
         String email = firstName + "." + lastName + "@algomind.com";
 
+        System.out.print("Enter hourly rate: ");
+        double payRate = scanner.nextDouble();
+        int newTutorID = generateNewID();
+        System.out.print("Enter tutor phone number: ");
         ArrayList<String> coursesTeaching = getCoursesTutorCanTeach();
 
         scanner.nextLine();  // Consume newline character
