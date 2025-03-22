@@ -64,6 +64,9 @@ public class Session implements Schedulable {
         this.lesson = lesson;
     }
 
+    /**
+     * Prints hours that Session occurs in in military time
+     */
     public void viewSessionTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         boolean hasAppointment = false;
@@ -173,7 +176,7 @@ public class Session implements Schedulable {
     }
 
     /**
-     * Time ranges from 1 to 8
+     *
      * @param timeStart
      * @param duration
      * @param isAvailable
