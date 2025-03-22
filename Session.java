@@ -1,9 +1,12 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.BitSet;
-import java.util.Timer;
-import java.util.TimerTask;
 
+/**
+ * Assume time is military time for simplicity of math.
+ * Start Time: 9:00
+ * Closing Time: 17:00
+ */
 public class Session implements Schedulable {
     // FINALS
     private static final int WORK_HOURS_IN_DAY = 8;
@@ -17,7 +20,7 @@ public class Session implements Schedulable {
     private Student student;    // student in session
     private Tutors tutor;
     private String lesson;      // lesson being taught
-    private BitSet appointmentTime = new BitSet(WORK_HOURS_IN_DAY);
+    private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
     /** CONSTRUCTOR
      *
@@ -32,7 +35,9 @@ public class Session implements Schedulable {
             throw new IllegalArgumentException("Invalid Session.");
         }
         if (!isAvailable(startTime, duration, tutor)) {
-            throw new IllegalArgumentException("Invalid Session.");
+            throw new IllegalArgumentException("Invalid Session. Tutor not available.");
+        } else {
+            this.sessionTime = createNewAvailibilityBitSet(startTime, duration);
         }
 
         this.duration = duration;
@@ -58,12 +63,12 @@ public class Session implements Schedulable {
         this.lesson = lesson;
     }
 
-    public void printSessionTime() {
+    public void viewSessionTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         boolean hasAppointment = false;
 
         for (int i = 0; i < WORK_HOURS_IN_DAY; i++) {
-            if (appointmentTime.get(i)) {
+            if (sessionTime.get(i)) {
                 hasAppointment = true;
                 LocalTime time = LocalTime.of(START_HOUR + i, 0);
                 System.out.println("Appointment at: " + time.format(formatter));
@@ -76,28 +81,44 @@ public class Session implements Schedulable {
     }
 
     /**
-     * Start time
-     * @param startTime integer from 8 to 12 or from 1 to 4
+     * Checks if session is a valid session.
+     * Checks if tutor works during session time and duration.
+     * Check Session declaration for time documentation.
+     * @param startTime
      * @param duration
      * @return
-     */ // TODO: Check if tutor is available during proposedSession hours
+     */
     @Override
     public boolean isAvailable(int startTime, int duration, Tutors tutor) {
-        BitSet proposedSession = new BitSet(WORK_HOURS_IN_DAY);
-        startTime -= WORK_HOURS_IN_DAY;
-        // create bitset for proposedSession with startTime and duration
-        try {
-            proposedSession.set(startTime, startTime + duration);
-        } catch (Exception e) {
-            System.out.println("Invalid start time or duration.");
-        }
+        BitSet proposedSession = createNewAvailibilityBitSet(startTime, duration);
+        BitSet tutorAvailibility = tutor.getAvailability();
 
-        int i = proposedSession.nextSetBit(0);
-        while (i != -1) {
-            System.out.println("Bit at index " + i + " is set");
-            i = proposedSession.nextSetBit(i + 1);
-        }
+        return containsAllBits(proposedSession, tutorAvailibility);
+    }
 
+    /**
+     *
+     * @param startTime
+     * @param duration
+     * @return
+     */
+    public static BitSet createNewAvailibilityBitSet(int startTime, int duration) {
+        BitSet newAvailibilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
+        newAvailibilityBitSet.set(startTime, duration);
+        return newAvailibilityBitSet;
+    }
+
+    /**
+     * Checks if every bit in bitset1 are ON in bitset2
+     * @param bitset1
+     * @param bitset2
+     * @return
+     */
+    public static boolean containsAllBits(BitSet bitset1, BitSet bitset2) {
+        BitSet temp = (BitSet) bitset1.clone(); // Clone bitset1
+        temp.and(bitset2); // AND with bitset2
+
+        return temp.equals(bitset1); // If they are equal, all bits in bitset1 are in bitset2
     }
 
     /**
@@ -128,7 +149,7 @@ public class Session implements Schedulable {
 //        timer.cancel(); // Stop the timer
 //        timer.purge(); //Remove cancelled tasks
 //
-//        //TODO: update student lesson after session finished
+//
 //
 //    }
 //
@@ -164,5 +185,27 @@ public class Session implements Schedulable {
 
     public String getLessonName() {
         return lesson;
+    }
+
+    /**
+     * Time ranges from 1 to 8
+     * @param timeStart
+     * @param duration
+     * @param isAvailable
+     */
+    @Override
+    public void setAvailability(int timeStart, int duration, boolean isAvailable) {
+        BitSet newAvailability = new BitSet(WORK_HOURS_IN_DAY);
+        int timeEnd = timeStart + duration;
+        if (timeEnd <= WORK_HOURS_IN_DAY && timeStart < WORK_HOURS_IN_DAY && timeStart > 0) {
+            newAvailability.set(timeStart, endTime);
+        } else {
+            System.out.println("Invalid time slot to work. Please try again.");
+        }
+    }
+
+    @Override
+    public BitSet getAvailabilityBitSet(BitSet newSchedule) {
+        return null;
     }
 }

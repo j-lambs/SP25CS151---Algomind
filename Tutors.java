@@ -37,6 +37,9 @@ public class Tutors extends Employee implements Schedulable{
 //
 //    }
 
+    public BitSet getAvailability() {
+        return availability;
+    }
 
 
     public String getEmail() {
@@ -147,7 +150,6 @@ public class Tutors extends Employee implements Schedulable{
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
         }
     }
-
 
 
     @Override
