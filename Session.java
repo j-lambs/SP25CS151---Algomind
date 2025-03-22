@@ -1,5 +1,6 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
@@ -8,6 +9,7 @@ class Session implements Schedulable {
     private static final int WORK_HOURS_IN_DAY = 8;
     private static final int START_HOUR = 9;
     private static final int DEFAULT_SESSION_DURATION = 1;
+    private static final int[] startTimes = {9,10,11,12,13,14,15,16,17};
 
     // Attributes
     private int duration;       // duration of session in minutes
@@ -15,11 +17,11 @@ class Session implements Schedulable {
     private int endTime;        // end time of session in minutes
     private Student student;    // student in session
     private Tutors tutor;        // tutor conducting the session
-    private String lesson;      // lesson being taught
+    private Courses course;      // lesson being taught
     private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
     /** Constructor with specified duration */
-    public Session(int duration, int startTime, Tutors tutor, Student student, String lesson) throws IllegalArgumentException {
+    public Session(int duration, int startTime, Tutors tutor, Student student, Courses course) throws IllegalArgumentException {
         if (startTime < START_HOUR || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
             throw new IllegalArgumentException("Invalid session timing.");
         }
@@ -33,15 +35,20 @@ class Session implements Schedulable {
         this.endTime = startTime + duration;
         this.tutor = tutor;
         this.student = student;
-        this.lesson = lesson;
+        this.course = course;
 
         // Mark session time as occupied
         this.sessionTime = createNewAvailabilityBitSet(startTime, duration);
     }
 
     /** Constructor with default session duration */
-    public Session(int startTime, Tutors tutor, Student student, String lesson) {
-        this(DEFAULT_SESSION_DURATION, startTime, tutor, student, lesson);
+    public Session(int startTime, Tutors tutor, Student student, Courses course) {
+        this.duration = DEFAULT_SESSION_DURATION;
+        this.startTime = startTime;
+        this.endTime = startTime + duration;
+        this.tutor = tutor;
+        this.student = student;
+        this.course = course;
     }
 
     /** Views the session times in a human-readable format */
@@ -68,7 +75,7 @@ class Session implements Schedulable {
         BitSet tutorAvailability = tutor.getAvailability();
 
         boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailability);
-        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(), this.lesson);
+        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),this.course );
 
         return tutorAvailable && tutorCanTeachSubject;
     }
@@ -89,7 +96,7 @@ class Session implements Schedulable {
     }
 
     /** Checks if the tutor teaches the student's current subject */
-    public static boolean tutorTeachesSubject(List<String> tutorCourses, String targetCourse) {
+    public static boolean tutorTeachesSubject(List<Courses> tutorCourses, Courses targetCourse) {
         return tutorCourses.contains(targetCourse);
     }
 
@@ -101,21 +108,47 @@ class Session implements Schedulable {
                         " End Time: " + this.endTime +
                         " Student: " + this.student.getStudentName() +
                         " Tutor: " + this.tutor.getFullName() +
-                        " Lesson: " + this.lesson
+                        " Course: " + this.course
         );
     }
 
     /** Getters and Setters */
+    public int getStartTime(){
+        return startTime;
+    }
+    public int getEndTime(){
+        return endTime;
+    }
+    public Student getStudent(){
+        return student;
+    }
+    public Tutors getTutor(){
+        return tutor;
+    }
+    public Courses getCourse() {
+        return course;
+    }
     public int getDuration() {
-        return this.duration;
+        return duration;
     }
 
+    //Setters
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
+    public void setCourse(Courses course) {
+        this.course = course;
+    }
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
-    public String getLesson() {
-        return lesson;
+    public void reschedule(int startTime, int duration, Tutors tutor, Student student) {
+        setStartTime(startTime);
+        setDuration(duration);
     }
 
     /** Sets tutor availability */
