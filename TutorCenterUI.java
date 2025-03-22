@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ public class TutorCenterUI {
     public static void main(String[] args) {
         ArrayList<Tutors> listOfTutors = new ArrayList<>();
         ArrayList<Manager> listOfManagers = new ArrayList<>();
+        ArrayList<Student> listOfStudents = new ArrayList<>();
 //        Manager m0 = new Manager("jane", "doe", "jane.doe@algomind.com",
 //                "650888999", 100, "active");
 //        listOfManagers.add(m0);
@@ -27,7 +29,7 @@ public class TutorCenterUI {
                     showManagerMenu(listOfTutors, listOfManagers);
                     break;
                 case 2:
-                    showTutorMenu();
+                    showTutorMenu(listOfTutors, listOfManagers);
                     break;
                 case 3:
                     showStudentMenu();
@@ -42,7 +44,8 @@ public class TutorCenterUI {
     }
 
     private static void showManagerMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers) {
-        Manager currentManager = managerSignIn(listOfManagers);
+        // Make manager sign in by ID
+        Manager currentManager = signIn(listOfManagers);
         while (true) {
             System.out.println("\nManager Menu");
             System.out.println("1. Hire Tutor");
@@ -61,7 +64,7 @@ public class TutorCenterUI {
                     fireTutor();
                     break;
                 case 3:
-                    viewTutors();
+                    viewTutors(listOfTutors);
                     break;
                 case 4:
                    return;
@@ -71,32 +74,96 @@ public class TutorCenterUI {
         }
     }
 
-    private static Manager managerSignIn(ArrayList<Manager> listOfManagers) {
-        Scanner managerMenuScanner = new Scanner(System.in);
+    /**
+     * signIn for Managers
+     * @param listOfManagers
+     * @return
+     */
+    private static Manager signIn(ArrayList<Manager> listOfManagers) {
+        Scanner employeeMenuScanner = new Scanner(System.in);
         Manager currentManager;
-        boolean validManager = false;
+        boolean validEmp = false;
 
-        while (!validManager) {
+        while (!validEmp) {
             System.out.println("Which manager are you? Enter your ID.");
-            int currentManagerID = managerMenuScanner.nextInt();
+            int currentManagerID = employeeMenuScanner.nextInt();
             // check if ID exists in listOfManagers
             int i = 0;
             for (Manager m : listOfManagers) {
                 if (m.getId() == currentManagerID) {
                     currentManager = m;
-                    validManager = true;
+                    validEmp = true;
                     break;
                 }
                 ++i;
             }
             // has look through listOfManagers and ID does not exist
             if (i >= listOfManagers.size()) {
-                System.out.println("Manager ID does not exist. Please try again.");
+                System.out.println("Employee ID does not exist. Please try again.");
             }
         }
-
-        managerMenuScanner.close();
+        employeeMenuScanner.close();
         return currentManager;
+    }
+
+    /**
+     * Sign in for tutors
+     * @param listOfTutors
+     * @return
+     */
+    private static Tutors signIn(ArrayList<Tutors> listOfTutors) {
+        Scanner employeeMenuScanner = new Scanner(System.in);
+        Tutors currentTutor;
+        boolean validEmp = false;
+
+        while (!validEmp) {
+            System.out.println("Which tutor are you? Enter your ID. Or press 1 to display all Tutor info.");
+            int currentTutorID = employeeMenuScanner.nextInt();
+            if (currentTutorID == 1) {
+                viewAllTutors(listOfTutors);
+            } else {
+                // check if ID exists in listOfManagers
+                int i = 0;
+                for (Tutors t : listOfTutors) {
+                    if (t.getId() == currentTutorID) {
+                        currentTutor = t;
+                        validEmp = true;
+                        break;
+                    }
+                    ++i;
+                }
+                // has look through listOfTutors and ID does not exist
+                if (i >= listOfTutors.size()) {
+                    System.out.println("Employee ID does not exist. Please try again.");
+                }
+            }
+            employeeMenuScanner.close();
+            return currentTutor;
+        }
+    }
+
+    private static Student signIn(ArrayList<Student> students, String studentName) {
+        if (students.size() == 0) {
+            throw new IllegalArgumentException("No active students.");
+        }
+
+        Scanner signInScanner = new Scanner(System.in);
+        Student currentStudent = null;
+        // look for studentName in listOfStudents
+        boolean validStudent = false;
+        while (!validStudent) {
+            for (Student s : students) {
+                if (studentName.equalsIgnoreCase(s.getStudentName())) {
+                    validStudent = true;
+                    signInScanner.close();
+                    return s;
+                }
+            }
+            // studentName not found
+            System.out.println("Student not found. Please enter valid student name.");
+            studentName = signInScanner.nextLine();
+        }
+        return currentStudent;
     }
 
     /**
@@ -128,6 +195,8 @@ public class TutorCenterUI {
         Tutors tutor = new Tutors(firstName, lastName, newTutorID, payRate,"active", phoneNumber, email, true,
                 coursesTeaching);
         manager.hireTutor(tutor);
+        System.out.println("New hire information:");
+        tutor.display_information();
         System.out.println("Tutor hired successfully!");
     }
 
@@ -180,7 +249,9 @@ public class TutorCenterUI {
         return null;
     }
 
-    private static void showTutorMenu() {
+    private static void showTutorMenu(ArrayList<Tutors> listOfTutors, ArrayList<Manager> listOfManagers, ArrayList<Student> students) {
+        // Make tutor sign in by ID
+        Tutors currentTutor = (Tutors) signIn(listOfTutors);
         while (true) {
             System.out.println("\nTutor Menu");
             System.out.println("1. View Student Information");
@@ -195,7 +266,9 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewStudentInfo();
+                    String studentName = scanner.nextLine();
+                    Student studentOfInterest = signIn(students, studentName);
+                    studentOfInterest.getStudentInfo();
                     break;
                 case 2:
                     viewSessions();
@@ -204,7 +277,7 @@ public class TutorCenterUI {
                     updateLesson();
                     break;
                 case 4:
-                    viewAllTutors();
+                    viewAllTutors(listOfTutors);
                     break;
                 case 5:
                     scheduleSession();
@@ -218,15 +291,12 @@ public class TutorCenterUI {
         }
     }
 
-    private static void viewStudentInfo() {
-        System.out.print("Enter your Student name: ");
-        String studentName = scanner.nextLine();
-
-        if (studentName != null) {
-
-        } else {
-            System.out.println("Student not found.");
-        }
+    /**
+     * Displays info of single student
+     * @param student
+     */
+    private static void viewStudentInfo(Student student) {
+        student.getStudentInfo();
     }
 
     private static void viewSessions() {
@@ -234,7 +304,10 @@ public class TutorCenterUI {
 
     private static void updateLesson() {
     }
-    private static void viewAllTutors() {
+    private static void viewAllTutors(ArrayList<Tutors> listOfTutors) {
+        for (Tutors t: listOfTutors) {
+            t.display_information();
+        }
     }
     private static void scheduleSession() {
     }
@@ -244,7 +317,16 @@ public class TutorCenterUI {
 
 
 
-    private static void showStudentMenu() {
+    private static void showStudentMenu(ArrayList<Student> students) {
+        Student currentStudent = null;
+        try {
+            Scanner studentMenuScanner = new Scanner(System.in);
+            System.out.println("Enter Student Name");
+            String studentName = studentMenuScanner.nextLine();
+            currentStudent = signIn(students, studentName);
+        } catch (Exception e) {
+            System.out.println("Student Sign in Error");
+        }
         while (true) {
             System.out.println("\nStudent Menu");
             System.out.println("1. View Courses");
@@ -255,10 +337,10 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewCourse();
+                    currentStudent.viewCourses();
                     break;
                 case 2:
-                    viewStudentInfo();
+                    currentStudent.getStudentInfo();
                     break;
                 default:
                     System.out.println("Invalid choice, Try again!");
