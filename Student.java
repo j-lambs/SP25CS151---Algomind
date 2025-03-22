@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class Student {  
+class Student {
     public String studentName;
     public ArrayList<String> coursesTaken;
-    public int phoneNo;
+    public long phoneNo;
     public String email;
     public String gradeLevel;
 
-    public Student(String studentName, ArrayList<String> coursesTaken, int phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, ArrayList<String> coursesTaken, long phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
@@ -29,7 +29,7 @@ public class Student {
         System.out.println(studentName + "'s courses: " + coursesTaken);
     }
 
-    public void addCourse(Courses course) {
+    public void addCourse(Course course) {
         if (!coursesTaken.contains(course.getCourseName())) {
             if (course.getGradeLevel().equals(gradeLevel)) {
                 coursesTaken.add(course.getCourseName());
@@ -60,14 +60,23 @@ public class Student {
             System.out.println(studentName + " is NOT enrolled in " + course);
             return false;
         }
-
-    public void addCourse(String course) {
-        coursesTaken.add(course);
-
     }
 
     public void updateGradeLevel(String newGradeLevel) {
-        this.gradeLevel = newGradeLevel;
+        if (!newGradeLevel.equals(gradeLevel)) {
+            gradeLevel = newGradeLevel;
+            System.out.println("Grade level updated to " + newGradeLevel);
+        } else {
+            System.out.println("New grade level is same as current.");
+        }
+    }
+
+    public String currentCourse(Session session) {
+        if (session != null && session.getStudent().equals(this)) {
+            return session.getLessonName();
+        } else {
+            return "No active session found.";
+        }
     }
 
     public void updateEmail(String newEmail) {
