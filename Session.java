@@ -1,72 +1,57 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-/**
- * Assume time is military time for simplicity of math.
- * Start Time: 9:00
- * Closing Time: 17:00
- */
-public class Session implements Schedulable {
-    // FINALS
+class Session implements Schedulable {
+    // Constants
     private static final int WORK_HOURS_IN_DAY = 8;
     private static final int START_HOUR = 9;
     private static final int DEFAULT_SESSION_DURATION = 1;
+    private static final int[] startTimes = {9,10,11,12,13,14,15,16,17};
 
-    // ATTRIBUTES
-    private int duration;      // duration of session in seconds
-    private int startTime;     // gets start time of session in standard format
-    private int endTime;       // end time of session in standard format
+    // Attributes
+    private int duration;       // duration of session in minutes
+    private int startTime;      // start time of session in minutes (from START_HOUR)
+    private int endTime;        // end time of session in minutes
     private Student student;    // student in session
-    private Tutors tutor;
-    private String lesson;      // lesson being taught
+    private Tutors tutor;        // tutor conducting the session
+    private Courses course;      // lesson being taught
     private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
-    /** CONSTRUCTOR
-     *
-     * @param duration
-     * @param startTime
-     * @param tutor
-     * @param student
-     * @param lesson
-     */
-    public Session(int duration, int startTime, Tutors tutor, Student student, String lesson) throws Exception {
-        if (startTime < START_HOUR || startTime + duration >= (WORK_HOURS_IN_DAY + START_HOUR)) {
-            throw new IllegalArgumentException("Invalid Session.");
+    /** Constructor with specified duration */
+    public Session(int duration, int startTime, Tutors tutor, Student student, Courses course) throws IllegalArgumentException {
+        if (startTime < START_HOUR || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
+            throw new IllegalArgumentException("Invalid session timing.");
         }
+
         if (!isAvailable(startTime, duration, tutor, student)) {
-            throw new IllegalArgumentException("Invalid Session. Tutor not available.");
-        } else {
-            this.sessionTime = createNewAvailibilityBitSet(startTime, duration);
+            throw new IllegalArgumentException("Tutor is not available at the requested time.");
         }
 
         this.duration = duration;
         this.startTime = startTime;
-        this.endTime = startTime + this.duration;
+        this.endTime = startTime + duration;
         this.tutor = tutor;
         this.student = student;
-        this.lesson = lesson;
+        this.course = course;
+
+        // Mark session time as occupied
+        this.sessionTime = createNewAvailabilityBitSet(startTime, duration);
     }
 
-    /**
-     * Constructor, with default duration
-     * @param startTime
-     * @param tutor
-     * @param student
-     * @param lesson
-     */
-    public Session(int startTime, Tutors tutor, Student student, String lesson) {
+    /** Constructor with default session duration */
+    public Session(int startTime, Tutors tutor, Student student, Courses course) {
         this.duration = DEFAULT_SESSION_DURATION;
         this.startTime = startTime;
-        this.endTime = startTime + this.duration;
+        this.endTime = startTime + duration;
+        this.tutor = tutor;
         this.student = student;
-        this.lesson = lesson;
+        this.course = course;
     }
 
-    /**
-     * Prints hours that Session occurs in in military time
-     */
+    /** Views the session times in a human-readable format */
     public void viewSessionTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         boolean hasAppointment = false;
@@ -84,48 +69,25 @@ public class Session implements Schedulable {
         }
     }
 
-    /**
-     * Checks if session is a valid session.
-     * Checks if tutor works during session time and duration.
-     * Check Session declaration for time documentation.
-     * @param startTime
-     * @param duration
-     * @return
-     */
-    @Override
+    /** Checks if the session is valid, including tutor availability and subject compatibility */
     public boolean isAvailable(int startTime, int duration, Tutors tutor, Student student) {
-        BitSet proposedSession = createNewAvailibilityBitSet(startTime, duration);
-        BitSet tutorAvailibility = tutor.getAvailability();
+        BitSet proposedSession = createNewAvailabilityBitSet(startTime, duration);
+        BitSet tutorAvailability = tutor.getAvailability();
 
-        boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailibility);
+        boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailability);
+        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),this.course );
 
-        // check if tutor can teach subject
-        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(), student.getCurrentCourse);
-
-        if (tutorAvailable && tutorCanTeachSubject) {
-            return true;
-        }
-        return false;
+        return tutorAvailable && tutorCanTeachSubject;
     }
 
-    /**
-     *
-     * @param startTime
-     * @param duration
-     * @return
-     */
-    public static BitSet createNewAvailibilityBitSet(int startTime, int duration) {
-        BitSet newAvailibilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
-        newAvailibilityBitSet.set(startTime, duration);
-        return newAvailibilityBitSet;
+    /** Creates a BitSet for the session's availability based on start time and duration */
+    public static BitSet createNewAvailabilityBitSet(int startTime, int duration) {
+        BitSet newAvailabilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
+        newAvailabilityBitSet.set(startTime - START_HOUR, startTime - START_HOUR + duration); // Corrected time setting
+        return newAvailabilityBitSet;
     }
 
-    /**
-     * Checks if every bit in bitset1 are ON in bitset2
-     * @param bitset1
-     * @param bitset2
-     * @return
-     */
+    /** Checks if all bits in bitset1 are ON in bitset2 */
     public static boolean containsAllBits(BitSet bitset1, BitSet bitset2) {
         BitSet temp = (BitSet) bitset1.clone(); // Clone bitset1
         temp.and(bitset2); // AND with bitset2
@@ -133,107 +95,76 @@ public class Session implements Schedulable {
         return temp.equals(bitset1); // If they are equal, all bits in bitset1 are in bitset2
     }
 
-    /**
-     * Chcek if tutor teaches subject Student is currently working on.
-     * @param tutorCourses
-     * @param targetCourse
-     * @return
-     */
-    public static boolean tutorTeachesSubject(List<String> tutorCourses, String targetCourse) {
-        boolean canTeach = false;
-        for (String c : tutorCourses) {
-            if (targetCourse.equals(c)) {
-                canTeach = true;
-            }
-        }
-        return canTeach;
+    /** Checks if the tutor teaches the student's current subject */
+    public static boolean tutorTeachesSubject(List<Courses> tutorCourses, Courses targetCourse) {
+        return tutorCourses.contains(targetCourse);
     }
 
-    /**
-     * Prints Attributes of Session
-     */
+    /** Prints details of the session */
     public void viewSessionDetails() {
         System.out.println(
                 "Start Time: " + this.startTime +
-                "Duration: " + this.duration +
-                "End Time: " + this.endTime +
-                "Student: " + this.student.getStudentName() +
-                "Tutor: " + this.tutor.getFirstName() +
-                "Lesson: " + this.lesson
-                );
+                        " Duration: " + this.duration +
+                        " End Time: " + this.endTime +
+                        " Student: " + this.student.getStudentName() +
+                        " Tutor: " + this.tutor.getFullName() +
+                        " Course: " + this.course
+        );
     }
 
-    public long getDuration() {
-        return this.duration;
+    /** Getters and Setters */
+    public int getStartTime(){
+        return startTime;
+    }
+    public int getEndTime(){
+        return endTime;
+    }
+    public Student getStudent(){
+        return student;
+    }
+    public Tutors getTutor(){
+        return tutor;
+    }
+    public Courses getCourse() {
+        return course;
+    }
+    public int getDuration() {
+        return duration;
     }
 
-    public void setDuration(long duration) {
+    //Setters
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
+    public void setCourse(Courses course) {
+        this.course = course;
+    }
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
-    public String getLessonName() {
-        return lesson;
+    public void reschedule(int startTime, int duration, Tutors tutor, Student student) {
+        setStartTime(startTime);
+        setDuration(duration);
     }
 
-    /**
-     *
-     * @param timeStart
-     * @param duration
-     * @param isAvailable
-     */
+    /** Sets tutor availability */
     @Override
     public void setAvailability(int timeStart, int duration, boolean isAvailable) {
-        BitSet newAvailability = new BitSet(WORK_HOURS_IN_DAY);
-        int timeEnd = timeStart + duration;
-        if (timeEnd <= WORK_HOURS_IN_DAY && timeStart < WORK_HOURS_IN_DAY && timeStart > 0) {
-            newAvailability.set(timeStart, endTime);
-        } else {
-            System.out.println("Invalid time slot to work. Please try again.");
+        if (timeStart < START_HOUR || timeStart + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
+            System.out.println("Invalid time slot.");
+            return;
         }
+        // Logic for setting tutor availability...
     }
 
     @Override
     public BitSet getAvailabilityBitSet(BitSet newSchedule) {
+        // Implement method logic here
         return null;
-    }
 
-    /**
-     Starts timer to start session, will end after duration of session
-     */
-//    public void startSession() {
-//        printMilitaryTime(startTime);
-//
-//        Timer timer = new Timer();
-//        // Schedule a task to run after 10 seconds (10000 milliseconds)
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                endSession(timer);
-//                timer.cancel(); // Stop the timer after execution
-//            }
-//        }, this.duration * 1000L);
-//
-//        System.out.println("Timer started. Function will execute in " + DEFAULT_SESSION_DURATION + " seconds...");
-//    }
-//
-//    /**
-//     * Ends session
-//     */
-//    public void endSession(Timer timer) {
-//        System.out.println(duration + " hours passed! Session finished.");
-//        printMilitaryTime(endTime);
-//        timer.cancel(); // Stop the timer
-//        timer.purge(); //Remove cancelled tasks
-//
-//
-//
-//    }
-//
-//    /**
-//     * Converts and prints milliseconds from midnight, myTime, and prints it in military time.
-//     * @param myTime
-//     */
-//    public static void printMilitaryTime(long myTime) {
-//        System.out.println(String.format("%1$TH:%1$TM:%1$TS", myTime));
-//    }
+    }
 }
