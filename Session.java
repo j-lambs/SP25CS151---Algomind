@@ -155,7 +155,6 @@ class Session implements Schedulable {
     }
 
     /** Sets tutor availability */
-    @Override
     public void setAvailability(int timeStart, int duration, boolean isAvailable) {
         if (timeStart < START_HOUR || timeStart + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
             System.out.println("Invalid time slot.");

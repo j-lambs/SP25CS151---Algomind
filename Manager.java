@@ -4,7 +4,8 @@ import java.util.List;
 
 public class Manager extends Employee {
     private List<Tutors> managedTutors;  // List of tutors the manager manages
-    private List<Session> sessions;// List of sessions the manager oversees
+    private List<Session> sessions;
+    private double grossPay;// List of sessions the manager oversees
 
     // Constructor
     public Manager(String firstName, String lastName, String email, String phone, int id, String status) {
@@ -115,15 +116,13 @@ public class Manager extends Employee {
 
     // Override updateGrossPay method
     @Override
-    double updateGrossPay() {
-        try {
-            // Assuming manager works 40 hours/week, 4 weeks/month
-            double payRate = 30.0 * 40 * 4;
-            return payRate;
-        } catch (Exception e) {
-            System.out.println("Error calculating gross pay: " + e.getMessage());
-            return 0;
-        }
+    protected void updateGrossPay() {
+        this.grossPay = this.grossPay + (30 * 40);
+    }
+
+    protected void payEmployee(Manager manager) {
+        System.out.println(this.getFullName() + " has been paid for the week.");
+        updateGrossPay();
     }
 }
 

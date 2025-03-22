@@ -139,7 +139,7 @@ abstract class Employee {
     }
 
     abstract void positionPayRate();
-    abstract double updateGrossPay(); //for tutor and manager
+    abstract void updateGrossPay(); //for tutor and manager
 
 
 }

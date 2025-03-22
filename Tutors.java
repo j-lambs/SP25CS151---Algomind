@@ -1,11 +1,12 @@
 import java.util.*;
 
-public class Tutors extends Employee implements Schedulable{
+public class Tutors extends Employee {
     private String tutorEmail;
     private double payRate;
     private BitSet availability;
     private List<Course> coursesTeaching;
     private List<Session> scheduledSessions;
+    private double grossPay;
 
     public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
                   String tutorEmail, BitSet availability, List<Course> coursesTeaching) {
@@ -83,8 +84,13 @@ public class Tutors extends Employee implements Schedulable{
     }
 
     @Override
-    public double updateGrossPay() {
-        return 25.0 * 20 * 4;
+    public void updateGrossPay() {
+        this.grossPay = this.grossPay + (25.0 * 40);
+    }
+
+    public void payEmployee(Tutors tutor) {
+        System.out.println(tutor.getFullName() + " has been paid for the week.");
+        updateGrossPay();
     }
 
 }
@@ -118,17 +124,4 @@ public class Tutors extends Employee implements Schedulable{
 
 
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
