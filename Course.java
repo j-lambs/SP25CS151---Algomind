@@ -1,19 +1,17 @@
 import java.util.ArrayList;
 
-public class Courses {
+public class Course{
     private String courseName;
     private String courseInfo;
     private int courseCode;
-    private String gradeLevel;
-    private ArrayList<String> lessons;
+    private int gradeLevel;
 
     // Constructor
-    public Courses(String courseName, String courseInfo, int courseCode, String gradeLevel) {
+    public Course(String courseName, String courseInfo, int courseCode, int gradeLevel) {
         this.courseName = courseName;
         this.courseInfo = courseInfo;
         this.courseCode = courseCode;
         this.gradeLevel = gradeLevel;
-        this.lessons = new ArrayList<>();
     }
 
     // Getter Methods
@@ -63,7 +61,6 @@ public class Courses {
 
     // Methods to manage lessons
     public void addLesson(String lesson) {
-
         lessons.add(lesson);
         System.out.println("Lesson  should added: " + lesson);
     }

@@ -2,12 +2,12 @@ import java.util.List;
 
 class Student {
     public String studentName;
-    public List<Courses> coursesTaken;
+    public List<Course> coursesTaken;
     public int phoneNo;
     public String email;
-    public String gradeLevel;
+    public int gradeLevel;
   
-    public Student(String studentName, List<Courses> coursesTaken, int phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, List<Course> coursesTaken, int phoneNo, String email, int gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
@@ -30,7 +30,7 @@ class Student {
     }
 
 
-    public void addCourse(Courses course) {
+    public void addCourse(Course course) {
         if (!coursesTaken.contains(course)) {
 
             if (course.getGradeLevel().equals(gradeLevel)) {
@@ -45,7 +45,7 @@ class Student {
         }
     }
 
-    public void removeCourse(Courses course) {
+    public void removeCourse(Course course) {
         if (coursesTaken.contains(course)) {
             coursesTaken.remove(course);
             System.out.println(course + " removed.");
@@ -54,7 +54,7 @@ class Student {
         }
     }
 
-    public boolean isEnrolled(Courses course) {
+    public boolean isEnrolled(Course course) {
         if (coursesTaken.contains(course)) {
             System.out.println(studentName + " is enrolled in " + course);
             return true;
@@ -65,11 +65,14 @@ class Student {
     }
 
 
-    public void enrollStudent(Student student) {
+    public void enrollInCourse(Course course) {
+        if (coursesTaken.contains(course)) {
+
+        }
     }
 
-    public void updateGradeLevel(String newGradeLevel) {
-        if (!newGradeLevel.equals(gradeLevel)) {
+    public void updateGradeLevel(int newGradeLevel) {
+        if (newGradeLevel != gradeLevel) {
             gradeLevel = newGradeLevel;
             System.out.println("Grade level updated to " + newGradeLevel);
         } else {
@@ -77,7 +80,7 @@ class Student {
         }
     }
 
-    public String currentCourse(Session session) {
+    public Course currentCourse(Session session) {
         if (session != null && session.getStudent().equals(this)) {
             return session.getLessonName();
         } else {

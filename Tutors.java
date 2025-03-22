@@ -2,155 +2,80 @@ import java.util.*;
 
 public class Tutors extends Employee implements Schedulable{
     private String tutorEmail;
+    private double payRate;
     private BitSet availability;
-    private List<String> coursesTeaching;
-    private List<String> scheduledSessions;
-    private double rate;
-//    private List<Tutors> tutorList;
-//    private List<Student> students = new ArrayList<>();
-
+    private List<Course> coursesTeaching;
+    private List<Session> scheduledSessions;
 
     public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
-                  String tutorEmail, BitSet availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
+                  String tutorEmail, BitSet availability, List<Course> coursesTeaching) {
+        //Calling parent class constructor
         super(firstName,
                 lastName,
-               tutorEmail,
-               phoneNumber,
+                tutorEmail,
+                phoneNumber,
                 id,
-                payRate,
                 status);
-                // call the construcotr from the employee calss means parent class
-        this.tutorEmail = tutorEmail;
+        this.payRate = payRate;
         this.availability = availability;
         this.coursesTeaching = new ArrayList<>(coursesTeaching);
         this.scheduledSessions = new ArrayList<>();
-//        this.tutorList = tutorList;
-//        this.students = students;
     }
-
-
-//    public String getTutorFirstName() {
-//
-//        return getFirstName;
-//    }
-//    public String getTutorLastName() {
-//
-//    }
-
+    //getters
+    public double getPayRate() {
+        return payRate;
+    }
+    public void setPayRate(double payRate) {
+        this.payRate = payRate;
+    }
     public BitSet getAvailability() {
         return availability;
     }
-
-
-    public String getEmail() {
-        return tutorEmail;
+    public void setAvailability(BitSet availability) {
+        this.availability = availability;
     }
-
-//    public boolean isAvailability() {
-//        return availability;
-//    }
-
-    public List<String> getCourses() {
+    public List<Course> getCourses() {
         return coursesTeaching;
     }
-
-    public List<String> getSessions() {
+    public List<Session> getSessions() {
         return scheduledSessions;
     }
 
-//    public List<Tutors> getTutors() {
-//        return tutorList;
-//    }
-//    public List<Student> getStudents() {
-//        return students;
-//    }
-
-    public void setEmail(String email) {
-        tutorEmail = email;
+    //Setters
+    public void addSession(Session session) {
+        scheduledSessions.add(session);
     }
-
-//    public void setAvailability(boolean available) {
-//        availability = available;
-//    }
-
-    public void setCoursesTeaching(List<String> courses) {
-        for (String s : coursesTeaching = courses) {
-
-        }
-
+    public void removeSession(Session session) {
+        scheduledSessions.remove(session);
     }
-
-   public void addTutor(Tutors name) {
-      tutorList.add(name);
-        System.out.println("Tutor added: " + name.getFullName());
+    public void addTeachableCourse(Course course) {
+        coursesTeaching.add(course);
     }
-
-
 
     // show tutor information
     public void showInformation() {
         super.display_information();
-        System.out.println("Email: " + tutorEmail);
-        System.out.println("Available: " + (availability ))
+        System.out.println("Available: " + (availability));
         System.out.println("Courses: " + coursesTeaching);
         if (scheduledSessions.isEmpty()) {
-            System.out.println("Sessions: Null means nothing");
-        } else {
+            System.out.println("No scheduled sessions");
+        }
+        else {
             System.out.println("Sessions: " + scheduledSessions);
         }
     }
-    // adding students
-    public void addStudent(Student student) {
-        students.add(student);
 
-        System.out.println("Student added: " + student.StudentName());
-
-    }
-
-// showing information student information
-    public void showAllStudents() {
-        if (students.isEmpty()) {
-            System.out.println("No students assigned to this tutor.");
-        } else {
-            System.out.println("Students  going to assigned to  the Tutor: " + getFirstName());
-            for (Student student : students) {
-                student.getStudentInfo();
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>");
-            }
-        }
-    }
-
-
-    public void scheduleSession(String session) {
-        if (availability) {
-            scheduledSessions.add(session);
-            System.out.println("Scheduled: " + session);
-        } else {
-            System.out.println("Tutor not available.");
-        }
-    }
-
-    public void updateSession(String oldSession, String newSession) {
+    public void updateSession(Session oldSession, Session newSession) {
+        addSession(newSession);
         int index = scheduledSessions.indexOf(oldSession);
         if (index != -1) {
-            scheduledSessions.set(index, newSession);
+            removeSession(oldSession);
+            addSession(newSession);
             System.out.println("Updated: " + newSession);
         } else {
-            System.out.println("Session not able to found .");
+            System.out.println("Session was not found.");
         }
     }
-
-    public void showAllTutors() {
-        if (tutorList.isEmpty()) {
-            System.out.println("No tutors available.");
-            return;
-        }
-        for (Tutors tutor : tutorList) {
-            tutor.showInformation();
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
-        }
-    }
-
 
     @Override
     public void positionPayRate() {
@@ -158,11 +83,11 @@ public class Tutors extends Employee implements Schedulable{
     }
 
     @Override
-    double updateGrossPay() {
+    public double updateGrossPay() {
         return 25.0 * 20 * 4;
     }
 
-
+}
 
 
     /* public static void main(String[] args) {

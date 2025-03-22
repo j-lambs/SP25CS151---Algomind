@@ -14,7 +14,7 @@ public class Manager extends Employee {
     }
 
     // Method to add a tutor to the manager's list
-    public void addTutor(Tutors tutor) {
+    public void hireTutor(Tutors tutor) {
         try {
             if (tutor == null) {
                 throw new IllegalArgumentException("Tutor cannot be null.");
@@ -64,7 +64,7 @@ public class Manager extends Employee {
     }
 
     // Method to schedule a session for a tutor
-    public void scheduleSession(Tutors tutor, Student student, Courses course, int startTime, int duration) {
+    public void scheduleSession(Tutors tutor, Student student, Course course, int startTime, int duration) {
         try {
             if (tutor == null || student == null || course == null || startTime <= 0) {
                 throw new IllegalArgumentException("Invalid session parameters.");
@@ -118,8 +118,8 @@ public class Manager extends Employee {
     double updateGrossPay() {
         try {
             // Assuming manager works 40 hours/week, 4 weeks/month
-            double pay = 30.0 * 40 * 4;
-            return pay;
+            double payRate = 30.0 * 40 * 4;
+            return payRate;
         } catch (Exception e) {
             System.out.println("Error calculating gross pay: " + e.getMessage());
             return 0;
