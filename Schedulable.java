@@ -1,8 +1,7 @@
 import java.util.BitSet;
 
 interface Schedulable {
-    void setAvailability(int timeSlot, boolean isAvailable);
-    void updateAvailibility();
+    void setAvailability(int timeStart, int duration, boolean isAvailable);
     boolean isAvailable(int startTime, int duration);
-    String getAvailabilityBitString(BitSet newSchedule);
+    BitSet getAvailabilityBitSet(BitSet newSchedule);
 }
