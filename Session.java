@@ -149,7 +149,7 @@ public class Session implements Schedulable {
                 "Duration: " + this.duration +
                 "End Time: " + this.endTime +
                 "Student: " + this.student.getStudentName() +
-                "Tutor: " + this.tutor.getTutorName() +
+                "Tutor: " + this.tutor.getFirstName() +
                 "Lesson: " + this.lesson
                 );
     }
