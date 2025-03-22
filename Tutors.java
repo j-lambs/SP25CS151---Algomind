@@ -1,40 +1,51 @@
 import java.util.*;
 
-public class Tutors extends Employee {
+public class Tutors extends Employee implements Schedulable{
     private String tutorEmail;
-    private boolean availability;
+    private BitSet availability;
     private List<String> coursesTeaching;
     private List<String> scheduledSessions;
-    private List<Tutors> tutorList;
-    private List<Student> students = new ArrayList<>();
+    private double rate;
+//    private List<Tutors> tutorList;
+//    private List<Student> students = new ArrayList<>();
 
 
-    public Tutors(String firstName, String lastName, int id, Date hireDate, String status, long phoneNumber,
-                  String tutorEmail, boolean availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
+    public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
+                  String tutorEmail, BitSet availability, List<String> coursesTeaching, List<Tutors> tutorList,List<Student> students) {
         super(firstName,
                 lastName,
                tutorEmail,
                phoneNumber,
                 id,
-                hireDate,
+                payRate,
                 status);
                 // call the construcotr from the employee calss means parent class
         this.tutorEmail = tutorEmail;
         this.availability = availability;
         this.coursesTeaching = new ArrayList<>(coursesTeaching);
         this.scheduledSessions = new ArrayList<>();
-        this.tutorList = tutorList;
-        this.students = students;
+//        this.tutorList = tutorList;
+//        this.students = students;
     }
+
+
+//    public String getTutorFirstName() {
+//
+//        return getFirstName;
+//    }
+//    public String getTutorLastName() {
+//
+//    }
+
 
 
     public String getEmail() {
         return tutorEmail;
     }
 
-    public boolean isAvailability() {
-        return availability;
-    }
+//    public boolean isAvailability() {
+//        return availability;
+//    }
 
     public List<String> getCourses() {
         return coursesTeaching;
@@ -44,20 +55,20 @@ public class Tutors extends Employee {
         return scheduledSessions;
     }
 
-    public List<Tutors> getTutors() {
-        return tutorList;
-    }
-    public List<Student> getStudents() {
-        return students;
-    }
+//    public List<Tutors> getTutors() {
+//        return tutorList;
+//    }
+//    public List<Student> getStudents() {
+//        return students;
+//    }
 
     public void setEmail(String email) {
         tutorEmail = email;
     }
 
-    public void setAvailability(boolean available) {
-        availability = available;
-    }
+//    public void setAvailability(boolean available) {
+//        availability = available;
+//    }
 
     public void setCoursesTeaching(List<String> courses) {
         for (String s : coursesTeaching = courses) {

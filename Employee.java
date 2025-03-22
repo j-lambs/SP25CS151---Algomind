@@ -5,7 +5,24 @@ import java.util.Date;
 
 abstract class Employee {
     private final int WORK_HOURS_IN_DAY = 8;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private int id;
+    private String positionTitle = "Unassigned";
+//    private Date hire_date;
+    private String status; // active, inactive
+//    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY); // availability of Employee for every hour in workday
+
+import java.util.Date;
+
+abstract class Employee {
+    private String firstName = null
+
     private String firstName = null;
+
     private String lastName = null;
     private String email = null;
     private String phone = null;
@@ -63,6 +80,9 @@ abstract class Employee {
     }
     protected String getLastName() {
         return lastName;
+    }
+    protected String getFullName(){
+        return firstName + " " + lastName;
     }
     protected int getId() {
         return id;
@@ -138,9 +158,7 @@ abstract class Employee {
         }
     }
 
-    abstract double update_gross_pay(); //for tutor and manager
-    abstract void position_pay_rate();
-
+    abstract void positionPayRate();
     abstract double updateGrossPay(); //for tutor and manager
 
 

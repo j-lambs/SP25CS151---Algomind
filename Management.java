@@ -16,6 +16,17 @@ public class Management {
         this.sessions = new ArrayList<>();
     }
 
+    // Method for adding tutors
+    public void addTutor(Tutors tutor) {
+        this.tutors.add(tutor);
+    }
+
+    //method for removing tutors
+    public void removeTutor(Tutors tutor) {
+        this.tutors.remove(tutor);
+    }
+
+    //method for adding student
     public void addStudent(Student student) {
         students.add(student);
     }
@@ -24,6 +35,21 @@ public class Management {
     public void removeStudent(Student student) {
         students.remove(student);
     }
+
+    // Method to add session
+    public void scheduleSession(long duration, long startTime, Tutors tutor, Student student, String lesson) {
+        // Check if tutor is available at the proposed start time (if desired)
+        boolean isAvailable = tutor.isAvailable((int) startTime, (int) duration);
+
+        if (isAvailable) {
+            Session session = new Session(duration, startTime, tutor, student, lesson);
+            sessions.add(session);
+            System.out.println("Session scheduled for " + student.+ " with " + tutor.getName() + " on " + startTime + " for " + duration + " seconds.");
+        } else {
+            System.out.println("Tutor " + tutor.getName() + " is not available at the requested time.");
+        }
+    }
+
 
     // Method to view all tutors
     public void viewTutors() {
