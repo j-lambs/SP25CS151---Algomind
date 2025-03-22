@@ -28,6 +28,12 @@ public class Tutors extends Employee {
     }
 
 
+    public String getTutorName() {
+        return getFirstName;
+    }
+
+
+
     public String getEmail() {
         return tutorEmail;
     }

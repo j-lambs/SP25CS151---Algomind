@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Student {
+public class Student {
     public String studentName;
     public ArrayList<String> coursesTaken;
     public int phoneNo;
@@ -13,6 +13,13 @@ class Student {
         this.phoneNo = phoneNo;
         this.email = email;
         this.gradeLevel = gradeLevel;
+    }
+
+    /**
+     *
+     */
+    public String getStudentName() {
+        return this.studentName;
     }
 
     public void getStudentInfo() {
