@@ -337,7 +337,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewCourse();
+                    currentStudent.viewCourses();
                     break;
                 case 2:
                     currentStudent.getStudentInfo();
