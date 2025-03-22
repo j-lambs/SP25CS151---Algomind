@@ -1,13 +1,13 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Student {  
     public String studentName;
-    public ArrayList<String> coursesTaken;
+    public List<Courses> coursesTaken;
     public int phoneNo;
     public String email;
     public String gradeLevel;
 
-    public Student(String studentName, ArrayList<String> coursesTaken, int phoneNo, String email, String gradeLevel) {
+    public Student(String studentName, List<Courses> coursesTaken, int phoneNo, String email, String gradeLevel) {
         this.studentName = studentName;
         this.coursesTaken = coursesTaken;
         this.phoneNo = phoneNo;
@@ -30,9 +30,9 @@ public class Student {
     }
 
     public void addCourse(Courses course) {
-        if (!coursesTaken.contains(course.getCourseName())) {
+        if (!coursesTaken.contains(course)) {
             if (course.getGradeLevel().equals(gradeLevel)) {
-                coursesTaken.add(course.getCourseName());
+                coursesTaken.add(course);
                 System.out.println(course.getCourseName() + " added.");
             } else {
                 System.out.println("Cannot enroll in " + course.getCourseName() +
@@ -43,7 +43,7 @@ public class Student {
         }
     }
 
-    public void removeCourse(String course) {
+    public void removeCourse(Courses course) {
         if (coursesTaken.contains(course)) {
             coursesTaken.remove(course);
             System.out.println(course + " removed.");
@@ -52,7 +52,7 @@ public class Student {
         }
     }
 
-    public boolean isEnrolled(String course) {
+    public boolean isEnrolled(Courses course) {
         if (coursesTaken.contains(course)) {
             System.out.println(studentName + " is enrolled in " + course);
             return true;
@@ -60,17 +60,9 @@ public class Student {
             System.out.println(studentName + " is NOT enrolled in " + course);
             return false;
         }
-
-    public void addCourse(String course) {
-        coursesTaken.add(course);
-
     }
 
-    public void updateGradeLevel(String newGradeLevel) {
-        this.gradeLevel = newGradeLevel;
-    }
+    public void enrollStudent(Student student) {
 
-    public void updateEmail(String newEmail) {
-        this.email = newEmail;
     }
 }
