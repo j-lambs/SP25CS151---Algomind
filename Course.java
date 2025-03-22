@@ -1,17 +1,23 @@
 import java.util.ArrayList;
+import java.util.List;
 
-public class Course{
+public class Course {
     private String courseName;
-    private String courseInfo;
+    private String courseSummary;
     private int courseCode;
     private int gradeLevel;
+    private String instructor;
+    private List<Student> students;
 
     // Constructor
-    public Course(String courseName, String courseInfo, int courseCode, int gradeLevel) {
+    public Course(String courseName, String courseSummary,
+                  int courseCode, int gradeLevel, String instructor) {
         this.courseName = courseName;
-        this.courseInfo = courseInfo;
+        this.courseSummary = courseSummary;
         this.courseCode = courseCode;
         this.gradeLevel = gradeLevel;
+        this.instructor = instructor;
+        this.students = new ArrayList<>();
     }
 
     // Getter Methods
@@ -20,79 +26,63 @@ public class Course{
     }
 
     public String getCourseInfo() {
-        return courseInfo;
+        return courseSummary;
     }
 
     public int getCourseCode() {
-
         return courseCode;
     }
 
-    public String getGradeLevel() {
-
+    public int getGradeLevel() {
         return gradeLevel;
     }
 
-    public ArrayList<String> getLessons() {
-
-        return lessons;
+    public String getInstructor() {
+        return instructor;
+    }
+    public List<Student> getStudents() {
+        return students;
     }
 
     // Setter Methods
-    public void setCourseName(String courseName) {
-
+    protected void setCourseName(String courseName) {
         this.courseName = courseName;
     }
 
-    public void setCourseInfo(String courseInfo) {
-
-        this.courseInfo = courseInfo;
+    protected void setCourseInfo(String courseSummary) {
+        this.courseSummary = courseSummary;
     }
 
-    public void setCourseCode(int courseCode) {
-
+    protected void setCourseCode(int courseCode) {
         this.courseCode = courseCode;
     }
 
-    public void setGradeLevel(String gradeLevel) {
-
+    protected void setGradeLevel(int gradeLevel) {
         this.gradeLevel = gradeLevel;
     }
 
-    // Methods to manage lessons
-    public void addLesson(String lesson) {
-        lessons.add(lesson);
-        System.out.println("Lesson  should added: " + lesson);
+    protected void setInstructor(String instructor) {
+        this.instructor = instructor;
     }
-    //methods to remove lessons
-    public void removeLesson(String lesson) {
-        if (lessons.contains(lesson)) {
-            lessons.remove(lesson);
-            System.out.println("Lesson removed: " + lesson);
-        } else {
-            System.out.println("Lesson not found: " + lesson);
-        }
-    }
-    //Update lessons
-    public void updateLesson(String lesson) {
-        if (lessons.contains(lesson)) {
-            lessons.set(lessons.indexOf(lesson), lesson);
-            System.out.println("Lesson update: " + lesson);
-        }
-        else {
-            System.out.println("Lesson not found: " + lesson);
-        }
+    protected void setStudents(List<Student> students) {
+        this.students = students;
     }
 
     //Displaing Course Info
     public void displayCourseInfo() {
         System.out.println("Course: " + courseName + " (Code: " + courseCode + ")");
         System.out.println("Grade Level: " + gradeLevel);
-        System.out.println("Info: " + courseInfo);
-        System.out.println("Lessons:");
-        for (String lesson : lessons) {
-            System.out.println("- " + lesson);
-        }
+        System.out.println("Info: " + courseSummary);
     }
 
+    public void enrollStudent(Student student) {
+        students.add(student);
+    }
+
+    public void disiplineStudent(Student student) {
+        System.out.println("Student disiplined: " + student);
+    }
+
+
 }
+
