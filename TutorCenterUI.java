@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -172,6 +173,24 @@ public class TutorCenterUI {
             System.out.println("New student added successfully!");
         }
     }
+
+    /**
+     * Returns tutor of given targetID
+     * @param managedTutors
+     * @param targetID
+     * @return
+     * @throws Exception
+     */
+    private static Tutors findTutorById(List<Tutors> managedTutors, int targetID) {
+        for (Tutors tutor : managedTutors) {
+            if (tutor.getId() == targetID) {
+                return tutor;
+            }
+        }
+        // Tutor ID not found
+        return null;
+    }
+
     // Fire a Tutor
     private static void fireTutor(Manager manager) {
         System.out.print("Enter tutor ID to fire: ");
@@ -187,9 +206,9 @@ public class TutorCenterUI {
         }
     }
 
-    private static Tutors findTutorByName(String name) {
+    private static Tutors findTutorByName(String name, Manager manager) {
         //Object manager = null;
-        for (Tutors tutor :manager.getTutors ) {
+        for (Tutors tutor : manager.getManagedTutors()) {
             if (tutor.getFullName().equalsIgnoreCase(name)) {
                 return tutor;
             }
@@ -246,6 +265,12 @@ public class TutorCenterUI {
         }
         System.out.println("Tutor not found. Try again.");
         return signInTutor(listOfTutors); // retry
+    }
+
+    private static void viewAllTutors(List<Tutors> listOfTutors) {
+        for (Tutors tutor : listOfTutors) {
+            tutor.display_information();
+        }
     }
 
     // Student Menu
