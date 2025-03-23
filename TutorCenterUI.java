@@ -179,7 +179,6 @@ public class TutorCenterUI {
      * @param managedTutors
      * @param targetID
      * @return
-     * @throws Exception
      */
     private static Tutors findTutorById(List<Tutors> managedTutors, int targetID) {
         for (Tutors tutor : managedTutors) {
@@ -221,7 +220,7 @@ public class TutorCenterUI {
         Tutors currentTutor = signInTutor(listOfTutors);
         while (true) {
             System.out.println("\nTutor Menu");
-            System.out.println("1. View Student Information");
+            System.out.println("1. View All Student Information");
             System.out.println("2. View Session");
             System.out.println("3. Show all Tutors");
             System.out.println("4. Schedule Session");
@@ -232,7 +231,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewStudentInfo(Scanner);
+                    viewAllStudents(students);
                     break;
                 case 2:
                     viewSessions();
@@ -270,6 +269,12 @@ public class TutorCenterUI {
     private static void viewAllTutors(List<Tutors> listOfTutors) {
         for (Tutors tutor : listOfTutors) {
             tutor.display_information();
+        }
+    }
+
+    private static void viewAllStudents(List<Student> students) {
+        for (Student student : students) {
+            student.getStudentInfo();
         }
     }
 
