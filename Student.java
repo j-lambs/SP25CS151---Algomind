@@ -8,7 +8,7 @@ class Student {
     public String email;
     public int gradeLevel;
     private List<String> permanentRecord;
-  
+
     public Student(String studentName, List<Course> currentCourses, int phoneNo, String email, int gradeLevel) {
         this.studentName = studentName;
         this.currentCourses = currentCourses;
