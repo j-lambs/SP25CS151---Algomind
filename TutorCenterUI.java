@@ -147,7 +147,9 @@ public class TutorCenterUI {
         System.out.println("Tutor hired successfully!");
     }
 
-    /** Creates a BitSet for the session's availability based on start time and duration */
+    /**
+     * Creates a BitSet for the session's availability based on start time and duration
+     */
     private static BitSet createNewAvailabilityBitSet(int startTime, int duration) {
         BitSet newAvailabilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
         newAvailabilityBitSet.set(startTime - START_HOUR, startTime - START_HOUR + duration); // Corrected time setting
@@ -210,6 +212,7 @@ public class TutorCenterUI {
 
     /**
      * Returns tutor of given targetID
+     *
      * @param managedTutors
      * @param targetID
      * @return
@@ -255,11 +258,11 @@ public class TutorCenterUI {
         System.out.println("Welcome Tutor " + currentTutor.getFirstName() + "!");
         while (true) {
             System.out.println("\nTutor Menu");
-            System.out.println("1. View All Student Information");
+            System.out.println("1. View Tutor Information");
             System.out.println("2. View Session");
             System.out.println("3. Show all Tutors");
-            System.out.println("4. Schedule Session");
-            System.out.println("5. Update Session");
+            System.out.println();
+            System.out.println("4. Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -275,17 +278,13 @@ public class TutorCenterUI {
                     viewAllTutors(listOfTutors);
                     break;
                 case 4:
-                    scheduleSession();
-                    break;
-                case 5:
-                    updateSession();
-                    break;
+                    return
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
         }
     }
-    
+
     // Sign in for Tutor
     private static Tutors signInTutor(List<Tutors> listOfTutors) {
         System.out.print("Enter Tutor ID: ");
@@ -375,13 +374,16 @@ public class TutorCenterUI {
         manager.scheduleSession(findTutorByName(tutorName, manager),
                 manager.returnStudentByName(studentName),
                 Course.MathCourses.getMathCourse(courseName),
-                startTime, duration)  ;
-
-    private static void updateSession() {
-        // Implement logic for session updates here
+                startTime, duration);
     }
 
-    private static void viewSessions() {
-        // Session view logic
+        private static void updateSession(Manager manager, List<Student> students) {
+
+            // Implement logic for session updates here
+        }
+
+        private static void viewSessions() {
+            // Session view logic
+        }
     }
 }
