@@ -4,8 +4,8 @@ public class Tutors extends Employee {
     private String tutorEmail;
     private double payRate;
     private BitSet availability;
-    private List<Course> coursesTeaching;
-    private List<Session> scheduledSessions;
+    private final List<Course> coursesTeaching;
+    private final List<Session> scheduledSessions;
     private double grossPay;
 
     public Tutors(String firstName, String lastName, int id, double payRate,String status, String phoneNumber,
@@ -23,6 +23,7 @@ public class Tutors extends Employee {
         this.scheduledSessions = new ArrayList<>();
     }
     //getters
+
     public double getPayRate() {
         return payRate;
     }
