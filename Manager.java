@@ -1,11 +1,12 @@
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Manager extends Employee {
-    private final List<Tutors> managedTutors;  // List of tutors the manager manages
-    private final List<Session> sessions;
-    private final List<Student> students = null;
+    private final ArrayList<Tutors> managedTutors;  // List of tutors the manager manages
+    private final ArrayList<Session> sessions;
+    private final ArrayList<Student> students = null;
     private double grossPay;// List of sessions the manager oversees
 
     // Constructor
@@ -15,13 +16,13 @@ public class Manager extends Employee {
         sessions = new ArrayList<>();// Initialize the list of sessions
     }
 
-    public List<Tutors> getManagedTutors() {
+    public ArrayList<Tutors> getManagedTutors() {
         return managedTutors;
     }
-    public List<Session> getSessions() {
+    public ArrayList<Session> getSessions() {
         return sessions;
     }
-    public List<Student> getStudents() { return students; }
+    public ArrayList<Student> getStudents() { return students; }
 
     public void addStudent(Student student) {
         students.add(student);

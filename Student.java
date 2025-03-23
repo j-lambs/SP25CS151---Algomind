@@ -1,14 +1,14 @@
-import java.util.List;
+import java.util.*;
 
 class Student {
     public String studentName;
-    public List<Course> currentCourses;
+    public ArrayList<Course> currentCourses;
     public int phoneNo;
     public String email;
     public int gradeLevel;
     private List<String> permanentRecord;
   
-    public Student(String studentName, List<Course> currentCourses, int phoneNo, String email, int gradeLevel) {
+    public Student(String studentName, ArrayList<Course> currentCourses, int phoneNo, String email, int gradeLevel) {
         this.studentName = studentName;
         this.currentCourses = currentCourses;
         this.phoneNo = phoneNo;

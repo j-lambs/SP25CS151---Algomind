@@ -100,7 +100,7 @@ public class TutorCenterUI {
                     scheduleSession(currentManager);
                     break;
                 case 6:
-                    rescheduleSession(currentManager);
+                    updateSession(currentManager, currentManager.getSessions());
                     break;
                 case 7:
                     return;
@@ -381,7 +381,7 @@ public class TutorCenterUI {
         // Implementation for session scheduling can go here
     }
 
-    private static void updateSession(Manager manager, Tutors tutor) {
+    private static void updateSession(Manager manager, ArrayList<Session> Session) {
         // Implement logic for session updates here
     }
 

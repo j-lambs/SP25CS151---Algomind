@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ public class Course {
     private int courseCode;
     private int gradeLevel;
     private String instructor;
-    private List<Student> students;
+    private ArrayList<Student> students;
 
     // Constructor
     public Course(String courseName, String courseSummary,
@@ -41,7 +42,7 @@ public class Course {
         return instructor;
     }
 
-    public List<Student> getStudents() {
+    public ArrayList<Student> getStudents() {
         return students;
     }
 
@@ -66,7 +67,7 @@ public class Course {
         this.instructor = instructor;
     }
 
-    protected void setStudents(List<Student> students) {
+    protected void setStudents(ArrayList<Student> students) {
         this.students = students;
     }
 

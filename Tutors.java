@@ -5,7 +5,7 @@ public class Tutors extends Employee {
     private double payRate;
     private BitSet availability;
     private final ArrayList<Course> coursesTeaching;
-    private final List<Session> scheduledSessions;
+    private final ArrayList<Session> scheduledSessions;
     private double grossPay;
     private Manager manager;
 
