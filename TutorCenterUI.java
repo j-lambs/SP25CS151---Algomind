@@ -1,10 +1,12 @@
 import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class TutorCenterUI {
+    // Constants
+    private static final int WORK_HOURS_IN_DAY = 8;
+    private static final int START_HOUR = 9;
+    private static final int DEFAULT_SESSION_DURATION = 1;
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -117,9 +119,23 @@ public class TutorCenterUI {
         System.out.print("Enter tutor phone number: ");
         String phoneNumber = scanner.nextLine();
 
-        Tutors newTutor = new Tutors(firstName, lastName, newTutorID, payRate, "active", phoneNumber, firstName + "." + lastName + "@algomind.com", true, new ArrayList<>());
+        System.out.println("Enter start hour.");
+        int startHour = scanner.nextInt();
+        System.out.println("Enter amount of hours they can work.");
+        int durationHours = scanner.nextInt();
+        BitSet workBS = createNewAvailabilityBitSet(startHour, durationHours);
+
+        Tutors newTutor = new Tutors(firstName, lastName, newTutorID, payRate, "active", phoneNumber,
+                firstName + "." + lastName + "@algomind.com", workBS, new ArrayList<>());
         manager.hireTutor(newTutor);
         System.out.println("Tutor hired successfully!");
+    }
+
+    /** Creates a BitSet for the session's availability based on start time and duration */
+    private static BitSet createNewAvailabilityBitSet(int startTime, int duration) {
+        BitSet newAvailabilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
+        newAvailabilityBitSet.set(startTime - START_HOUR, startTime - START_HOUR + duration); // Corrected time setting
+        return newAvailabilityBitSet;
     }
 
     // Generate random ID
