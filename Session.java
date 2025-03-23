@@ -17,8 +17,8 @@ class Session implements Schedulable {
     private int duration;       // duration of session in minutes
     private int startTime;      // start time of session in minutes (from START_HOUR)
     private int endTime;        // end time of session in minutes
-    private Student student;    // student in session
-    private Tutors tutor;        // tutor conducting the session
+    private final Student student;    // student in session
+    private final Tutors tutor;        // tutor conducting the session
     private Course course;      // lesson being taught
     private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
@@ -158,7 +158,6 @@ class Session implements Schedulable {
     public void setAvailability(int timeStart, int duration, boolean isAvailable) {
         if (timeStart < START_HOUR || timeStart + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
             System.out.println("Invalid time slot.");
-            return;
         }
         // Logic for setting tutor availability...
     }

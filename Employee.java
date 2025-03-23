@@ -9,7 +9,7 @@ abstract class Employee {
     private int id = 0;
     //private SimpleDateFormat hireDate;
     private String status = "Unassigned";
-    private BitSet availability = new BitSet(WORK_HOURS_IN_DAY);// active, inactive
+    private final BitSet availability = new BitSet(WORK_HOURS_IN_DAY);// active, inactive
 
 
     //All employee info is known
@@ -88,7 +88,7 @@ abstract class Employee {
         System.out.println("Employee ID: " + getId());
     //    System.out.println("Hire Date: " + getHireDate());
         System.out.println("Status: " + getStatus());
-    };
+    }
 
 
     // Set availability for a specific 30-minute slot
