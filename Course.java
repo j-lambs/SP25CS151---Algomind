@@ -25,7 +25,7 @@ public class Course {
         return courseName;
     }
 
-    public String getCourseInfo() {
+    public String getCourseSumary() {
         return courseSummary;
     }
 
@@ -40,6 +40,7 @@ public class Course {
     public String getInstructor() {
         return instructor;
     }
+
     public List<Student> getStudents() {
         return students;
     }
@@ -64,6 +65,7 @@ public class Course {
     protected void setInstructor(String instructor) {
         this.instructor = instructor;
     }
+
     protected void setStudents(List<Student> students) {
         this.students = students;
     }
@@ -79,10 +81,45 @@ public class Course {
         students.add(student);
     }
 
-    public void disiplineStudent(Student student) {
-        System.out.println("Student disiplined: " + student);
+    public static class MathCourses {
+
+        // Method to return the list of available math courses
+        public static List<Course> getMathCourses() {
+            List<Course> mathCourses = new ArrayList<>();
+
+            // Add the math courses to the list
+            mathCourses.add(new Course("Calculus I", "Introduction to calculus, limits, and derivatives.",
+                    101, 1, "Dr. John Doe"));
+            mathCourses.add(new Course("Calculus II", "Continuation of Calculus I, integration techniques, and applications.",
+                    102, 1, "Dr. John Doe"));
+            mathCourses.add(new Course("Calculus III", "Advanced calculus with multivariable functions.",
+                    201, 2, "Dr. Jane Smith"));
+            mathCourses.add(new Course("Linear Algebra", "Study of vectors, matrices, and systems of linear equations.",
+                    202, 2, "Dr. Mark Lee"));
+            mathCourses.add(new Course("Discrete Mathematics", "Introduction to logic, set theory, combinatorics, and graph theory.",
+                    301, 3, "Dr. Emily White"));
+            mathCourses.add(new Course("Abstract Algebra", "Study of algebraic structures such as groups, rings, and fields.",
+                    302, 3, "Dr. Alan Brown"));
+            mathCourses.add(new Course("Probability and Statistics", "An introduction to probability theory and statistical methods.",
+                    401, 4, "Dr. Sophie Green"));
+            mathCourses.add(new Course("Differential Equations", "Study of ordinary differential equations and their applications.",
+                    402, 3, "Dr. Richard Black"));
+
+            return mathCourses;
+        }
+        public static Course getMathCourse(String courseName) {
+            for (int i = 0; i < getMathCourses().size(); i++) {
+                if (getMathCourses().get(i).getCourseName().equals(courseName)) {
+                    return getMathCourses().get(i);
+                }
+            }
+            return null;
+        }
     }
 
+    public void displayMathCourses() {
+        System.out.println("Math courses: " + MathCourses.getMathCourses());
+    }
 
 }
 
