@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class TutorCenterUI {
@@ -278,7 +279,7 @@ public class TutorCenterUI {
                     viewAllTutors(listOfTutors);
                     break;
                 case 4:
-                    return
+                    return;
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
@@ -377,13 +378,12 @@ public class TutorCenterUI {
                 startTime, duration);
     }
 
-        private static void updateSession(Manager manager, List<Student> students) {
+    private static void updateSession(Manager manager, ArrayList<Session> session) {
 
-            // Implement logic for session updates here
-        }
+        // Implement logic for session updates here
+    }
 
-        private static void viewSessions() {
-            // Session view logic
-        }
+    private static void viewSessions() {
+        // Session view logic
     }
 }
