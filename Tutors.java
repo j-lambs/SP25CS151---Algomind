@@ -7,9 +7,10 @@ public class Tutors extends Employee {
     private final List<Course> coursesTeaching;
     private final List<Session> scheduledSessions;
     private double grossPay;
+    private Manager manager;
 
     public Tutors(String firstName, String lastName, int id, double payRate, String status, String phoneNumber,
-                  String tutorEmail, boolean availability, ArrayList<String> coursesTeaching) {
+                  String tutorEmail, BitSet availability, ArrayList<Course> coursesTeaching) {
         //Calling parent class constructor
         super(firstName,
                 lastName,
