@@ -91,6 +91,12 @@ public class TutorCenterUI {
                     addNewStudent(students);
                     break;
                 case 5:
+                    scheduleSession(currentManager);
+                    break;
+                case 6:
+                    updateSession(currentManager, currentManager.getSessions());
+                    break;
+                case 7:
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
@@ -260,10 +266,10 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewAllStudents(students);
+                    currentTutor.showInformation();
                     break;
                 case 2:
-                    viewSessions();
+                    currentTutor.getSessions();
                     break;
                 case 3:
                     viewAllTutors(listOfTutors);
@@ -354,9 +360,22 @@ public class TutorCenterUI {
         // Implementation of lesson update can be added here
     }
 
-    private static void scheduleSession() {
-        // Implementation for session scheduling can go here
-    }
+    private static void scheduleSession(Manager manager) {
+        System.out.print("Please enter the student's name: ");
+        String studentName = scanner.nextLine();
+        System.out.print("Please enter the tutor's name: ");
+        String tutorName = scanner.nextLine();
+        System.out.println("What course is this session for: ");
+        String courseName = scanner.nextLine();
+        System.out.print("What is the start time: ");
+        int startTime = scanner.nextInt();
+        System.out.print("What is the duration: ");
+        int duration = scanner.nextInt();
+
+        manager.scheduleSession(findTutorByName(tutorName, manager),
+                manager.returnStudentByName(studentName),
+                Course.MathCourses.getMathCourse(courseName),
+                startTime, duration)  ;
 
     private static void updateSession() {
         // Implement logic for session updates here

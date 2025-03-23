@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.*;
 
 class Student {
     public String studentName;
@@ -9,6 +9,7 @@ class Student {
     private List<String> permanentRecord;
   
     public Student(String studentName, List<Course> currentCourses, String phoneNo, String email, int gradeLevel) {
+
         this.studentName = studentName;
         this.currentCourses = currentCourses;
         this.phoneNo = phoneNo;
