@@ -75,7 +75,8 @@ public class TutorCenterUI {
             System.out.println("4. Add New Student");
             System.out.println("5. Add New Manager");
             System.out.println("6. Create New Session ");
-            System.out.println("7. Go Back");
+            System.out.println("7. Update Session ");
+            System.out.println("8. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -94,17 +95,47 @@ public class TutorCenterUI {
                     addNewStudent(students);
                     break;
                 case 5:
+                    addNewManager(listOfManagers);
+                case 6:
                     scheduleSession(currentManager);
                     break;
-                case 6:
+                case 7:
                     updateSession(currentManager, currentManager.getSessions());
                     break;
-                case 7:
+                case 8:
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
         }
+    }
+
+    private static void addNewManager(ArrayList<Manager> listOfManagers) {
+        System.out.print("Enter manager first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Enter manager last name: ");
+        String lastName = scanner.nextLine();
+        System.out.print("Enter manager gross pay: ");
+        double grossPay = scanner.nextDouble();
+        scanner.nextLine();
+
+        int newID = generateNewID();
+        System.out.print("Enter manager phone number: ");
+        String phoneNumber = scanner.nextLine();
+
+        System.out.println("Enter start hour.");
+        int startHour = scanner.nextInt();
+        System.out.println("Enter amount of hours they can work.");
+        int durationHours = scanner.nextInt();
+        BitSet workBS = createNewAvailabilityBitSet(startHour, durationHours);
+
+//        Manager newManager = new Manager(firstName, lastName, newID, grossPay, "active", phoneNumber,
+//                firstName + "." + lastName + "@algomind.com", workBS, new ArrayList<>());
+        Manager newManager = new Manager(firstName, lastName, firstName + "." + lastName + "@algomind.com",
+                phoneNumber, newID, "active");
+        listOfManagers.add(newManager);
+
+        System.out.println("Manager hired successfully!");
     }
 
 
