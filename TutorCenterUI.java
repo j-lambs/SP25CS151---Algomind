@@ -10,9 +10,9 @@ public class TutorCenterUI {
 
     public static void main(String[] args) {
         // Create some initial lists
-        List<Tutors> listOfTutors = new ArrayList<>();
-        List<Manager> listOfManagers = new ArrayList<>();
-        List<Student> listOfStudents = new ArrayList<>();
+        ArrayList<Tutors> listOfTutors = new ArrayList<>();
+        ArrayList<Manager> listOfManagers = new ArrayList<>();
+        ArrayList<Student> listOfStudents = new ArrayList<>();
 
         // Example: Add 2 managers for the sake of demonstration
         Manager manager1 = new Manager("Jane", "Doe", "jane.doe@algomind.com",
@@ -45,7 +45,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    showManagerMenu(listOfManagers);
+                    showManagerMenu(listOfManagers, listOfStudents);
                     break;
                 case 2:
                     showTutorMenu(listOfTutors, listOfManagers, listOfStudents);
@@ -63,7 +63,7 @@ public class TutorCenterUI {
     }
 
     // Manager Menu
-    private static void showManagerMenu(List<Manager> listOfManagers) {
+    private static void showManagerMenu(ArrayList<Manager> listOfManagers, ArrayList<Student> students) {
         Manager currentManager = signInManager(listOfManagers);
         System.out.println("Welcome Manager " + currentManager.getFirstName() + "!");
         while (true) {
@@ -88,7 +88,7 @@ public class TutorCenterUI {
                     viewTutors(currentManager);
                     break;
                 case 4:
-                    addNewStudent();
+                    addNewStudent(students);
                     break;
                 case 5:
                     return;
@@ -167,7 +167,7 @@ public class TutorCenterUI {
     }
 
     // Add a new student
-    private static void addNewStudent() {
+    private static void addNewStudent(ArrayList<Student> students) {
         System.out.print("Enter student's name: ");
         String name = scanner.nextLine();
 
@@ -196,6 +196,7 @@ public class TutorCenterUI {
             }
 
             Student newStudent = new Student(name, studentCourses, phoneNumber, email, gradeLevel);
+            students.add(newStudent);
 
             System.out.println("New student added successfully!");
         }
