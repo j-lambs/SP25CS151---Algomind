@@ -91,6 +91,12 @@ public class TutorCenterUI {
                     addNewStudent(students);
                     break;
                 case 5:
+                    scheduleSession(currentManager);
+                    break;
+                case 6:
+                    updateSession(currentManager, currentManager.getSessions());
+                    break;
+                case 7:
                     return;
                 default:
                     System.out.println("Invalid choice. Try again.");
@@ -260,10 +266,10 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewAllStudents(students);
+                    currentTutor.showInformation();
                     break;
                 case 2:
-                    viewSessions();
+                    currentTutor.getSessions();
                     break;
                 case 3:
                     viewAllTutors(listOfTutors);
@@ -357,8 +363,7 @@ public class TutorCenterUI {
     private static void scheduleSession() {
         // Implementation for session scheduling can go here
     }
-
-    private static void updateSession() {
+    private static void updateSession(Manager manager, ArrayList<Session> Session) {
         // Implement logic for session updates here
     }
 
