@@ -14,13 +14,23 @@ public class TutorCenterUI {
         List<Manager> listOfManagers = new ArrayList<>();
         List<Student> listOfStudents = new ArrayList<>();
 
-        // Example: Add one manager for the sake of demonstration
+        // Example: Add 2 managers for the sake of demonstration
         Manager manager1 = new Manager("Jane", "Doe", "jane.doe@algomind.com",
                 "650888999", 1, "active");
         listOfManagers.add(manager1);
         Manager manager2 = new Manager("John", "Doe", "john.doe@algomind.com",
                 "6504567893", 2, "active");
         listOfManagers.add(manager2);
+        // Add 2 tutors for demo
+        BitSet aliceSchedule = createNewAvailabilityBitSet(9, 4);
+        ArrayList<Course> aliceCourses = new ArrayList<>(); ArrayList<Course> bobCourses = new ArrayList<>();
+        BitSet bobSchedule = createNewAvailabilityBitSet(13, 4);
+        Tutors alice = new Tutors("Alice", "Smith", 100, 20, "active",
+                        "4089091111", "alice.smith@algomind.com", aliceSchedule, aliceCourses);
+        Tutors bob = new Tutors("Bob", "Builder", 101, 18, "active",
+                "5105557777", "bob.builder@algomind.com", bobSchedule, bobCourses);
+        listOfTutors.add(alice); listOfTutors.add(bob);
+
 
         // Main loop
         while (true) {
@@ -146,6 +156,7 @@ public class TutorCenterUI {
 
     // View all tutors
     private static void viewTutors(Manager currentManager) {
+        System.out.println();
         if (currentManager.getManagedTutors().isEmpty()) {
             System.out.println("No tutors available.");
         } else {
