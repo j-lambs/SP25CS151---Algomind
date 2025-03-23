@@ -172,6 +172,24 @@ public class TutorCenterUI {
             System.out.println("New student added successfully!");
         }
     }
+
+    /**
+     * Returns tutor of given targetID
+     * @param managedTutors
+     * @param targetID
+     * @return
+     * @throws Exception
+     */
+    private static Tutors findTutorById(List<Tutors> managedTutors, int targetID) {
+        for (Tutors tutor : managedTutors) {
+            if (tutor.getId() == targetID) {
+                return tutor;
+            }
+        }
+        // Tutor ID not found
+        return null;
+    }
+
     // Fire a Tutor
     private static void fireTutor(Manager manager) {
         System.out.print("Enter tutor ID to fire: ");
