@@ -1,10 +1,11 @@
-import java.awt.image.AreaAveragingScaleFilter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class TutorCenterUI {
+    // Constants
+    private static final int WORK_HOURS_IN_DAY = 8;
+    private static final int START_HOUR = 9;
+    private static final int DEFAULT_SESSION_DURATION = 1;
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -13,13 +14,23 @@ public class TutorCenterUI {
         List<Manager> listOfManagers = new ArrayList<>();
         List<Student> listOfStudents = new ArrayList<>();
 
-        // Example: Add one manager for the sake of demonstration
+        // Example: Add 2 managers for the sake of demonstration
         Manager manager1 = new Manager("Jane", "Doe", "jane.doe@algomind.com",
                 "650888999", 1, "active");
         listOfManagers.add(manager1);
         Manager manager2 = new Manager("John", "Doe", "john.doe@algomind.com",
                 "6504567893", 2, "active");
         listOfManagers.add(manager2);
+        // Add 2 tutors for demo
+        BitSet aliceSchedule = createNewAvailabilityBitSet(9, 4);
+        ArrayList<Course> aliceCourses = new ArrayList<>(); ArrayList<Course> bobCourses = new ArrayList<>();
+        BitSet bobSchedule = createNewAvailabilityBitSet(13, 4);
+        Tutors alice = new Tutors("Alice", "Smith", 100, 20, "active",
+                        "4089091111", "alice.smith@algomind.com", aliceSchedule, aliceCourses);
+        Tutors bob = new Tutors("Bob", "Builder", 101, 18, "active",
+                "5105557777", "bob.builder@algomind.com", bobSchedule, bobCourses);
+        listOfTutors.add(alice); listOfTutors.add(bob);
+
 
         // Main loop
         while (true) {
@@ -58,6 +69,7 @@ public class TutorCenterUI {
     // Manager Menu
     private static void showManagerMenu(List<Manager> listOfManagers) {
         Manager currentManager = signInManager(listOfManagers);
+        System.out.println("Welcome Manager " + currentManager.getFirstName() + "!");
         while (true) {
             System.out.println("\nManager Menu");
             System.out.println("1. Hire Tutor");
@@ -129,9 +141,23 @@ public class TutorCenterUI {
         System.out.print("Enter tutor phone number: ");
         String phoneNumber = scanner.nextLine();
 
-        Tutors newTutor = new Tutors(firstName, lastName, newTutorID, payRate, "active", phoneNumber, firstName + "." + lastName + "@algomind.com", true, new ArrayList<>());
+        System.out.println("Enter start hour.");
+        int startHour = scanner.nextInt();
+        System.out.println("Enter amount of hours they can work.");
+        int durationHours = scanner.nextInt();
+        BitSet workBS = createNewAvailabilityBitSet(startHour, durationHours);
+
+        Tutors newTutor = new Tutors(firstName, lastName, newTutorID, payRate, "active", phoneNumber,
+                firstName + "." + lastName + "@algomind.com", workBS, new ArrayList<>());
         manager.hireTutor(newTutor);
         System.out.println("Tutor hired successfully!");
+    }
+
+    /** Creates a BitSet for the session's availability based on start time and duration */
+    private static BitSet createNewAvailabilityBitSet(int startTime, int duration) {
+        BitSet newAvailabilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
+        newAvailabilityBitSet.set(startTime - START_HOUR, startTime - START_HOUR + duration); // Corrected time setting
+        return newAvailabilityBitSet;
     }
 
     // Generate random ID
@@ -142,6 +168,7 @@ public class TutorCenterUI {
 
     // View all tutors
     private static void viewTutors(Manager currentManager) {
+        System.out.println();
         if (currentManager.getManagedTutors().isEmpty()) {
             System.out.println("No tutors available.");
         } else {
@@ -191,7 +218,6 @@ public class TutorCenterUI {
      * @param managedTutors
      * @param targetID
      * @return
-     * @throws Exception
      */
     private static Tutors findTutorById(List<Tutors> managedTutors, int targetID) {
         for (Tutors tutor : managedTutors) {
@@ -231,9 +257,10 @@ public class TutorCenterUI {
     // Tutor Menu
     private static void showTutorMenu(List<Tutors> listOfTutors, List<Manager> listOfManagers, List<Student> students) {
         Tutors currentTutor = signInTutor(listOfTutors);
+        System.out.println("Welcome Tutor " + currentTutor.getFirstName() + "!");
         while (true) {
             System.out.println("\nTutor Menu");
-            System.out.println("1. View Student Information");
+            System.out.println("1. View Tutor Information");
             System.out.println("2. View Session");
             System.out.println("3. Show all Tutors");
             System.out.println("5. Update Session");
@@ -243,7 +270,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    viewStudentInfo();
+                    currentTutor.
                     break;
                 case 2:
                     viewSessions();
@@ -282,9 +309,16 @@ public class TutorCenterUI {
         }
     }
 
+    private static void viewAllStudents(List<Student> students) {
+        for (Student student : students) {
+            student.getStudentInfo();
+        }
+    }
+
     // Student Menu
     private static void showStudentMenu(List<Student> students) {
         Student currentStudent = signInStudent(students);
+        System.out.println("Welcome Student " + currentStudent.getStudentName() + "!");
         while (true) {
             System.out.println("\nStudent Menu");
             System.out.println("1. View Courses");

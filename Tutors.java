@@ -4,7 +4,7 @@ public class Tutors extends Employee {
     private String tutorEmail;
     private double payRate;
     private BitSet availability;
-    private final List<Course> coursesTeaching;
+    private final ArrayList<Course> coursesTeaching;
     private final List<Session> scheduledSessions;
     private double grossPay;
     private Manager manager;
@@ -20,7 +20,7 @@ public class Tutors extends Employee {
                 status);
         this.payRate = payRate;
         this.availability = availability;
-        this.coursesTeaching = new ArrayList<>(coursesTeaching);
+        this.coursesTeaching = new ArrayList<>();
         this.scheduledSessions = new ArrayList<>();
     }
     //getters
