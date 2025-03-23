@@ -75,7 +75,7 @@ public class TutorCenterUI {
             System.out.println("4. Add New Student");
             System.out.println("5. Add New Manager");
             System.out.println("6. Create New Session ");
-            System.out.println("5. Go Back");
+            System.out.println("7. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
