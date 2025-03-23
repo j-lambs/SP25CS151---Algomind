@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class TutorCenterUI {
@@ -72,6 +73,8 @@ public class TutorCenterUI {
             System.out.println("2. Fire Tutor");
             System.out.println("3. View Tutors");
             System.out.println("4. Add New Student");
+            System.out.println("5. Add New Manager");
+            System.out.println("6. Create New Session ");
             System.out.println("5. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -193,7 +196,7 @@ public class TutorCenterUI {
         String email = scanner.nextLine();
 
         // Assume courses taken by the student are added here
-        List<Course> studentCourses = new ArrayList<>();
+        ArrayList<Course> studentCourses = new ArrayList<>();
         System.out.println("Enter current courses taken by the student(separate by comma)");
         String coursesInput = scanner.nextLine();
 
@@ -278,7 +281,7 @@ public class TutorCenterUI {
                     viewAllTutors(listOfTutors);
                     break;
                 case 4:
-                    return
+                    return;
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
@@ -377,13 +380,12 @@ public class TutorCenterUI {
                 startTime, duration);
     }
 
-        private static void updateSession(Manager manager, List<Student> students) {
+    private static void updateSession(Manager manager, ArrayList<Session> session) {
 
-            // Implement logic for session updates here
-        }
+        // Implement logic for session updates here
+    }
 
-        private static void viewSessions() {
-            // Session view logic
-        }
+    private static void viewSessions() {
+        // Session view logic
     }
 }
