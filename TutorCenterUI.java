@@ -270,10 +270,10 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    currentTutor.
+                    currentTutor.showInformation();
                     break;
                 case 2:
-                    viewSessions();
+                    currentTutor.getSessions();
                     break;
                 case 3:
                     viewAllTutors(listOfTutors);

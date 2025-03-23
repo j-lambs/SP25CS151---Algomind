@@ -5,7 +5,7 @@ import java.util.List;
 public class Manager extends Employee {
     private final List<Tutors> managedTutors;  // List of tutors the manager manages
     private final List<Session> sessions;
-    private final List<Student> students;
+    private final List<Student> students = null;
     private double grossPay;// List of sessions the manager oversees
 
     // Constructor
