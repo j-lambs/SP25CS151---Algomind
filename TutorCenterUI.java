@@ -1,4 +1,3 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -63,7 +62,7 @@ public class TutorCenterUI {
                     hireTutor(listOfTutors, currentManager);
                     break;
                 case 2:
-                    fireTutor();
+                    fireTutor(listOfTutors,currentManager);
                     break;
                 case 3:
                     viewTutors(listOfTutors);
@@ -78,6 +77,8 @@ public class TutorCenterUI {
         }
     }
 
+
+
     /**
      * signIn for Managers
      * @param listOfManagers
@@ -85,7 +86,7 @@ public class TutorCenterUI {
      */
     private static Manager signIn(ArrayList<Manager> listOfManagers) {
         Scanner employeeMenuScanner = new Scanner(System.in);
-        Manager currentManager;
+        Manager currentManager = null;
         boolean validEmp = false;
 
         while (!validEmp) {
@@ -126,7 +127,7 @@ public class TutorCenterUI {
         String email = scanner.nextLine();
 
         boolean moreCourses = true;
-        List<Courses> coursesTaken = new ArrayList<>();
+        List<String> coursesTaken = new ArrayList<>();
         while (moreCourses) {
             System.out.println("Enter the next course you've taken. Press 0 (zero) when done.");
             String nextCourse = scanner.nextLine();
@@ -148,7 +149,7 @@ public class TutorCenterUI {
      */
     private static Tutors signIn(ArrayList<Tutors> listOfTutors) {
         Scanner employeeMenuScanner = new Scanner(System.in);
-        Tutors currentTutor;
+        Tutors currentTutor = null;
         boolean validEmp = false;
 
         while (!validEmp) {
@@ -175,6 +176,7 @@ public class TutorCenterUI {
             employeeMenuScanner.close();
             return currentTutor;
         }
+        return currentTutor;
     }
 
     private static Student signIn(ArrayList<Student> students, String studentName) {
@@ -211,7 +213,7 @@ public class TutorCenterUI {
         }
     }
 
-    private static void hireTutor(ArrayList<Tutors> tutorsArrayList, Manager manager) {
+    private static void hireTutor(ArrayList<Tutors> listOfTutors, Manager manager) {
         // Get tutor info
         System.out.print("Enter tutor first name: ");
         String firstName = scanner.nextLine();
@@ -262,7 +264,7 @@ public class TutorCenterUI {
         return courses;
     }
 
-    private static void fireTutor() {
+    private static void fireTutor(ArrayList<Tutors> listOfTutors, Manager manager ) {
         System.out.print("Enter tutor name to fire: ");
         String name = scanner.nextLine();
         // Assuming the manager has the method to find tutor by name
@@ -276,8 +278,9 @@ public class TutorCenterUI {
     }
 
     private static Tutors findTutorByName(String name) {
-        for (Tutors tutor : manager.getTutors()) {
-            if (tutor.getName().equals(name)) {
+        //Object manager = null;
+        for (Tutors tutor :manager.getTutors ) {
+            if (tutor.getFullName().equalsIgnoreCase(name)) {
                 return tutor;
             }
         }
@@ -334,8 +337,8 @@ public class TutorCenterUI {
         student.getStudentInfo();
     }
 
-    private static void viewSessions() {
-    }
+    //private static void viewSessions() {
+    //}
 
     private static void updateLesson() {
     }
