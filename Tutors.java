@@ -4,12 +4,13 @@ public class Tutors extends Employee {
     private String tutorEmail;
     private double payRate;
     private BitSet availability;
-    private List<Course> coursesTeaching;
-    private List<Session> scheduledSessions;
+    private final ArrayList<Course> coursesTeaching;
+    private final List<Session> scheduledSessions;
     private double grossPay;
+    private Manager manager;
 
     public Tutors(String firstName, String lastName, int id, double payRate, String status, String phoneNumber,
-                  String tutorEmail, boolean availability, ArrayList<String> coursesTeaching) {
+                  String tutorEmail, BitSet availability, ArrayList<Course> coursesTeaching) {
         //Calling parent class constructor
         super(firstName,
                 lastName,
@@ -19,10 +20,11 @@ public class Tutors extends Employee {
                 status);
         this.payRate = payRate;
         this.availability = availability;
-        this.coursesTeaching = new ArrayList<>(coursesTeaching);
+        this.coursesTeaching = new ArrayList<>();
         this.scheduledSessions = new ArrayList<>();
     }
     //getters
+
     public double getPayRate() {
         return payRate;
     }
