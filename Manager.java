@@ -1,9 +1,11 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Manager extends Employee {
     private final List<Tutors> managedTutors;  // List of tutors the manager manages
     private final List<Session> sessions;
+    private final List<Student> students;
     private double grossPay;// List of sessions the manager oversees
 
     // Constructor
@@ -19,6 +21,15 @@ public class Manager extends Employee {
     public List<Session> getSessions() {
         return sessions;
     }
+    public List<Student> getStudents() { return students; }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
+
 
     // Method to add a tutor to the manager's list
     public void hireTutor(Tutors tutor) {
@@ -135,6 +146,18 @@ public class Manager extends Employee {
         for (Tutors tutor : managedTutors) {
             if (tutor.getFullName().equals(tutorName)) {
                 return tutor;
+            }
+        }
+        return null;
+    }
+
+    public List<Student> returnStudents(){
+        return students;
+    }
+    public Student returnStudentByName(String studentName) {
+        for (Student student : students) {
+            if (student.getStudentName().equals(studentName)) {
+                return student;
             }
         }
         return null;
