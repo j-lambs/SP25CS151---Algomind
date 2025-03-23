@@ -1,4 +1,3 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 public class TutorCenterUI {
@@ -56,6 +55,7 @@ public class TutorCenterUI {
     // Manager Menu
     private static void showManagerMenu(List<Manager> listOfManagers) {
         Manager currentManager = signInManager(listOfManagers);
+        System.out.println("Welcome Manager " + currentManager.getFirstName() + "!");
         while (true) {
             System.out.println("\nManager Menu");
             System.out.println("1. Hire Tutor");
@@ -234,6 +234,7 @@ public class TutorCenterUI {
     // Tutor Menu
     private static void showTutorMenu(List<Tutors> listOfTutors, List<Manager> listOfManagers, List<Student> students) {
         Tutors currentTutor = signInTutor(listOfTutors);
+        System.out.println("Welcome Tutor " + currentTutor.getFirstName() + "!");
         while (true) {
             System.out.println("\nTutor Menu");
             System.out.println("1. View All Student Information");
@@ -297,6 +298,7 @@ public class TutorCenterUI {
     // Student Menu
     private static void showStudentMenu(List<Student> students) {
         Student currentStudent = signInStudent(students);
+        System.out.println("Welcome Student " + currentStudent.getStudentName() + "!");
         while (true) {
             System.out.println("\nStudent Menu");
             System.out.println("1. View Courses");
