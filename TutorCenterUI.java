@@ -1,4 +1,7 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class TutorCenterUI {
     private static Scanner scanner = new Scanner(System.in);
@@ -82,6 +85,7 @@ public class TutorCenterUI {
         }
     }
 
+
     // Sign in for Manager
     private static Manager signInManager(List<Manager> listOfManagers) {
         System.out.print("Enter Manager ID: ");
@@ -96,6 +100,7 @@ public class TutorCenterUI {
         System.out.println("Manager not found. Try again.");
         return signInManager(listOfManagers); // retry
     }
+
 
     // Hire a Tutor
     private static void hireTutor(Manager manager) {
@@ -182,10 +187,10 @@ public class TutorCenterUI {
         }
     }
 
-    // Find tutor by ID
-    private static Tutors findTutorById(List<Tutors> tutors, int tutorID) {
-        for (Tutors tutor : tutors) {
-            if (tutor.getId() == tutorID) {
+    private static Tutors findTutorByName(String name) {
+        //Object manager = null;
+        for (Tutors tutor :manager.getTutors ) {
+            if (tutor.getFullName().equalsIgnoreCase(name)) {
                 return tutor;
             }
         }
@@ -227,7 +232,7 @@ public class TutorCenterUI {
             }
         }
     }
-
+    
     // Sign in for Tutor
     private static Tutors signInTutor(List<Tutors> listOfTutors) {
         System.out.print("Enter Tutor ID: ");
