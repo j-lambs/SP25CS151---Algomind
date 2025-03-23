@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -246,6 +247,12 @@ public class TutorCenterUI {
         }
         System.out.println("Tutor not found. Try again.");
         return signInTutor(listOfTutors); // retry
+    }
+
+    private static void viewAllTutors(List<Tutors> listOfTutors) {
+        for (Tutors tutor : listOfTutors) {
+            tutor.display_information();
+        }
     }
 
     // Student Menu
