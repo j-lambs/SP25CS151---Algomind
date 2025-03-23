@@ -187,9 +187,9 @@ public class TutorCenterUI {
         }
     }
 
-    private static Tutors findTutorByName(String name) {
+    private static Tutors findTutorByName(String name, Manager manager) {
         //Object manager = null;
-        for (Tutors tutor :manager.getTutors ) {
+        for (Tutors tutor : manager.getManagedTutors()) {
             if (tutor.getFullName().equalsIgnoreCase(name)) {
                 return tutor;
             }
