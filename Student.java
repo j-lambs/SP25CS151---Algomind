@@ -30,6 +30,8 @@ class Student {
         }
     }
 
+
+
     public void viewCourses() {
         System.out.println(studentName + "'s courses: ");
         for (Course course : currentCourses) {

@@ -68,9 +68,9 @@ class Session implements Schedulable {
         BitSet tutorAvailability = tutor.getAvailability();
 
         boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailability);
-        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),getCourse());
+        //boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),getCourse());
 
-        return tutorAvailable && tutorCanTeachSubject;
+        return tutorAvailable ;
     }
 
     /** Creates a BitSet for the session's availability based on start time and duration */

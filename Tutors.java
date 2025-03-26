@@ -37,10 +37,10 @@ public class Tutors extends Employee {
     public void setAvailability(BitSet availability) {
         this.availability = availability;
     }
-    public List<Course> getCourses() {
+    public ArrayList<Course> getCourses() {
         return coursesTeaching;
     }
-    public List<Session> getSessions() {
+    public ArrayList<Session> getSessions() {
         return scheduledSessions;
     }
 
@@ -59,12 +59,19 @@ public class Tutors extends Employee {
     public void showInformation() {
         super.display_information();
         System.out.println("Available: " + (availability));
-        System.out.println("Courses: " + coursesTeaching);
+        System.out.println("Courses: ");
+        displayCourses();
         if (scheduledSessions.isEmpty()) {
             System.out.println("No scheduled sessions");
         }
         else {
             System.out.println("Sessions: " + scheduledSessions);
+        }
+    }
+
+    public void displayCourses() {
+        for (Course course : coursesTeaching) {
+            System.out.println(course.getCourseName());
         }
     }
 

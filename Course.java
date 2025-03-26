@@ -9,6 +9,7 @@ public class Course {
     private int gradeLevel;
     private String instructor;
     private ArrayList<Student> students;
+    private ArrayList<Course> courses;
 
     // Constructor
     public Course(String courseName, String courseSummary,
@@ -116,7 +117,7 @@ public class Course {
             }
             return null;
         }
-    }nnl  =pp==\/
+    }
 
     public void displayMathCourses() {
         System.out.println("Math courses: " + MathCourses.getMathCourses());

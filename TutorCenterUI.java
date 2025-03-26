@@ -15,6 +15,7 @@ public class TutorCenterUI {
         ArrayList<Manager> listOfManagers = new ArrayList<>();
         ArrayList<Student> listOfStudents = new ArrayList<>();
         ArrayList<Session> listOfSessions = new ArrayList<>();
+        ArrayList<Course> listOfCourses = new ArrayList<>();
 
         // Example: Add 2 managers for the sake of demonstration
         Manager manager1 = new Manager("Jane", "Doe", "jane.doe@algomind.com",
@@ -55,6 +56,8 @@ public class TutorCenterUI {
 
         student2CurrentCourses.add(calc1);
         student2CurrentCourses.add(discreteMath);
+        listOfCourses.add(linearAlgebra);
+        listOfCourses.add(discreteMath);
 
         Student student1 = new Student("mccay", student1CurrentCourses, "8881019999",
                 "mccay.beckrhode@gmail.com", 2);
@@ -76,7 +79,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    showManagerMenu(listOfManagers, listOfStudents, listOfTutors, listOfSessions);
+                    showManagerMenu(listOfManagers, listOfStudents, listOfTutors, listOfSessions, listOfCourses);
                     break;
                 case 2:
                     showTutorMenu(listOfTutors, listOfManagers, listOfStudents, listOfSessions);
@@ -97,7 +100,8 @@ public class TutorCenterUI {
     private static void showManagerMenu(ArrayList<Manager> listOfManagers,
                                         ArrayList<Student> students,
                                         ArrayList<Tutors> listOfTutors,
-                                        ArrayList<Session> listOfSessions) {
+                                        ArrayList<Session> listOfSessions,
+                                        ArrayList<Course> listOfCourses) {
         Manager currentManager = signInManager(listOfManagers);
         System.out.println("Welcome Manager " + currentManager.getFirstName() + "!");
         while (true) {
@@ -116,7 +120,7 @@ public class TutorCenterUI {
 
             switch (choice) {
                 case 1:
-                    hireTutor(currentManager, listOfTutors);
+                    hireTutor(currentManager, listOfTutors, listOfCourses);
                     break;
                 case 2:
                     fireTutor(currentManager);
@@ -129,6 +133,7 @@ public class TutorCenterUI {
                     break;
                 case 5:
                     addNewManager(listOfManagers);
+                    break;
                 case 6:
                     scheduleSession(currentManager, listOfSessions,students);
                     break;
@@ -200,7 +205,8 @@ public class TutorCenterUI {
 
 
     // Hire a Tutor
-    private static void hireTutor(Manager manager, ArrayList<Tutors> listOfTutors) {
+    private static void hireTutor(Manager manager, ArrayList<Tutors> listOfTutors,
+                                  ArrayList<Course> listOfCourses) {
         System.out.println("Hire a Tutor!");
         System.out.print("Enter tutor's first name: ");
         String firstName = scanner.nextLine();
@@ -229,6 +235,9 @@ public class TutorCenterUI {
         System.out.println("Tutor hired successfully! A new Tutor ID(" + newTutor.getId()
                 + ") has been generated.");
         listOfTutors.add(newTutor);
+        for (Course course : listOfCourses) {
+            newTutor.addTeachableCourse(course);
+        }
     }
 
     /**
@@ -454,25 +463,23 @@ public class TutorCenterUI {
 
     private static void scheduleSession(Manager manager, ArrayList<Session> sessions,
                                         ArrayList<Student> students) {
-        while (true) {
-            System.out.print("Please enter the student's name: ");
-            String studentName = scanner.nextLine();
-            System.out.print("Please enter the tutor's name: ");
-            String tutorName = scanner.nextLine();
-            System.out.println("What course is this session for: ");
-            String courseName = scanner.nextLine();
-            System.out.print("What is the start time: ");
-            int startTime = scanner.nextInt();
-            System.out.print("What is the duration: ");
-            int duration = scanner.nextInt();
+        System.out.print("Please enter the student's name: ");
+        String studentName = scanner.nextLine();
+        System.out.print("Please enter the tutor's name: ");
+        String tutorName = scanner.nextLine();
+        System.out.println("What course is this session for: ");
+        String courseName = scanner.nextLine();
+        System.out.print("What is the start time: ");
+        int startTime = scanner.nextInt();
+        System.out.print("What is the duration: ");
+        int duration = scanner.nextInt();
 
 
-            sessions.add(manager.scheduleSession(
-                    manager.getTutor(tutorName),
-                    returnStudentByName(studentName, students),
-                    Course.MathCourses.getMathCourse(courseName),
-                    startTime, duration));
-        }
+        sessions.add(manager.scheduleSession(
+                manager.getTutor(tutorName),
+                returnStudentByName(studentName, students),
+                Course.MathCourses.getMathCourse(courseName),
+                startTime, duration));
     }
 
     private static void updateSession(Manager manager, ArrayList<Session> session) {
