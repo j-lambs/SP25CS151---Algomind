@@ -6,14 +6,15 @@ import java.util.List;
 public class Manager extends Employee {
     private final ArrayList<Tutors> managedTutors;  // List of tutors the manager manages
     private final ArrayList<Session> sessions;
-    private final ArrayList<Student> students = null;
+    private final ArrayList<Student> students;
     private double grossPay;// List of sessions the manager oversees
 
     // Constructor
     public Manager(String firstName, String lastName, String email, String phone, int id, String status) {
         super(firstName, lastName, email, phone, id,status); // Call Employee constructor
         managedTutors = new ArrayList<>(); // Initialize the list of tutors
-        sessions = new ArrayList<>();// Initialize the list of sessions
+        sessions = new ArrayList<>();
+        students = new ArrayList<>();// Initialize the list of sessions
     }
 
     public ArrayList<Tutors> getManagedTutors() {
@@ -34,18 +35,9 @@ public class Manager extends Employee {
 
     // Method to add a tutor to the manager's list
     public void hireTutor(Tutors tutor) {
-        try {
-            if (tutor == null) {
-                throw new IllegalArgumentException("Tutor cannot be null.");
-            }
-            managedTutors.add(tutor);
-            System.out.println("Tutor " + tutor.getFullName() + " now reports to "
-                    + this.getFullName() + ".");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error adding tutor: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred while adding tutor: " + e.getMessage());
-        }
+        managedTutors.add(tutor);
+        System.out.println("Tutor " + tutor.getFullName() + " now reports to "
+                + this.getFullName() + ".");
     }
 
     // Method to remove a tutor from the manager's list
@@ -83,28 +75,18 @@ public class Manager extends Employee {
     }
 
     // Method to schedule a session for a tutor
-    public void scheduleSession(Tutors tutor, Student student, Course course, int startTime, int duration) {
-        try {
-            if (tutor == null || student == null || course == null || startTime <= 0) {
-                throw new IllegalArgumentException("Invalid session parameters.");
-            }
-
-            // Check if the tutor is available for the session
-            Session session = new Session(duration,startTime,tutor,student,course);
-            if (session.isAvailable(startTime,duration,tutor,student)){
-                // If available, schedule the session
-                sessions.add(session);
-                System.out.println("Session scheduled for tutor " + tutor.getFullName()
-                        + " with student " + student.getStudentName());
-            }
-            else {
-                System.out.println("Tutor " + tutor.getFullName() + " is not available at the requested time.");
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error scheduling session: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("An unexpected error occurred while scheduling session: " + e.getMessage());
+    public Session scheduleSession(Tutors tutor, Student student, Course course, int startTime, int duration) {
+        // Check if the tutor is available for the session
+        Session session = new Session(duration, startTime, tutor, student, course);
+        if (session.isAvailable(startTime, duration, tutor, student)) {
+            sessions.add(session);
+            System.out.println("Session scheduled for tutor " + tutor.getFullName()
+                    + " with student " + student.getStudentName());
+            return session;
+        } else {
+            System.out.println("Tutor " + tutor.getFullName() + " is not available at the requested time.");
         }
+        return null;
     }
 
     // Method to display all sessions for the manager
@@ -145,19 +127,19 @@ public class Manager extends Employee {
 
     public Tutors getTutor(String tutorName) {
         for (Tutors tutor : managedTutors) {
-            if (tutor.getFullName().equals(tutorName)) {
+            if (tutor.getFirstName().equalsIgnoreCase(tutorName)) {
                 return tutor;
             }
         }
         return null;
     }
 
-    public List<Student> returnStudents(){
+    public ArrayList<Student> returnStudents(){
         return students;
     }
     public Student returnStudentByName(String studentName) {
         for (Student student : students) {
-            if (student.getStudentName().equals(studentName)) {
+            if (student.getStudentName().equalsIgnoreCase(studentName)) {
                 return student;
             }
         }

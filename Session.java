@@ -9,8 +9,7 @@ class Session implements Schedulable {
     private static final int WORK_HOURS_IN_DAY = 8;
     private static final int START_HOUR = 9;
     private static final int DEFAULT_SESSION_DURATION = 1;
-    private static final List<Integer> startTimes =
-            Collections.unmodifiableList(List.of(9, 10, 11, 12, 13, 14, 15, 16, 17));
+
 
 
     // Attributes
@@ -23,16 +22,7 @@ class Session implements Schedulable {
     private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
     /** Constructor with specified duration */
-    public Session(int duration, int startTime, Tutors tutor, Student student, Course course)
-            throws IllegalArgumentException {
-        if (!startTimes.contains(startTime) || startTime + duration > (WORK_HOURS_IN_DAY + START_HOUR)) {
-            throw new IllegalArgumentException("Invalid session timing.");
-        }
-
-        if (!isAvailable(startTime, duration, tutor, student)) {
-            throw new IllegalArgumentException("Tutor is not available at the requested time.");
-        }
-
+    public Session(int duration, int startTime, Tutors tutor, Student student, Course course){
         this.duration = duration;
         this.startTime = startTime;
         this.endTime = startTime + duration;
@@ -78,7 +68,7 @@ class Session implements Schedulable {
         BitSet tutorAvailability = tutor.getAvailability();
 
         boolean tutorAvailable = containsAllBits(proposedSession, tutorAvailability);
-        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),this.course );
+        boolean tutorCanTeachSubject = tutorTeachesSubject(tutor.getCourses(),getCourse());
 
         return tutorAvailable && tutorCanTeachSubject;
     }
@@ -86,7 +76,7 @@ class Session implements Schedulable {
     /** Creates a BitSet for the session's availability based on start time and duration */
     public static BitSet createNewAvailabilityBitSet(int startTime, int duration) {
         BitSet newAvailabilityBitSet = new BitSet(WORK_HOURS_IN_DAY);
-        newAvailabilityBitSet.set(startTime - START_HOUR, startTime - START_HOUR + duration); // Corrected time setting
+        newAvailabilityBitSet.set(startTime, startTime + duration); // Corrected time setting
         return newAvailabilityBitSet;
     }
 
@@ -111,7 +101,7 @@ class Session implements Schedulable {
                         " End Time: " + this.endTime +
                         " Student: " + this.student.getStudentName() +
                         " Tutor: " + this.tutor.getFullName() +
-                        " Course: " + this.course
+                        " Course: " + this.course.getCourseName()
         );
     }
 

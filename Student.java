@@ -22,13 +22,19 @@ class Student {
     }
 
     public void getStudentInfo() {
-        System.out.println("Student Name: " + studentName);
-        System.out.println("Grade Level: " + gradeLevel);
-        System.out.println("Current Courses: " + currentCourses);
+        System.out.println("Student Name: " + this.getStudentName());
+        System.out.println("Grade Level: " + this.gradeLevel);
+        System.out.println("Current Courses: ");
+        for (Course course : currentCourses) {
+            System.out.println(course.getCourseName());
+        }
     }
 
     public void viewCourses() {
-        System.out.println(studentName + "'s courses: " + currentCourses);
+        System.out.println(studentName + "'s courses: ");
+        for (Course course : currentCourses) {
+            System.out.println(course.getCourseName());
+        }
     }
 
 
