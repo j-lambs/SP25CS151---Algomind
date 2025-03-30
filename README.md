@@ -1,13 +1,13 @@
-Group Name: Algomind
+## Group Name: Algomind
 
-Group Members: Jack Rellamas , Mccay Rhodebeck , Bhavya Vatsavayi & Karamjeet Kaur
+## Group Members: Jack Rellamas , Mccay Rhodebeck , Bhavya Vatsavayi & Karamjeet Kaur
 
-PROJECT TITLE: The Algomind Tutor Center
+## PROJECT TITLE: The Algomind Tutor Center
 
 Overview : We have developed a Java-based application designed to streamline the operations of a tutoring center. It allows managers, tutors and Students to access their respective menu, in which they can view information about the courses, students, sessions, tutors etc. There has been an increase in tutor center so this program might be useful and applicable in real-life.
 
-
-CLASSES:
+---
+## CLASSES:
 -Courses
     Attributes:
       private String courseName;
@@ -124,7 +124,6 @@ CLASSES:
 
 -Schedulable (INTERFACE)
 
-
 -TutorCenterUI
   Constants:
     private static final int WORK_HOURS_IN_DAY 
@@ -154,8 +153,8 @@ CLASSES:
       scheduleSession()
       updateSession()
       viewSessions()
-
-SESSION DOCUMENTATION:
+---
+## SESSION DOCUMENTATION:
 
 - Assume time is military time for simplicity of math.
 - Start Time: 9:00
@@ -185,7 +184,7 @@ private String lesson;      *// lesson being taught*
 
 private BitSet sessionTime = new BitSet(WORK_HOURS_IN_DAY);
 
-**When Creating Session:**
+When Creating Session:
 
 Constructor makes sure session
 
@@ -194,7 +193,7 @@ Constructor makes sure session
     1. Tutor works during session time
     2. Tutor knows current subject of Student
 
-**Methods:**
+Methods:
 
 viewSessionTime():
 
@@ -204,7 +203,7 @@ public boolean isAvailable(int startTime, int duration, Tutors tutor, Student st
 
 - Used in constructor
 
-TUTOR DOCUMENTATION:
+## TUTOR DOCUMENTATION:
 
 Tutors class inherits from Employee and implements Schedulable.
 • Each tutor can:
@@ -218,14 +217,20 @@ Manager class can:
 • Add/remove tutors
 • Oversee and schedule sessions
 
-STUDENT DOCUMENTATION:
+## STUDENT DOCUMENTATION:
 
 Student class can:
 Enroll in courses means showing the information from student.
 Tracking current session and view student info
 
+## INSTALLATION INSTRUCTIONS:
+1)Clone using web URL: https://github.com/j-lambs/SP25CS151---Algomind.git
+2)Project Trajectory : cd SP25CS151---Algomind
+3)Then the project can be opened by your preferred IDE.
+4)TutorCenterUI should be run.
 
-CONTRIBUTIONS:
+---
+## CONTRIBUTIONS:
 Jack Rellamas: Initial project planning and brainstroming, Contributed in making classes manager , employee , Scedulable,TutorCenterUI,Course (all memebers contributed in making of the classes) , De-bugging, Documentation
 
 Mccay Rhodebeck: Initial project planning and brainstroming, Contributed in making classes manager , employee , Scedulable,TutorCenterUI,Course (all memebers contributed in making of all the classes) , De-bugging, Documentation
@@ -233,3 +238,4 @@ Mccay Rhodebeck: Initial project planning and brainstroming, Contributed in maki
  Bhavya Vatsavayi: Initial project planning and brainstroming, Contributed in making classes manager , employee , Scedulable,TutorCenterUI,Course (all memebers contributed in making of all the classes) , De-bugging, Documentation, README
 
 Karamjeet Kaur:Initial project planning and brainstroming, Contributed in making classes manager , employee , Scedulable,TutorCenterUI,Course (all memebers contributed in making of all the classes) , De-bugging, Documentation , UML Diagram
+---
