@@ -130,7 +130,7 @@ Overview : We have developed a Java-based application designed to streamline the
     private static final int START_HOUR 
     private static final int DEFAULT_SESSION_DURATION = 1;
 
-  Methods & other Functional Elements:
+Methods & other Functional Elements:
       other than getter and setter methods
       showManagerMenu()
       signInManager()
